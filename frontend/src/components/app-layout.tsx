@@ -62,6 +62,7 @@ import { GlobalChatPanel } from '@/components/global-chat-panel'
 import { useFeatureFlags } from '@/hooks/use-feature-flags'
 import { Bot, Plus, Search, Sparkles } from 'lucide-react'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
+import { applyUiFont } from '@/lib/ui-fonts'
 import { useLocalAuthEnabled } from '@/hooks/use-local-auth'
 import { formatCurrency } from '@/lib/format'
 
@@ -130,8 +131,9 @@ export function AppLayout() {
   // Gated on agentsEnabled so the hotkey is a no-op when the feature is
   // off — keeps ⌘J free for browsers/other tools.
   useEffect(() => {
-    adminApi.defaultColors().then(({ light, dark }) => {
+    adminApi.defaultColors().then(({ light, dark, font }) => {
       setThemeBasedOnSystem(light, dark, resolvedTheme)
+      applyUiFont(font)
     }).catch(() => {})
     
     if (!chatAvailable) return

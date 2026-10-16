@@ -12,6 +12,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { CurrencySelect } from '@/components/currency-select'
 import { ShellLogo } from '@/components/shell-logo'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
+import { applyUiFont } from '@/lib/ui-fonts'
 import { isServerUnreachable } from '@/lib/auth-errors'
 import type { AxiosError } from 'axios'
 
@@ -43,8 +44,9 @@ export default function RegisterPage() {
     }).catch(() => {
       if (active) setChecking(false)
     })
-    adminApi.defaultColors().then(({ light, dark }) => {
+    adminApi.defaultColors().then(({ light, dark, font }) => {
       setThemeBasedOnSystem(light, dark, resolvedTheme)
+      applyUiFont(font)
     }).catch(() => {})
     return () => {
       active = false

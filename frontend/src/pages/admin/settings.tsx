@@ -31,6 +31,7 @@ import {
 import { PageHeader } from '@/components/page-header'
 import { TimezoneSettings } from '@/components/timezone-settings'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
+import { applyUiFont, DEFAULT_UI_FONT, UI_FONT_IDS, type UiFontId } from '@/lib/ui-fonts'
 import { useLocalAuthEnabled } from '@/hooks/use-local-auth'
 import { Search, Plus, Trash2, Shield, ShieldOff, UserCog, Users, Scale, Tag, Palette, Save, Hash, CalendarDays } from 'lucide-react'
 import type { AdminUser } from '@/types'
@@ -62,6 +63,8 @@ export default function AdminSettingsPage() {
   const [lastSyncedDark, setLastSyncedDark] = useState<string | undefined>()
   const [localLight, setLocalLight] = useState<string>('#6366F1')
   const [localDark, setLocalDark] = useState<string>('#818CF8')
+  const [lastSyncedFont, setLastSyncedFont] = useState<string | undefined>()
+  const [localFont, setLocalFont] = useState<UiFontId>(DEFAULT_UI_FONT)
 
   const { data: usersData, isLoading: usersLoading } = useQuery({
     queryKey: ['admin', 'users', search],
@@ -134,6 +137,12 @@ export default function AdminSettingsPage() {
   const { data: themeColorDarkSetting } = useQuery({
     queryKey: ['admin', 'settings', 'theme_color_dark'],
     queryFn: () => adminApi.getSetting('theme_color_dark').catch(() => null),
+    retry: false,
+  })
+
+  const { data: uiFontSetting } = useQuery({
+    queryKey: ['admin', 'settings', 'ui_font'],
+    queryFn: () => adminApi.getSetting('ui_font').catch(() => null),
     retry: false,
   })
 
@@ -236,17 +245,25 @@ export default function AdminSettingsPage() {
     setLastSyncedDark(themeColorDarkSetting.value)
     setLocalDark(themeColorDarkSetting.value)
   }
+  if (uiFontSetting?.value && uiFontSetting.value !== lastSyncedFont) {
+    setLastSyncedFont(uiFontSetting.value)
+    if (UI_FONT_IDS.includes(uiFontSetting.value as UiFontId)) {
+      setLocalFont(uiFontSetting.value as UiFontId)
+    }
+  }
 
   const saveColorsMutation = useMutation({
     mutationFn: async () => {
       await Promise.all([
         adminApi.updateSetting('theme_color_light', localLight),
         adminApi.updateSetting('theme_color_dark', localDark),
+        adminApi.updateSetting('ui_font', localFont),
       ])
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin', 'settings'] })
       setThemeBasedOnSystem(localLight, localDark, resolvedTheme)
+      applyUiFont(localFont)
       toast.success(t('admin.settings.updated'))
     },
     onError: () => {
@@ -389,6 +406,30 @@ export default function AdminSettingsPage() {
             </Button>
           </div>
           <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3 md:col-span-2">
+              <Label className="text-xs">{t('settings.uiFont')}</Label>
+              <Select
+                value={localFont}
+                onValueChange={(value) => {
+                  const next = value as UiFontId
+                  setLocalFont(next)
+                  applyUiFont(next)
+                }}
+              >
+                <SelectTrigger className="max-w-md">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {UI_FONT_IDS.map((id) => (
+                    <SelectItem key={id} value={id}>
+                      {t(`settings.fonts.${id}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">{t('settings.uiFontHint')}</p>
+            </div>
+
             {/* Light Mode Colors */}
             <div className="space-y-3">
               <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">

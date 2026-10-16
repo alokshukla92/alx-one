@@ -13,6 +13,7 @@ import { isServerUnreachable } from '@/lib/auth-errors'
 import { resolveLocalAuthEnabled } from '@/lib/auth-config-utils'
 import { useTheme } from 'next-themes'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
+import { applyUiFont } from '@/lib/ui-fonts'
 import {
   isConditionalPasskeySupported,
   isPasskeySupported,
@@ -83,8 +84,9 @@ export default function LoginPage() {
         setOidcConfigFailed(false)
       })
       .catch(() => setOidcConfigFailed(true))
-    adminApi.defaultColors().then(({ light, dark }) => {
+    adminApi.defaultColors().then(({ light, dark, font }) => {
       setThemeBasedOnSystem(light, dark, resolvedTheme)
+      applyUiFont(font)
     }).catch(() => {})
   }, [navigate, token, resolvedTheme])
 

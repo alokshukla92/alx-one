@@ -59,7 +59,7 @@ vi.mock('@/hooks/use-feature-flags', () => ({
 vi.mock('@/lib/api', () => ({
   auth: state.auth,
   admin: {
-    defaultColors: async () => ({ light: null, dark: null }),
+    defaultColors: async () => ({ light: null, dark: null, font: null }),
     numberFormat: async () => ({ format: 'auto' }),
   },
   accounts: { list: async () => [] },

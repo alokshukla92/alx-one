@@ -31,7 +31,7 @@ function httpError(status?: number): AxiosError {
 beforeEach(() => {
   vi.clearAllMocks()
   api.admin.registrationStatus.mockResolvedValue({ enabled: true })
-  api.admin.defaultColors.mockResolvedValue({ light: null, dark: null })
+  api.admin.defaultColors.mockResolvedValue({ light: null, dark: null, font: null })
   api.auth.oidcConfig.mockResolvedValue({
     enabled: false,
     provider_name: 'OIDC',

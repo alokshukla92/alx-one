@@ -29,12 +29,23 @@ from app.services import admin_service
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
+UI_FONT_PRESETS = {
+    "inter",
+    "geist",
+    "system",
+    "dm_sans",
+    "plus_jakarta",
+    "manrope",
+    "source_sans_3",
+}
+
 ALLOWED_SETTINGS = {
     "registration_enabled",
     "credit_card_accounting_mode",
     "use_provider_categories",
     "theme_color_light",
     "theme_color_dark",
+    "ui_font",
     "number_format",
     "date_format",
     "timezone",
@@ -166,6 +177,12 @@ async def update_setting(
                 detail=f"Invalid hex color code for '{key}'. Expected format: #RRGGBB",
             )
 
+    if key == "ui_font" and data.value not in UI_FONT_PRESETS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid value for 'ui_font'. Allowed: {sorted(UI_FONT_PRESETS)}",
+        )
+
     setting = await admin_service.set_app_setting(session, key, data.value)
     if key == "timezone":
         invalidate_timezone_cache()
@@ -217,7 +234,12 @@ async def default_colors(
 ):
     light = await admin_service.get_app_setting(session, "theme_color_light")
     dark = await admin_service.get_app_setting(session, "theme_color_dark")
-    return {"light": light.value if light else None, "dark": dark.value if dark else None}
+    font = await admin_service.get_app_setting(session, "ui_font")
+    return {
+        "light": light.value if light else None,
+        "dark": dark.value if dark else None,
+        "font": font.value if font else None,
+    }
 
 
 @router.get("/accounting-mode")

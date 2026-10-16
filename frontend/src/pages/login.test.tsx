@@ -62,7 +62,7 @@ beforeEach(() => {
     local_auth_enabled: true,
   })
   api.admin.registrationStatus.mockResolvedValue({ enabled: true })
-  api.admin.defaultColors.mockResolvedValue({ light: null, dark: null })
+  api.admin.defaultColors.mockResolvedValue({ light: null, dark: null, font: null })
   webauthn.isPasskeySupported.mockReturnValue(false)
   webauthn.isConditionalPasskeySupported.mockResolvedValue(false)
   webauthn.passkeyFailure.mockReturnValue('unknown')

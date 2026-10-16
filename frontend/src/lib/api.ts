@@ -1665,7 +1665,11 @@ export const admin = {
     const { data } = await api.get('/admin/date-format')
     return data
   },
-  defaultColors: async (): Promise<{ light: string | null; dark: string | null }> => {
+  defaultColors: async (): Promise<{
+    light: string | null
+    dark: string | null
+    font: string | null
+  }> => {
     const { data } = await api.get('/admin/default-colors')
     return data
   },

@@ -1332,6 +1332,17 @@
     "themeSystem": "System",
     "customization": "Customization",
     "themeColor": "Theme color",
+    "uiFont": "Font",
+    "uiFontHint": "Applies to the whole app for all users. System uses San Francisco on Apple devices and Segoe UI on Windows.",
+    "fonts": {
+      "inter": "Inter",
+      "geist": "Geist (original Securo)",
+      "system": "System default",
+      "dm_sans": "DM Sans",
+      "plus_jakarta": "Plus Jakarta Sans",
+      "manrope": "Manrope",
+      "source_sans_3": "Source Sans 3"
+    },
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
   },
