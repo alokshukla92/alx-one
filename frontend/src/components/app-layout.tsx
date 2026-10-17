@@ -60,11 +60,12 @@ import { CommandPalette } from '@/components/command-palette'
 import { useCommandPaletteHotkey } from '@/hooks/use-command-palette-hotkey'
 import { GlobalChatPanel } from '@/components/global-chat-panel'
 import { useFeatureFlags } from '@/hooks/use-feature-flags'
-import { Bot, Plus, Search, Sparkles } from 'lucide-react'
+import { Bot, LayoutGrid, Plus, Search, Sparkles } from 'lucide-react'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
 import { applyUiFont } from '@/lib/ui-fonts'
 import { useLocalAuthEnabled } from '@/hooks/use-local-auth'
 import { formatCurrency } from '@/lib/format'
+import { securoPath } from '@/lib/securo-path'
 
 const QuickAddTransaction = lazy(() => import('@/components/quick-add-transaction'))
 
@@ -212,7 +213,7 @@ export function AppLayout() {
           <Menu size={20} />
         </button>
         <Link
-          to="/"
+          to={securoPath()}
           className="flex items-center gap-2 -mx-1 px-1 py-1 rounded-md hover:bg-sidebar-accent transition-colors"
           aria-label={t('app.name')}
           title={t('nav.dashboard')}
@@ -306,7 +307,7 @@ export function AppLayout() {
             desktopSidebarCollapsed && 'lg:h-auto lg:min-h-0 lg:flex-col lg:justify-center lg:gap-2 lg:px-0 lg:py-3',
           )}>
             <Link
-              to="/"
+              to={securoPath()}
               className="flex items-center gap-2.5 -mx-1 px-1 py-1 rounded-md hover:bg-sidebar-accent transition-colors"
               onClick={() => setSidebarOpen(false)}
               aria-label={t('app.name')}
@@ -432,8 +433,8 @@ export function AppLayout() {
               }
 
               const isActive =
-                item.path === '/'
-                  ? location.pathname === '/'
+                item.path === securoPath()
+                  ? location.pathname === securoPath() || location.pathname === `${securoPath()}/`
                   : location.pathname.startsWith(item.path)
               const Icon = item.icon
               const showQuickAdd = item.key === 'transactions' && canWrite
@@ -523,7 +524,7 @@ export function AppLayout() {
                     return (
                       <Link
                         key={acc.id}
-                        to={`/accounts/${acc.id}`}
+                        to={securoPath(`/accounts/${acc.id}`)}
                         onClick={() => setSidebarOpen(false)}
                         className="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground transition-all"
                       >
@@ -583,6 +584,20 @@ export function AppLayout() {
             />
           </div>
 
+          <div className={cn('px-3 pb-2', desktopSidebarCollapsed && 'lg:px-1')}>
+            <Link
+              to="/"
+              onClick={() => setSidebarOpen(false)}
+              title={t('alx.hub.allModules')}
+              className={cn(
+                'flex items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium text-sidebar-muted transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground',
+                desktopSidebarCollapsed && 'lg:justify-center lg:px-0',
+              )}
+            >
+              <LayoutGrid size={17} className="shrink-0" aria-hidden />
+              <span className={cn(desktopSidebarCollapsed && 'lg:hidden')}>{t('alx.hub.allModules')}</span>
+            </Link>
+          </div>
           <div className={cn('px-3 pb-3 pt-1', desktopSidebarCollapsed && 'lg:hidden')}>
             <div
               className="text-[11px] leading-4 text-sidebar-muted/70 text-center"

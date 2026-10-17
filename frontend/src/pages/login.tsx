@@ -396,6 +396,7 @@ export default function LoginPage() {
             <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
               <ShellLogo size={22} className="text-primary" />
             </div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{t('alx.platformName')}</p>
             <h1 className="text-xl font-semibold tracking-tight">{t('auth.login')}</h1>
             <p className="text-sm text-muted-foreground mt-1">{t('auth.loginDescription')}</p>
           </div>

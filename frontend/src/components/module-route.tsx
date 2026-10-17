@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import { useWorkspace } from '@/contexts/workspace-context'
 import type { ModuleId } from '@/lib/modules'
+import { securoPath } from '@/lib/securo-path'
 
 /** Wraps a module's pages so navigating straight to the URL when the
  *  active workspace doesn't show that module lands on home instead of
@@ -21,6 +22,6 @@ export function ModuleRoute({
       </div>
     )
   }
-  if (!hasModule(module)) return <Navigate to="/" replace />
+  if (!hasModule(module)) return <Navigate to={securoPath()} replace />
   return <>{children}</>
 }

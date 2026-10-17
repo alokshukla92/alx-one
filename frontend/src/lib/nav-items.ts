@@ -16,6 +16,7 @@ import {
 // Relative, not aliased: this file is pulled into the test project,
 // which compiles without the `@/*` path mapping (see tsconfig.node.json).
 import type { ModuleId } from './modules'
+import { securoPath } from './securo-path'
 
 /**
  * Sidebar destinations. Lives outside `app-layout.tsx` so the filtering
@@ -35,21 +36,21 @@ export const navItems: NavItem[] = [
   // the sidebar focused on the main destinations. Transactions sits
   // inside the ACCOUNTS section since it's account-scoped data.
   { type: 'separator', labelKey: 'nav.groupAccounts' },
-  { type: 'link', key: 'transactions', path: '/transactions', icon: ArrowLeftRight, module: 'transactions' },
-  { type: 'link', key: 'invoices', path: '/invoices', icon: Receipt, module: 'invoices' },
-  { type: 'link', key: 'accounts', path: '/accounts', icon: Building2, module: 'accounts' },
-  { type: 'link', key: 'import', path: '/import', icon: Upload, module: 'import' },
+  { type: 'link', key: 'transactions', path: securoPath('/transactions'), icon: ArrowLeftRight, module: 'transactions' },
+  { type: 'link', key: 'invoices', path: securoPath('/invoices'), icon: Receipt, module: 'invoices' },
+  { type: 'link', key: 'accounts', path: securoPath('/accounts'), icon: Building2, module: 'accounts' },
+  { type: 'link', key: 'import', path: securoPath('/import'), icon: Upload, module: 'import' },
   { type: 'separator', labelKey: 'nav.groupAnalysis' },
-  { type: 'link', key: 'reports', path: '/reports', icon: BarChart3, module: 'reports' },
-  { type: 'link', key: 'assets', path: '/assets', icon: Landmark, module: 'assets' },
+  { type: 'link', key: 'reports', path: securoPath('/reports'), icon: BarChart3, module: 'reports' },
+  { type: 'link', key: 'assets', path: securoPath('/assets'), icon: Landmark, module: 'assets' },
   { type: 'separator', labelKey: 'nav.groupSetup' },
-  { type: 'link', key: 'budgets', path: '/budgets', icon: PiggyBank, module: 'budgets' },
-  { type: 'link', key: 'goals', path: '/goals', icon: Target, module: 'goals' },
-  { type: 'link', key: 'recurring', path: '/recurring', icon: Repeat, module: 'recurring' },
-  { type: 'link', key: 'categories', path: '/categories', icon: Tag, module: 'categories' },
-  { type: 'link', key: 'payees', path: '/payees', icon: Users, module: 'payees' },
-  { type: 'link', key: 'splitGroups', path: '/groups', icon: Split, module: 'split_groups' },
-  { type: 'link', key: 'rules', path: '/rules', icon: SlidersHorizontal, module: 'rules' },
+  { type: 'link', key: 'budgets', path: securoPath('/budgets'), icon: PiggyBank, module: 'budgets' },
+  { type: 'link', key: 'goals', path: securoPath('/goals'), icon: Target, module: 'goals' },
+  { type: 'link', key: 'recurring', path: securoPath('/recurring'), icon: Repeat, module: 'recurring' },
+  { type: 'link', key: 'categories', path: securoPath('/categories'), icon: Tag, module: 'categories' },
+  { type: 'link', key: 'payees', path: securoPath('/payees'), icon: Users, module: 'payees' },
+  { type: 'link', key: 'splitGroups', path: securoPath('/groups'), icon: Split, module: 'split_groups' },
+  { type: 'link', key: 'rules', path: securoPath('/rules'), icon: SlidersHorizontal, module: 'rules' },
 ]
 
 /**

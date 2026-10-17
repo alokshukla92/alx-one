@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import { useFeatureFlags } from '@/hooks/use-feature-flags'
+import { securoPath } from '@/lib/securo-path'
 
 /** Wraps every /agents/* page so navigating directly to the URL when
  *  AGENTS_ENABLED is false on the server kicks the user back to home
@@ -14,6 +15,6 @@ export function AgentsRoute({ children }: { children: React.ReactNode }) {
       </div>
     )
   }
-  if (!agentsEnabled) return <Navigate to="/" replace />
+  if (!agentsEnabled) return <Navigate to={securoPath()} replace />
   return <>{children}</>
 }

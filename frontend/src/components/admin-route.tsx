@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/auth-context'
+import { securoPath } from '@/lib/securo-path'
 
 export function AdminRoute({ children }: { children: React.ReactNode }) {
   const { token, user, isLoading } = useAuth()
@@ -13,7 +14,7 @@ export function AdminRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (!token || !user?.is_superuser) {
-    return <Navigate to="/" replace />
+    return <Navigate to={securoPath()} replace />
   }
 
   return <>{children}</>

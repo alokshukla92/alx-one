@@ -11,9 +11,9 @@ vi.mock('@/contexts/workspace-context', () => ({ useWorkspace }))
 function renderGuard() {
   return renderWithProviders(
     <Routes>
-      <Route path="/" element={<div>home</div>} />
+      <Route path="/securo" element={<div>home</div>} />
       <Route
-        path="/budgets"
+        path="/securo/budgets"
         element={
           <ModuleRoute module="budgets">
             <div>budgets page</div>
@@ -21,7 +21,7 @@ function renderGuard() {
         }
       />
     </Routes>,
-    { route: '/budgets' },
+    { route: '/securo/budgets' },
   )
 }
 
@@ -54,9 +54,9 @@ describe('ModuleRoute', () => {
 
     renderWithProviders(
       <Routes>
-        <Route path="/" element={<div>home</div>} />
+        <Route path="/securo" element={<div>home</div>} />
         <Route
-          path="/budgets"
+          path="/securo/budgets"
           element={
             <ModuleRoute module="invoices">
               <div>budgets page</div>
@@ -64,7 +64,7 @@ describe('ModuleRoute', () => {
           }
         />
       </Routes>,
-      { route: '/budgets' },
+      { route: '/securo/budgets' },
     )
 
     expect(hasModule).toHaveBeenCalledWith('invoices')

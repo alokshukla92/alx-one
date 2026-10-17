@@ -63,8 +63,32 @@
     "archiveConfirmTitle": "Archive workspace?",
     "archiveConfirmDescription": "The workspace \"{{name}}\" will be removed from your list. Data is preserved and an admin can restore it later."
   },
+  "alx": {
+    "platformName": "ALX One",
+    "hub": {
+      "eyebrow": "Personal ERP",
+      "title": "Choose a module",
+      "subtitle": "ALX One brings your tools together. Open a module to continue.",
+      "comingSoon": "Coming soon",
+      "allModules": "All modules"
+    },
+    "products": {
+      "securo": {
+        "name": "ALX Securo",
+        "description": "Finance — accounts, transactions, budgets, reports, and invoicing."
+      },
+      "people": {
+        "name": "ALX People",
+        "description": "Contacts, payroll, and household — planned."
+      },
+      "inventory": {
+        "name": "ALX Inventory",
+        "description": "Stock, assets, and procurement — planned."
+      }
+    }
+  },
   "app": {
-    "name": "Securo",
+    "name": "ALX Securo",
     "versionAriaLabel": "Running version {{version}}",
     "versionLabel": "Version {{version}}",
     "updateAvailable": "Update Available",

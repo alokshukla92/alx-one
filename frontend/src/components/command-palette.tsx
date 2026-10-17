@@ -37,6 +37,7 @@ import {
 import { search as searchApi, type SearchHit, type SearchHitType } from '@/lib/api'
 import { cn, normalizeText } from '@/lib/utils'
 import { transactionDescription } from '@/lib/transaction-description'
+import { securoPath } from '@/lib/securo-path'
 
 // ---------------------------------------------------------------------------
 // Static actions & navigation registry
@@ -55,19 +56,19 @@ type StaticItem = {
 }
 
 const NAV_ITEMS: StaticItem[] = [
-  { id: 'nav-dashboard', labelKey: 'nav.dashboard', icon: LayoutDashboard, path: '/', keywords: ['home', 'inicio', 'início'] },
-  { id: 'nav-transactions', labelKey: 'nav.transactions', icon: ArrowLeftRight, path: '/transactions', keywords: ['tx', 'transacoes', 'transações'], module: 'transactions' },
-  { id: 'nav-invoices', labelKey: 'nav.invoices', icon: Receipt, path: '/invoices', keywords: ['cobrancas', 'cobranças', 'faturas', 'clientes', 'recebimentos'], module: 'invoices' },
-  { id: 'nav-accounts', labelKey: 'nav.accounts', icon: Building2, path: '/accounts', keywords: ['contas'], module: 'accounts' },
-  { id: 'nav-import', labelKey: 'nav.import', icon: Upload, path: '/import', keywords: ['csv', 'ofx', 'importar'], module: 'import' },
-  { id: 'nav-reports', labelKey: 'nav.reports', icon: BarChart3, path: '/reports', keywords: ['relatorios', 'relatórios', 'charts'], module: 'reports' },
-  { id: 'nav-assets', labelKey: 'nav.assets', icon: Landmark, path: '/assets', keywords: ['patrimonio', 'patrimônio'], module: 'assets' },
-  { id: 'nav-budgets', labelKey: 'nav.budgets', icon: PiggyBank, path: '/budgets', keywords: ['orcamentos', 'orçamentos'], module: 'budgets' },
-  { id: 'nav-goals', labelKey: 'nav.goals', icon: Target, path: '/goals', keywords: ['metas'], module: 'goals' },
-  { id: 'nav-recurring', labelKey: 'nav.recurring', icon: Repeat, path: '/recurring', keywords: ['recorrentes'], module: 'recurring' },
-  { id: 'nav-categories', labelKey: 'nav.categories', icon: Tag, path: '/categories', keywords: ['categorias'], module: 'categories' },
-  { id: 'nav-payees', labelKey: 'nav.payees', icon: Users, path: '/payees', keywords: ['beneficiarios', 'beneficiários'], module: 'payees' },
-  { id: 'nav-rules', labelKey: 'nav.rules', icon: SlidersHorizontal, path: '/rules', keywords: ['regras'], module: 'rules' },
+  { id: 'nav-dashboard', labelKey: 'nav.dashboard', icon: LayoutDashboard, path: securoPath(), keywords: ['home', 'inicio', 'início'] },
+  { id: 'nav-transactions', labelKey: 'nav.transactions', icon: ArrowLeftRight, path: securoPath('/transactions'), keywords: ['tx', 'transacoes', 'transações'], module: 'transactions' },
+  { id: 'nav-invoices', labelKey: 'nav.invoices', icon: Receipt, path: securoPath('/invoices'), keywords: ['cobrancas', 'cobranças', 'faturas', 'clientes', 'recebimentos'], module: 'invoices' },
+  { id: 'nav-accounts', labelKey: 'nav.accounts', icon: Building2, path: securoPath('/accounts'), keywords: ['contas'], module: 'accounts' },
+  { id: 'nav-import', labelKey: 'nav.import', icon: Upload, path: securoPath('/import'), keywords: ['csv', 'ofx', 'importar'], module: 'import' },
+  { id: 'nav-reports', labelKey: 'nav.reports', icon: BarChart3, path: securoPath('/reports'), keywords: ['relatorios', 'relatórios', 'charts'], module: 'reports' },
+  { id: 'nav-assets', labelKey: 'nav.assets', icon: Landmark, path: securoPath('/assets'), keywords: ['patrimonio', 'patrimônio'], module: 'assets' },
+  { id: 'nav-budgets', labelKey: 'nav.budgets', icon: PiggyBank, path: securoPath('/budgets'), keywords: ['orcamentos', 'orçamentos'], module: 'budgets' },
+  { id: 'nav-goals', labelKey: 'nav.goals', icon: Target, path: securoPath('/goals'), keywords: ['metas'], module: 'goals' },
+  { id: 'nav-recurring', labelKey: 'nav.recurring', icon: Repeat, path: securoPath('/recurring'), keywords: ['recorrentes'], module: 'recurring' },
+  { id: 'nav-categories', labelKey: 'nav.categories', icon: Tag, path: securoPath('/categories'), keywords: ['categorias'], module: 'categories' },
+  { id: 'nav-payees', labelKey: 'nav.payees', icon: Users, path: securoPath('/payees'), keywords: ['beneficiarios', 'beneficiários'], module: 'payees' },
+  { id: 'nav-rules', labelKey: 'nav.rules', icon: SlidersHorizontal, path: securoPath('/rules'), keywords: ['regras'], module: 'rules' },
 ]
 
 const QUICK_ACTIONS: StaticItem[] = [
@@ -75,35 +76,35 @@ const QUICK_ACTIONS: StaticItem[] = [
     id: 'action-new-transaction',
     labelKey: 'cmdk.actions.newTransaction',
     icon: Plus,
-    onSelect: (nav) => nav('/transactions?new=1'),
+    onSelect: (nav) => nav(securoPath('/transactions?new=1')),
     keywords: ['new', 'add', 'create', 'nova', 'adicionar'],
   },
   {
     id: 'action-import',
     labelKey: 'cmdk.actions.importFile',
     icon: FileSpreadsheet,
-    onSelect: (nav) => nav('/import'),
+    onSelect: (nav) => nav(securoPath('/import')),
     keywords: ['upload', 'csv', 'ofx', 'qif'],
   },
   {
     id: 'action-new-budget',
     labelKey: 'cmdk.actions.newBudget',
     icon: PiggyBank,
-    onSelect: (nav) => nav('/budgets?new=1'),
+    onSelect: (nav) => nav(securoPath('/budgets?new=1')),
     keywords: ['budget', 'orcamento'],
   },
   {
     id: 'action-new-goal',
     labelKey: 'cmdk.actions.newGoal',
     icon: Target,
-    onSelect: (nav) => nav('/goals?new=1'),
+    onSelect: (nav) => nav(securoPath('/goals?new=1')),
     keywords: ['goal', 'meta', 'target'],
   },
   {
     id: 'action-reports',
     labelKey: 'cmdk.actions.openReports',
     icon: BarChart3,
-    onSelect: (nav) => nav('/reports'),
+    onSelect: (nav) => nav(securoPath('/reports')),
   },
 ]
 
@@ -121,7 +122,7 @@ const ENTITY_META: Record<SearchHitType, { icon: React.ElementType; tintClass: s
       const params = new URLSearchParams()
       if (hit.label) params.set('q', hit.label)
       params.set('highlight', hit.id)
-      return `/transactions?${params.toString()}`
+      return securoPath(`/transactions?${params.toString()}`)
     },
   },
   account: {
@@ -129,35 +130,35 @@ const ENTITY_META: Record<SearchHitType, { icon: React.ElementType; tintClass: s
     tintClass: 'text-emerald-500 dark:text-emerald-300',
     bgClass: 'bg-emerald-500/10',
     labelKey: 'cmdk.groups.accounts',
-    pathFor: (hit) => `/accounts/${hit.id}`,
+    pathFor: (hit) => securoPath(`/accounts/${hit.id}`),
   },
   payee: {
     icon: Users,
     tintClass: 'text-sky-500 dark:text-sky-300',
     bgClass: 'bg-sky-500/10',
     labelKey: 'cmdk.groups.payees',
-    pathFor: (hit) => `/transactions?payee_id=${hit.id}`,
+    pathFor: (hit) => securoPath(`/transactions?payee_id=${hit.id}`),
   },
   category: {
     icon: Tag,
     tintClass: 'text-fuchsia-500 dark:text-fuchsia-300',
     bgClass: 'bg-fuchsia-500/10',
     labelKey: 'cmdk.groups.categories',
-    pathFor: (hit) => `/transactions?category_id=${hit.id}`,
+    pathFor: (hit) => securoPath(`/transactions?category_id=${hit.id}`),
   },
   goal: {
     icon: Target,
     tintClass: 'text-amber-500 dark:text-amber-300',
     bgClass: 'bg-amber-500/10',
     labelKey: 'cmdk.groups.goals',
-    pathFor: () => '/goals',
+    pathFor: () => securoPath('/goals'),
   },
   asset: {
     icon: Landmark,
     tintClass: 'text-rose-500 dark:text-rose-300',
     bgClass: 'bg-rose-500/10',
     labelKey: 'cmdk.groups.assets',
-    pathFor: () => '/assets',
+    pathFor: () => securoPath('/assets'),
   },
 }
 

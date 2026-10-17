@@ -1,0 +1,22 @@
+/** First path segment for routes that lived at the app root before `/securo` nesting. */
+export const LEGACY_SECURO_SEGMENTS = [
+  'transactions',
+  'accounts',
+  'oauth',
+  'enable-banking',
+  'import',
+  'rules',
+  'categories',
+  'collections',
+  'budgets',
+  'goals',
+  'recurring',
+  'assets',
+  'reports',
+  'payees',
+  'groups',
+  'invoices',
+  'workspace',
+  'admin',
+  'agents',
+] as const
