@@ -34,6 +34,11 @@ export const UI_FONT_PRESETS = {
     googleFontsHref:
       'https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400..700;1,400..700&display=swap',
   },
+  poppins: {
+    family: "'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+    googleFontsHref:
+      'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap',
+  },
 } as const
 
 export type UiFontId = keyof typeof UI_FONT_PRESETS

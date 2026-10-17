@@ -37,6 +37,7 @@ UI_FONT_PRESETS = {
     "plus_jakarta",
     "manrope",
     "source_sans_3",
+    "poppins",
 }
 
 ALLOWED_SETTINGS = {
