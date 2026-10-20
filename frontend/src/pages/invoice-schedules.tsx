@@ -121,7 +121,7 @@ export default function InvoiceSchedulesPage() {
       {/* One row per currency, in the invoices page's shape: the headline
           figure with what supports it beside it. An agreement in euros and
           one in reais never add up, so they never share a line. */}
-      <div className="bg-card rounded-xl border border-border shadow-sm mb-5" data-testid="schedules-summary">
+      <div className="alx-panel mb-5" data-testid="schedules-summary">
         {!summary ? (
           <div className="px-5 py-4">
             <Skeleton className="h-10 w-48" />
@@ -197,7 +197,7 @@ export default function InvoiceSchedulesPage() {
         ) : !list || list.length === 0 ? (
           <div className="px-5 py-14 text-center" data-testid="schedules-empty">
             <Repeat className="h-8 w-8 mx-auto text-muted-foreground/50" />
-            <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto">
+            <p className="mt-3 text-app-body text-muted-foreground max-w-sm mx-auto">
               {filter === 'all'
                 ? t('invoices.schedules.empty')
                 : t('invoices.schedules.emptyFiltered')}
@@ -239,7 +239,7 @@ export default function InvoiceSchedulesPage() {
                     className="border-b border-border last:border-0 hover:bg-muted transition-colors cursor-pointer"
                   >
                     <td className="py-3 pl-4 sm:pl-5">
-                      <div className="text-sm font-medium text-foreground truncate">{schedule.name}</div>
+                      <div className="text-app-body font-medium text-foreground truncate">{schedule.name}</div>
                       <div className="text-xs text-muted-foreground truncate">
                         {schedule.payee?.name ?? t('invoices.noClient')}
                       </div>
@@ -253,7 +253,7 @@ export default function InvoiceSchedulesPage() {
                         </span>
                       )}
                     </td>
-                    <td className="py-3 pr-6 text-right text-sm font-bold tabular-nums">
+                    <td className="py-3 pr-6 text-right text-app-body font-bold tabular-nums">
                       {schedule.status === 'active'
                         ? money(schedule.monthly_amount, schedule.currency)
                         : <span className="text-muted-foreground font-medium">—</span>}

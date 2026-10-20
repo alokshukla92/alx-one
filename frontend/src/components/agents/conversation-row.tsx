@@ -81,7 +81,7 @@ export function ConversationRow({ conv, agentId, active, onPick, onDeleted }: Pr
               setEditing(false)
             }
           }}
-          className="flex-1 min-w-0 rounded-sm border bg-card px-1.5 py-0.5 text-sm"
+          className="flex-1 min-w-0 rounded-sm border bg-card px-1.5 py-0.5 text-app-body"
         />
         <button
           type="button"
@@ -109,7 +109,7 @@ export function ConversationRow({ conv, agentId, active, onPick, onDeleted }: Pr
   return (
     <div
       className={cn(
-        'group flex items-center px-3 py-2 text-sm hover:bg-muted',
+        'group flex items-center px-3 py-2 text-app-body hover:bg-muted',
         active && 'bg-muted',
       )}
     >

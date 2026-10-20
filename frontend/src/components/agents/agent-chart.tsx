@@ -46,11 +46,11 @@ import { formatCurrency } from '@/lib/format'
 
 // Same palette as reports.tsx so chats look like the rest of the app.
 const PALETTE = [
-  '#6366F1', // indigo
+  '#A8ED6B', // indigo
   '#10B981', // emerald
   '#F59E0B', // amber
   '#F43F5E', // rose
-  '#8B5CF6', // violet
+  '#236B35',
   '#06B6D4', // cyan
   '#EC4899', // pink
   '#84CC16', // lime
@@ -156,7 +156,7 @@ function AgentChartImpl({ spec }: Props) {
     <figure className="my-3 rounded-lg border border-border bg-card overflow-hidden">
       {(spec.title || spec.subtitle) && (
         <figcaption className="px-3 py-2 border-b border-border">
-          {spec.title && <div className="text-sm font-semibold">{spec.title}</div>}
+          {spec.title && <div className="text-app-body font-semibold">{spec.title}</div>}
           {spec.subtitle && <div className="text-xs text-muted-foreground mt-0.5">{spec.subtitle}</div>}
         </figcaption>
       )}

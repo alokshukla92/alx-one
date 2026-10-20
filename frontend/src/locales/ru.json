@@ -132,7 +132,9 @@
     "agents": "Агенты",
     "aiAgents": "ИИ-агенты",
     "collapseSidebar": "Свернуть боковую панель",
-    "expandSidebar": "Развернуть боковую панель"
+    "expandSidebar": "Развернуть боковую панель",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "Invoices",

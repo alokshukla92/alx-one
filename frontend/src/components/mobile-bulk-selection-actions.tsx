@@ -84,7 +84,7 @@ function BulkTagEditor(props: MobileBulkSelectionActionsProps) {
         value={props.tagInput}
         onChange={(event) => props.onTagInputChange(event.target.value)}
         placeholder={t('transactions.addTagsPlaceholder', '#tag…')}
-        className="h-9 w-full rounded-md border border-input bg-transparent px-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-ring"
+        className="h-9 w-full rounded-md border border-input bg-transparent px-2.5 text-app-body text-foreground outline-none placeholder:text-muted-foreground focus:border-ring"
         onKeyDown={(event) => { event.stopPropagation(); if (event.key === 'Enter') { event.preventDefault(); submitTags() } }}
       />
       <BulkTagButtons {...props} />

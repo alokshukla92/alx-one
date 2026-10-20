@@ -113,7 +113,7 @@ export function PayeeDetailDialog({
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">{t('payees.lastTransaction')}</p>
-                  <p className="text-sm font-medium">
+                  <p className="text-app-body font-medium">
                     {summaryData.last_transaction_date
                       ? new Date(summaryData.last_transaction_date + 'T00:00:00').toLocaleDateString(dateLocale)
                       : '—'}
@@ -133,15 +133,15 @@ export function PayeeDetailDialog({
                   <p className="text-xs font-medium text-muted-foreground">{t('dashboard.recentTransactions')}</p>
                   <div className="divide-y divide-border rounded-lg border border-border overflow-hidden">
                     {recentTxData.items.map((tx) => (
-                      <div key={tx.id} className="flex items-center justify-between px-3 py-2 bg-background text-sm">
+                      <div key={tx.id} className="flex items-center justify-between px-3 py-2 bg-background text-app-body">
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-foreground truncate">{tx.description}</p>
+                          <p className="text-app-body font-medium text-foreground truncate">{tx.description}</p>
                           <p className="text-xs text-muted-foreground">
                             {new Date(tx.date + 'T00:00:00').toLocaleDateString(dateLocale)}
                             {tx.category?.name && <> · {tx.category.name}</>}
                           </p>
                         </div>
-                        <span className={`text-sm font-semibold tabular-nums ml-3 ${tx.type === 'debit' ? 'text-rose-500' : 'text-emerald-600'}`}>
+                        <span className={`text-app-body font-semibold tabular-nums ml-3 ${tx.type === 'debit' ? 'text-rose-500' : 'text-emerald-600'}`}>
                           {mask(formatCurrency(tx.amount, tx.currency, locale))}
                         </span>
                       </div>

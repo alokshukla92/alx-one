@@ -72,7 +72,7 @@ function MonthPicker({
         >
           <ChevronLeft className="size-4" />
         </button>
-        <span className="text-sm font-medium text-foreground capitalize px-2 py-1">
+        <span className="text-app-body font-medium text-foreground capitalize px-2 py-1">
           {menuYear}
         </span>
         <button
@@ -115,13 +115,13 @@ function MonthPicker({
                   : m.name
 
                 return (
-                  <td key={m.number} className="h-10 w-1/4 text-center text-sm p-0 relative">
+                  <td key={m.number} className="h-10 w-1/4 text-center text-app-body p-0 relative">
                     <button
                       type="button"
                       disabled={isDisabled}
                       onClick={() => onMonthSelect?.(monthDate)}
                       className={cn(
-                        'h-full w-full rounded-lg text-sm capitalize transition-colors flex items-center justify-center cursor-pointer',
+                        'h-full w-full rounded-lg text-app-body capitalize transition-colors flex items-center justify-center cursor-pointer',
                         isSelected
                           ? 'bg-primary text-primary-foreground font-semibold'
                           : 'text-foreground hover:bg-muted/60 disabled:opacity-30 disabled:pointer-events-none'

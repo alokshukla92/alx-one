@@ -220,7 +220,7 @@ export default function InvoicesPage() {
       {/* One block, in the dashboard's shape: a headline figure with its
           supporting numbers beside it, and the accountant's view of the
           same money to the right. Four identical stat cards say less. */}
-      <div className="bg-card rounded-xl border border-border shadow-sm mb-5">
+      <div className="alx-panel mb-5">
         <div className="grid grid-cols-1 lg:grid-cols-3">
           <div className="lg:col-span-2 px-5 py-4">
             <p className="text-xs font-medium text-muted-foreground mb-0.5">
@@ -243,7 +243,7 @@ export default function InvoicesPage() {
                 </p>
                 <p
                   className={cn(
-                    'text-sm font-bold tabular-nums',
+                    'text-app-body font-bold tabular-nums',
                     overdue > 0 ? 'text-rose-500' : 'text-muted-foreground',
                   )}
                   data-testid="summary-overdue"
@@ -262,7 +262,7 @@ export default function InvoicesPage() {
                     ? t('invoices.summary.paidThisMonth')
                     : t('invoices.summary.receivedThisMonth')}
                 </p>
-                <p className="text-sm font-bold tabular-nums text-emerald-600" data-testid="summary-received">
+                <p className="text-app-body font-bold tabular-nums text-emerald-600" data-testid="summary-received">
                   {money(summary?.received_this_month)}
                 </p>
               </div>
@@ -270,7 +270,7 @@ export default function InvoicesPage() {
                 <p className="text-xs font-medium text-muted-foreground mb-0.5">
                   {t('invoices.summary.upcoming')}
                 </p>
-                <p className="text-sm font-bold tabular-nums text-foreground" data-testid="summary-upcoming">
+                <p className="text-app-body font-bold tabular-nums text-foreground" data-testid="summary-upcoming">
                   {summary?.upcoming.length ?? 0}
                 </p>
               </div>
@@ -348,7 +348,7 @@ export default function InvoicesPage() {
             <button
               type="button"
               data-testid="invoice-year-trigger"
-              className="inline-flex items-center justify-center gap-2 border border-border rounded-lg px-3 py-1.5 text-sm bg-card text-foreground hover:bg-muted/50 transition-all cursor-pointer min-w-[180px]"
+              className="inline-flex items-center justify-center gap-2 border border-border rounded-lg px-3 py-1.5 text-app-body bg-card text-foreground hover:bg-muted/50 transition-all cursor-pointer min-w-[180px]"
             >
               <CalendarIcon className="size-3.5 text-muted-foreground" />
               {year ? t('invoices.fiscalYear', { year }) : t('invoices.allYears')}
@@ -362,7 +362,7 @@ export default function InvoicesPage() {
             <DropdownMenuItem
               onClick={() => setYear(null)}
               data-testid="invoice-year-all"
-              className="text-sm"
+              className="text-app-body"
             >
               {t('invoices.allYears')}
             </DropdownMenuItem>
@@ -373,7 +373,7 @@ export default function InvoicesPage() {
                 key={option}
                 onClick={() => setYear(option)}
                 data-testid={`invoice-year-${option}`}
-                className="text-sm tabular-nums"
+                className="text-app-body tabular-nums"
               >
                 {t('invoices.fiscalYear', { year: option })}
               </DropdownMenuItem>
@@ -392,7 +392,7 @@ export default function InvoicesPage() {
         ) : visible.length === 0 ? (
           <div className="px-5 py-14 text-center" data-testid="invoices-empty">
             <Receipt className="h-8 w-8 mx-auto text-muted-foreground/50" />
-            <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto">
+            <p className="mt-3 text-app-body text-muted-foreground max-w-sm mx-auto">
               {filter !== 'all'
                 ? t('invoices.emptyFiltered')
                 : year
@@ -450,7 +450,7 @@ export default function InvoicesPage() {
                     className="border-b border-border last:border-0 hover:bg-muted transition-colors cursor-pointer"
                   >
                     <td className="py-3 pl-4 sm:pl-5">
-                      <div className="flex items-center gap-1.5 text-sm font-medium text-foreground truncate">
+                      <div className="flex items-center gap-1.5 text-app-body font-medium text-foreground truncate">
                         {/* A recurring invoice says so with a glyph, not a
                             column: the list is about money, and which
                             agreement it came from is one hop away. */}
@@ -497,10 +497,10 @@ export default function InvoicesPage() {
                         </span>
                       )}
                     </td>
-                    <td className="py-3 text-right text-xs sm:text-sm tabular-nums text-muted-foreground">
+                    <td className="py-3 text-right text-xs sm:text-app-body tabular-nums text-muted-foreground">
                       {money(invoice.total, invoice.currency)}
                     </td>
-                    <td className="py-3 text-right text-xs sm:text-sm font-bold tabular-nums hidden sm:table-cell">
+                    <td className="py-3 text-right text-xs sm:text-app-body font-bold tabular-nums hidden sm:table-cell">
                       {Number(invoice.balance) > 0 ? (
                         money(invoice.balance, invoice.currency)
                       ) : (

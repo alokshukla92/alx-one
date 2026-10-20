@@ -31,7 +31,7 @@ export function TransactionsColumnPicker({ state }: Props) {
             return (
               <li key={col.id}>
                 <label
-                  className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-muted ${
+                  className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-app-body hover:bg-muted ${
                     disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
                   }`}
                 >

@@ -201,7 +201,7 @@ export default function GroupsPage() {
         </div>
       </div>
 
-      <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden mb-4">
+      <div className="alx-panel overflow-hidden mb-4">
         {isLoading ? (
           <div className="p-6 space-y-3">
             {Array.from({ length: 3 }).map((_, i) => (
@@ -234,7 +234,7 @@ export default function GroupsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-semibold text-foreground truncate">{group.name}</span>
+                    <span className="text-app-body font-semibold text-foreground truncate">{group.name}</span>
                     <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full">
                       {t(`splitGroups.kind.${group.kind}`)}
                     </span>
@@ -290,7 +290,7 @@ export default function GroupsPage() {
               onChangeNotes={setNotes}
             />
             {editing && (
-              <label className="text-sm text-muted-foreground inline-flex items-center gap-2 cursor-pointer">
+              <label className="text-app-body text-muted-foreground inline-flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={editing.is_archived}

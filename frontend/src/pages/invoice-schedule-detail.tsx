@@ -233,31 +233,31 @@ export default function InvoiceScheduleDetailPage() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-[220px] p-1 bg-card border border-border rounded-xl shadow-md">
                   {actions.canEdit && (
-                    <DropdownMenuItem onClick={() => setEditOpen(true)} data-testid="schedule-edit" className="gap-2 text-sm">
+                    <DropdownMenuItem onClick={() => setEditOpen(true)} data-testid="schedule-edit" className="gap-2 text-app-body">
                       <Pencil className="h-4 w-4 text-muted-foreground" />
                       {t('common.edit')}
                     </DropdownMenuItem>
                   )}
                   {actions.canPause && (
-                    <DropdownMenuItem onClick={() => pauseMutation.mutate()} data-testid="schedule-pause" className="gap-2 text-sm">
+                    <DropdownMenuItem onClick={() => pauseMutation.mutate()} data-testid="schedule-pause" className="gap-2 text-app-body">
                       <Pause className="h-4 w-4 text-muted-foreground" />
                       {t('invoices.schedules.action.pause')}
                     </DropdownMenuItem>
                   )}
                   {actions.canResume && (
-                    <DropdownMenuItem onClick={() => resumeMutation.mutate()} data-testid="schedule-resume" className="gap-2 text-sm">
+                    <DropdownMenuItem onClick={() => resumeMutation.mutate()} data-testid="schedule-resume" className="gap-2 text-app-body">
                       <Play className="h-4 w-4 text-muted-foreground" />
                       {t('invoices.schedules.action.resume')}
                     </DropdownMenuItem>
                   )}
                   {actions.canEnd && (
-                    <DropdownMenuItem onClick={() => setEndOpen(true)} data-testid="schedule-end" className="gap-2 text-sm text-destructive focus:text-destructive">
+                    <DropdownMenuItem onClick={() => setEndOpen(true)} data-testid="schedule-end" className="gap-2 text-app-body text-destructive focus:text-destructive">
                       <Ban className="h-4 w-4" />
                       {t('invoices.schedules.action.end')}
                     </DropdownMenuItem>
                   )}
                   {actions.canDelete && (
-                    <DropdownMenuItem onClick={() => deleteMutation.mutate()} data-testid="schedule-delete" className="gap-2 text-sm text-destructive focus:text-destructive">
+                    <DropdownMenuItem onClick={() => deleteMutation.mutate()} data-testid="schedule-delete" className="gap-2 text-app-body text-destructive focus:text-destructive">
                       <Trash2 className="h-4 w-4" />
                       {t('common.delete')}
                     </DropdownMenuItem>
@@ -343,7 +343,7 @@ export default function InvoiceScheduleDetailPage() {
                 <div key={term.id} className="flex items-center gap-3 px-4 sm:px-5 py-3" data-testid="schedule-term-row">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-medium tabular-nums">
+                      <span className="text-app-body font-medium tabular-nums">
                         {t('invoices.schedules.terms.from', { date: showDate(term.effective_from) })}
                       </span>
                       {isCurrent && (
@@ -362,7 +362,7 @@ export default function InvoiceScheduleDetailPage() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-bold tabular-nums">{money(term.total)}</p>
+                    <p className="text-app-body font-bold tabular-nums">{money(term.total)}</p>
                     <p className="text-[11px] text-muted-foreground tabular-nums">
                       {t('invoices.schedules.terms.perMonth', {
                         amount: money(monthlyEquivalent(Number(term.total), schedule.frequency)),
@@ -403,7 +403,7 @@ export default function InvoiceScheduleDetailPage() {
           {invoices.length === 0 ? (
             <div className="px-5 py-10 text-center" data-testid="schedule-invoices-empty">
               <Receipt className="h-7 w-7 mx-auto text-muted-foreground/50" />
-              <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto">
+              <p className="mt-3 text-app-body text-muted-foreground max-w-sm mx-auto">
                 {schedule.status === 'active' && schedule.next_period_start
                   ? t('invoices.schedules.invoices.emptyNext', { date: showDate(schedule.next_period_start) })
                   : t('invoices.schedules.invoices.empty')}
@@ -431,7 +431,7 @@ export default function InvoiceScheduleDetailPage() {
                         data-testid="schedule-invoice-row"
                         className="border-b border-border last:border-0 hover:bg-muted transition-colors cursor-pointer"
                       >
-                        <td className="py-3 pl-4 sm:pl-5 text-sm tabular-nums">
+                        <td className="py-3 pl-4 sm:pl-5 text-app-body tabular-nums">
                           {invoice.period_start && invoice.period_end
                             ? periodLabel(invoice.period_start, invoice.period_end, dateLocale)
                             : showDate(invoice.issue_date)}
@@ -442,7 +442,7 @@ export default function InvoiceScheduleDetailPage() {
                         <td className="py-3 text-xs text-muted-foreground tabular-nums hidden md:table-cell">
                           {showDate(invoice.due_date)}
                         </td>
-                        <td className="py-3 text-right text-sm tabular-nums">{money(invoice.total)}</td>
+                        <td className="py-3 text-right text-app-body tabular-nums">{money(invoice.total)}</td>
                         <td className="py-3 pr-4 sm:pr-5 text-right">
                           <StateBadge state={invoice.state} />
                         </td>

@@ -281,7 +281,7 @@ export function TransactionSplitsSection({
 
   return (
     <div className="space-y-3 pt-2 border-t border-border">
-      <label className="text-sm font-medium inline-flex items-center gap-2 cursor-pointer">
+      <label className="text-app-body font-medium inline-flex items-center gap-2 cursor-pointer">
         <input
           type="checkbox"
           checked={enabled}
@@ -338,7 +338,7 @@ export function TransactionSplitsSection({
                     </button>
                   </div>
                   <select
-                    className="w-full border border-border rounded-md px-2 py-1.5 text-sm bg-card"
+                    className="w-full border border-border rounded-md px-2 py-1.5 text-app-body bg-card"
                     value={groupId}
                     onChange={(e) => setGroupId(e.target.value)}
                   >
@@ -352,7 +352,7 @@ export function TransactionSplitsSection({
                 <div className="space-y-1">
                   <Label className="text-xs">{t('splitGroups.shareType')}</Label>
                   <select
-                    className="w-full border border-border rounded-md px-2 py-1.5 text-sm bg-card"
+                    className="w-full border border-border rounded-md px-2 py-1.5 text-app-body bg-card"
                     value={shareType}
                     onChange={(e) => setShareType(e.target.value as ShareType)}
                   >
@@ -428,7 +428,7 @@ export function TransactionSplitsSection({
                                 }
                                 className="h-4 w-4 rounded border-border accent-primary"
                               />
-                              <span className="text-sm flex-1 min-w-0 truncate">
+                              <span className="text-app-body flex-1 min-w-0 truncate">
                                 {m.name}
                                 {m.is_self && (
                                   <span className="ml-1.5 text-xs text-primary">
@@ -446,7 +446,7 @@ export function TransactionSplitsSection({
                               <Input
                                 type="number"
                                 step="0.01"
-                                className="w-24 h-8 text-sm"
+                                className="w-24 h-8 text-app-body"
                                 value={row.amount}
                                 onChange={(e) => updateRow(m.id, { amount: e.target.value })}
                               />
@@ -456,7 +456,7 @@ export function TransactionSplitsSection({
                                 <Input
                                   type="number"
                                   step="0.01"
-                                  className="w-20 h-8 text-sm"
+                                  className="w-20 h-8 text-app-body"
                                   value={row.percent}
                                   onChange={(e) => updateRow(m.id, { percent: e.target.value })}
                                 />

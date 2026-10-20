@@ -189,7 +189,7 @@ export function GlobalChatPanel({ open, onOpenChange }: Props) {
                   >
                     <ArrowLeft className="h-4 w-4" />
                   </Button>
-                  <span className="text-sm font-medium truncate">
+                  <span className="text-app-body font-medium truncate">
                     {t('agents.globalChat.history', 'Recent conversations')}
                   </span>
                 </>
@@ -202,7 +202,7 @@ export function GlobalChatPanel({ open, onOpenChange }: Props) {
                     aria-label={t('agents.globalChat.selectAgent', 'Select agent')}
                     className={cn(
                       'h-8 gap-1.5 border-0 bg-transparent shadow-none focus-visible:ring-0',
-                      'px-2 -ml-1 hover:bg-muted text-sm font-medium',
+                      'px-2 -ml-1 hover:bg-muted text-app-body font-medium',
                       'data-[size=default]:h-8',
                     )}
                   >
@@ -239,7 +239,7 @@ export function GlobalChatPanel({ open, onOpenChange }: Props) {
                     style={{ backgroundColor: activeAgent?.color ?? 'transparent' }}
                     aria-hidden
                   />
-                  <span className="text-sm font-medium truncate">
+                  <span className="text-app-body font-medium truncate">
                     {activeAgent?.name ?? t('agents.globalChat.title', 'Chat')}
                   </span>
                   {activeAgent?.is_default && (
@@ -302,11 +302,11 @@ export function GlobalChatPanel({ open, onOpenChange }: Props) {
             {loadingAgents && (
               <div className="flex-1 flex items-center justify-center text-muted-foreground gap-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="text-sm">{t('common.loading', 'Loading…')}</span>
+                <span className="text-app-body">{t('common.loading', 'Loading…')}</span>
               </div>
             )}
             {!loadingAgents && agentsList && agentsList.length === 0 && (
-              <div className="flex-1 flex flex-col items-center justify-center text-center px-6 gap-2 text-sm text-muted-foreground">
+              <div className="flex-1 flex flex-col items-center justify-center text-center px-6 gap-2 text-app-body text-muted-foreground">
                 <span>
                   {t(
                     'agents.globalChat.empty',
@@ -369,13 +369,13 @@ function ConversationsList({ agentId, activeConversationId, onPick }: ConvListPr
     return (
       <div className="flex-1 flex items-center justify-center text-muted-foreground gap-2">
         <Loader2 className="h-4 w-4 animate-spin" />
-        <span className="text-sm">{t('common.loading', 'Loading…')}</span>
+        <span className="text-app-body">{t('common.loading', 'Loading…')}</span>
       </div>
     )
   }
   if (!data || data.length === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center text-sm text-muted-foreground px-6 text-center">
+      <div className="flex-1 flex items-center justify-center text-app-body text-muted-foreground px-6 text-center">
         {t('agents.globalChat.noConversations', 'No conversations yet.')}
       </div>
     )
@@ -413,7 +413,7 @@ function ConversationRow({
       )}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-medium truncate">
+        <span className="text-app-body font-medium truncate">
           {conv.title || 'Untitled'}
         </span>
         <span className="text-[11px] text-muted-foreground shrink-0 tabular-nums">

@@ -141,7 +141,7 @@ export function OnboardingTour({ onComplete }: Props) {
               {current + 1}/{STEPS.length}
             </span>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">{t(step.descKey)}</p>
+          <p className="text-app-body text-muted-foreground leading-relaxed">{t(step.descKey)}</p>
           <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
             <Button variant="ghost" size="sm" onClick={onComplete} className="text-muted-foreground">
               {t('onboarding.skip')}

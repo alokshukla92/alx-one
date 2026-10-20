@@ -132,7 +132,9 @@
     "agents": "Agenti",
     "aiAgents": "Agenti IA",
     "collapseSidebar": "Riduci barra laterale",
-    "expandSidebar": "Espandi barra laterale"
+    "expandSidebar": "Espandi barra laterale",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "Invoices",

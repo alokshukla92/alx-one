@@ -1025,8 +1025,8 @@ export default function TransactionsPage() {
     return (
       <>
         <span
-          className={`text-xs md:text-sm font-bold tabular-nums ${
-            tx.is_ignored ? 'text-gray-500': tx.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'
+          className={`text-xs md:text-app-body font-medium tabular-nums ${
+            tx.is_ignored ? 'text-gray-500': tx.type === 'credit' ? 'alx-amount-income' : 'alx-amount-expense'
           }`}
         >
           {mask(
@@ -1077,10 +1077,10 @@ export default function TransactionsPage() {
         <CategoryIcon icon={tx.category?.icon} color={tx.category?.color} size="lg" />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <p className="text-sm font-semibold text-foreground truncate">{tx.description}</p>
+            <p className="text-app-body font-medium text-foreground truncate">{tx.description}</p>
             {tx.group_id && (
               <span
-                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-violet-700 bg-violet-50 border border-violet-200 dark:bg-violet-950/40 dark:text-violet-300 dark:border-violet-900 px-1.5 py-0.5 rounded-full"
+                className="alx-badge alx-badge-group"
                 title={t('splitGroups.sharedRowTooltip')}
               >
                 {tx.is_shared && tx.parent_owner_name
@@ -1122,7 +1122,7 @@ export default function TransactionsPage() {
                 to={`/invoices/${link.invoice_id}`}
                 onClick={(e) => e.stopPropagation()}
                 title={t('transactions.invoiceBadgeTooltip')}
-                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 bg-emerald-50 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-900 px-1.5 py-0.5 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-950/70 transition-colors"
+                className="alx-badge alx-badge-success hover:opacity-90 transition-opacity"
               >
                 <Receipt className="h-3 w-3" />
                 {link.external_number
@@ -1133,10 +1133,10 @@ export default function TransactionsPage() {
               </Link>
             ))}
             {!!tx.transfer_pair_id && (
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full">
+              <span className="alx-badge alx-badge-transfer">
                 <ArrowLeftRight className="h-3 w-3" />
                 {t('transactions.transfer')}
-                <span title={t('transactions.transferTooltip')}><HelpCircle className="h-3 w-3 text-blue-400" /></span>
+                <span title={t('transactions.transferTooltip')}><HelpCircle className="h-3 w-3 text-[var(--color-text-muted)]" /></span>
               </span>
             )}
             {tx.is_ignored &&
@@ -1144,7 +1144,7 @@ export default function TransactionsPage() {
               <span className="ml-2 inline-flex items-center gap-1 text-xs text-gray-600 font-normal bg-gray-100 border border-gray-200 rounded px-1.5 py-0.5">
                 <EyeClosed className="h-3 w-3" />
                 {t('transactions.ignored')}
-                <span title={t('transactions.ignoreTransferHint')}><HelpCircle className="h-3 w-3 text-blue-400" /></span>
+                <span title={t('transactions.ignoreTransferHint')}><HelpCircle className="h-3 w-3 text-muted-foreground" /></span>
               </span>
                             )
             }
@@ -1155,12 +1155,12 @@ export default function TransactionsPage() {
               <span className="ml-2 inline-flex items-center gap-1 text-xs text-slate-600 font-normal bg-slate-100 border border-slate-200 rounded px-1.5 py-0.5 dark:text-slate-300 dark:bg-slate-500/15 dark:border-slate-500/30">
                 <ChartNoAxesColumn className="h-3 w-3" />
                 {t('transactions.excludedFromReports')}
-                <span title={t('transactions.excludeFromReportsHint')}><HelpCircle className="h-3 w-3 text-blue-400" /></span>
+                <span title={t('transactions.excludeFromReportsHint')}><HelpCircle className="h-3 w-3 text-muted-foreground" /></span>
               </span>
             )}
             {tx.recurring_transaction_id != null && (
               <span
-                className="text-[10px] font-semibold uppercase tracking-wide text-primary bg-primary/5 border border-primary/10 px-1.5 py-0.5 rounded-full"
+                className="alx-badge alx-badge-muted"
                 title={t('transactions.recurringLinkedTooltip')}
               >
                 {t('transactions.recurringBadge')}
@@ -1223,7 +1223,7 @@ export default function TransactionsPage() {
     switch (col.id) {
       case 'date':
         return (
-          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-sm text-muted-foreground tabular-nums`}>
+          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-app-body text-muted-foreground tabular-nums`}>
             {new Date(tx.date + 'T00:00:00').toLocaleDateString(dateLocale)}
           </TableCell>
         )
@@ -1237,7 +1237,7 @@ export default function TransactionsPage() {
         return (
           <TableCell key={col.id} style={widthStyle} className={baseClass}>
             {tx.category ? (
-              <span className="text-sm text-muted-foreground">{tx.category.name}</span>
+              <span className="text-app-body text-muted-foreground">{tx.category.name}</span>
             ) : (
               <span className="text-xs text-muted-foreground italic">{t('transactions.noCategory')}</span>
             )}
@@ -1246,7 +1246,7 @@ export default function TransactionsPage() {
       case 'account': {
         const acc = accountsList?.find((a) => a.id === tx.account_id)
         return (
-          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-sm text-muted-foreground`}>
+          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-app-body text-muted-foreground`}>
             {acc ? (
               <span className="flex items-center gap-2 min-w-0">
                 <AccountIcon account={acc} size="sm" />
@@ -1266,7 +1266,7 @@ export default function TransactionsPage() {
         )
       case 'payee':
         return (
-          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-sm text-muted-foreground`}>
+          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-app-body text-muted-foreground`}>
             {tx.payee_name ?? tx.payee ?? <span className="text-muted-foreground">—</span>}
           </TableCell>
         )
@@ -1302,7 +1302,7 @@ export default function TransactionsPage() {
       }
       case 'attachments':
         return (
-          <TableCell key={col.id} style={widthStyle} className={`${baseClass} pr-5 text-sm text-muted-foreground tabular-nums`}>
+          <TableCell key={col.id} style={widthStyle} className={`${baseClass} pr-5 text-app-body text-muted-foreground tabular-nums`}>
             {(tx.attachment_count ?? 0) > 0 ? (
               <span className="inline-flex items-center gap-1 justify-end w-full">
                 <Paperclip size={12} />{tx.attachment_count}
@@ -1312,15 +1312,15 @@ export default function TransactionsPage() {
         )
       case 'type':
         return (
-          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-sm`}>
-            <span className={tx.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}>
+          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-app-body`}>
+            <span className={tx.type === 'credit' ? 'alx-amount-income' : 'alx-amount-expense'}>
               {tx.type === 'credit' ? t('transactions.typeIncome') : t('transactions.typeExpense')}
             </span>
           </TableCell>
         )
       case 'status':
         return (
-          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-sm text-muted-foreground capitalize`}>
+          <TableCell key={col.id} style={widthStyle} className={`${baseClass} text-app-body text-muted-foreground capitalize`}>
             {tx.status === 'pending'
               ? t('transactions.statusPending')
               : t('transactions.statusPosted')}
@@ -1500,7 +1500,7 @@ export default function TransactionsPage() {
 
       {/* Table / Mobile Cards */}
       {viewMode === 'list' && (
-      <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden mb-4">
+      <div className="alx-panel overflow-hidden mb-4">
         {isLoading ? (
           <div className="p-6 space-y-3">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -1513,7 +1513,7 @@ export default function TransactionsPage() {
             {groupedByDate.map((group) => (
               <div key={group.date}>
                 <div className="bg-muted/80 px-4 py-1.5 border-b border-border">
-                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <span className="text-xs font-medium text-muted-foreground">
                     {group.label}
                   </span>
                 </div>
@@ -1631,8 +1631,8 @@ export default function TransactionsPage() {
               <span className="flex items-baseline gap-1.5 text-xs">
                 <span className="text-muted-foreground">{t('transactions.summaryNet')}</span>
                 <span
-                  className={`text-sm font-bold tabular-nums ${
-                    data.summary.net >= 0 ? 'text-emerald-600' : 'text-rose-500'
+                  className={`text-app-body font-medium tabular-nums ${
+                    data.summary.net >= 0 ? 'alx-amount-income' : 'text-destructive'
                   }`}
                 >
                   {mask(formatCurrency(data.summary.net, data.summary.currency, locale))}
@@ -1643,13 +1643,13 @@ export default function TransactionsPage() {
             <div className="flex items-center justify-between sm:hidden">
               <span className="flex items-baseline gap-1.5 text-xs">
                 <span className="text-muted-foreground">{t('transactions.summaryIncome')}</span>
-                <span className="text-sm font-semibold tabular-nums text-emerald-600">
+                <span className="text-app-body font-medium tabular-nums alx-amount-income">
                   {mask(formatCurrency(data.summary.income, data.summary.currency, locale))}
                 </span>
               </span>
               <span className="flex items-baseline gap-1.5 text-xs">
                 <span className="text-muted-foreground">{t('transactions.summaryExpenses')}</span>
-                <span className="text-sm font-semibold tabular-nums text-rose-500">
+                <span className="text-app-body font-medium tabular-nums alx-amount-expense">
                   {mask(formatCurrency(data.summary.expense, data.summary.currency, locale))}
                 </span>
               </span>
@@ -1658,7 +1658,7 @@ export default function TransactionsPage() {
             {data.summary.excluded > 0 && (
               <span className="flex items-baseline gap-1.5 text-xs sm:hidden">
                 <span className="text-muted-foreground">{t('transactions.summaryExcluded')}</span>
-                <span className="text-sm font-semibold tabular-nums text-muted-foreground">
+                <span className="text-app-body font-semibold tabular-nums text-muted-foreground">
                   {mask(formatCurrency(data.summary.excluded, data.summary.currency, locale))}
                 </span>
               </span>
@@ -1670,28 +1670,28 @@ export default function TransactionsPage() {
             {data.summary.excluded > 0 && (
               <span className="hidden sm:flex items-baseline gap-1.5 text-xs">
                 <span className="text-muted-foreground">{t('transactions.summaryExcluded')}</span>
-                <span className="text-sm font-semibold tabular-nums text-muted-foreground">
+                <span className="text-app-body font-semibold tabular-nums text-muted-foreground">
                   {mask(formatCurrency(data.summary.excluded, data.summary.currency, locale))}
                 </span>
               </span>
             )}
             <span className="hidden sm:flex items-baseline gap-1.5 text-xs">
               <span className="text-muted-foreground">{t('transactions.summaryIncome')}</span>
-              <span className="text-sm font-semibold tabular-nums text-emerald-600">
+              <span className="text-app-body font-medium tabular-nums alx-amount-income">
                 {mask(formatCurrency(data.summary.income, data.summary.currency, locale))}
               </span>
             </span>
             <span className="hidden sm:flex items-baseline gap-1.5 text-xs">
               <span className="text-muted-foreground">{t('transactions.summaryExpenses')}</span>
-              <span className="text-sm font-semibold tabular-nums text-rose-500">
+              <span className="text-app-body font-semibold tabular-nums text-rose-500">
                 {mask(formatCurrency(data.summary.expense, data.summary.currency, locale))}
               </span>
             </span>
             <span className="hidden sm:flex items-baseline gap-1.5 text-xs">
               <span className="text-muted-foreground">{t('transactions.summaryNet')}</span>
               <span
-                className={`text-sm font-bold tabular-nums ${
-                  data.summary.net >= 0 ? 'text-emerald-600' : 'text-rose-500'
+                className={`text-app-body font-bold tabular-nums ${
+                  data.summary.net >= 0 ? 'alx-amount-income' : 'text-destructive'
                 }`}
               >
                 {mask(formatCurrency(data.summary.net, data.summary.currency, locale))}
@@ -1716,7 +1716,7 @@ export default function TransactionsPage() {
               >
                 {t('transactions.previous')}
               </Button>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-app-body text-muted-foreground">
                 {page} / {totalPages}
               </span>
               <Button
@@ -1808,7 +1808,7 @@ export default function TransactionsPage() {
                 crowded bar. The sum is hidden below sm where only the
                 count pill shows. */}
             <div className="flex items-center gap-2.5 pl-3 pr-4 whitespace-nowrap">
-              <span className="inline-flex items-center justify-center size-6 rounded-full bg-primary/10 text-primary text-xs font-semibold shrink-0">
+              <span className="inline-flex items-center justify-center size-6 rounded-full bg-[var(--color-primary-soft)] text-[var(--color-green-dark)] text-xs font-medium shrink-0">
                 {selectedIds.size}
               </span>
               <div className="hidden sm:flex flex-col leading-tight">
@@ -1816,8 +1816,8 @@ export default function TransactionsPage() {
                   {t('transactions.selected')}
                 </span>
                 <span
-                  className={`text-sm font-bold tabular-nums ${
-                    selectedNet >= 0 ? 'text-emerald-600' : 'text-rose-500'
+                  className={`text-app-body font-medium tabular-nums ${
+                    selectedNet >= 0 ? 'alx-amount-income' : 'text-destructive'
                   }`}
                 >
                   {mask(
@@ -1861,7 +1861,7 @@ export default function TransactionsPage() {
               disabled={bulkAddToGroupMutation.isPending}
               onClick={() => setBulkAddToGroupOpen(true)}
               title={t('transactions.addToGroup')}
-              className="h-8 px-3 shrink-0 text-sm"
+              className="h-8 px-3 shrink-0 text-app-body"
             >
               <Users size={15} className="lg:mr-1.5" />
               <span className="hidden lg:inline">{t('transactions.addToGroup')}</span>
@@ -1876,7 +1876,7 @@ export default function TransactionsPage() {
                 value={bulkTagInput}
                 onChange={(e) => setBulkTagInput(e.target.value)}
                 placeholder={t('transactions.addTagsPlaceholder', '#tag…')}
-                className="rounded-lg px-2.5 py-2 text-sm bg-transparent text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:bg-muted/60 w-28 md:w-40"
+                className="rounded-lg px-2.5 py-2 text-app-body bg-transparent text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:bg-muted/60 w-28 md:w-40"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && bulkTagInput.trim()) {
                     e.preventDefault()
@@ -1924,7 +1924,7 @@ export default function TransactionsPage() {
               disabled={!canOpenLinkDialog}
               title={linkDisabledTooltip ?? t('transactions.linkAsTransfer')}
               onClick={() => setLinkTransferDialogOpen(true)}
-              className="h-8 px-3 shrink-0 text-sm"
+              className="h-8 px-3 shrink-0 text-app-body"
             >
               <ArrowLeftRight size={15} className="mr-1.5" />
               <span className="hidden lg:inline">{t('transactions.linkAsTransfer')}</span>
@@ -1941,7 +1941,7 @@ export default function TransactionsPage() {
                   size="sm"
                   variant="ghost"
                   onClick={() => handleCreateRuleFromTransaction(selectedTx)}
-                  className="h-8 px-3 shrink-0 text-sm"
+                  className="h-8 px-3 shrink-0 text-app-body"
                   title={t('transactions.createRule')}
                 >
                   <SlidersHorizontal size={15} className="lg:mr-1.5" />
@@ -1956,7 +1956,7 @@ export default function TransactionsPage() {
               variant="destructive"
               onClick={() => setBulkDeleteConfirmOpen(true)}
               disabled={bulkDeleteMutation.isPending}
-              className="h-8 px-3 shrink-0 text-sm"
+              className="h-8 px-3 shrink-0 text-app-body"
             >
               <Trash2 size={15} className="lg:mr-1.5" />
               <span className="hidden lg:inline">{t('common.delete')}</span>
@@ -2071,7 +2071,7 @@ export default function TransactionsPage() {
           <DialogHeader>
             <DialogTitle>{t('transactions.confirmTransferCategoryTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {t('transactions.confirmTransferCategoryDesc')}
           </p>
           <DialogFooter className="flex-row flex-nowrap items-center justify-end gap-2 sm:space-x-0">
@@ -2115,7 +2115,7 @@ export default function TransactionsPage() {
           <DialogHeader>
             <DialogTitle>{t('transactions.installmentScopeTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {t('transactions.installmentScopeDeleteDesc')}
           </p>
           <DialogFooter className="flex-col sm:flex-row sm:justify-end gap-2">

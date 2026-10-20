@@ -53,7 +53,7 @@ function ConnectorSelectSession({ open, onClose, onSelect }: ConnectorSelectDial
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t('accounts.selectConnector')}</DialogTitle>
-          <p className="text-sm text-muted-foreground">{t('accounts.selectConnectorDesc')}</p>
+          <p className="text-app-body text-muted-foreground">{t('accounts.selectConnectorDesc')}</p>
         </DialogHeader>
         <div className="space-y-2 pt-2">
           {loading ? (
@@ -61,7 +61,7 @@ function ConnectorSelectSession({ open, onClose, onSelect }: ConnectorSelectDial
               <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
             </div>
           ) : providers.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-8">
+            <p className="text-app-body text-muted-foreground text-center py-8">
               {t('accounts.noConnectorsAvailable')}
             </p>
           ) : (
@@ -83,7 +83,7 @@ function ConnectorSelectSession({ open, onClose, onSelect }: ConnectorSelectDial
                   <Building2 size={16} className="text-muted-foreground" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-foreground">{p.display_name}</p>
+                  <p className="text-app-body font-medium text-foreground">{p.display_name}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{t(`accounts.providers.${p.name}.description`, p.description)}</p>
                   {!p.configured && (
                     <p className="text-xs text-amber-600 mt-1.5">

@@ -25,7 +25,7 @@ const MAPPABLE_FIELDS = [
 ] as const
 
 const SELECT_CLASS =
-  'border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]'
+  'border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]'
 
 /**
  * The investments half of the import page.
@@ -160,7 +160,7 @@ export function AssetImportPanel() {
                 <div className="mb-4 flex h-12 w-12 animate-pulse items-center justify-center rounded-full bg-primary/10">
                   <FileText size={22} className="text-primary" />
                 </div>
-                <p className="text-sm font-semibold text-foreground">{t('assetImport.reading')}</p>
+                <p className="text-app-body font-semibold text-foreground">{t('assetImport.reading')}</p>
                 <p className="mt-1 text-xs text-muted-foreground">{file?.name}</p>
               </>
             ) : file && preview && !needsMapping ? (
@@ -168,7 +168,7 @@ export function AssetImportPanel() {
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
                   <CheckCircle2 size={22} className="text-emerald-500" />
                 </div>
-                <p className="text-sm font-semibold text-foreground">{file.name}</p>
+                <p className="text-app-body font-semibold text-foreground">{file.name}</p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {t('assetImport.summaryOrders', { count: importable })}
                 </p>
@@ -184,7 +184,7 @@ export function AssetImportPanel() {
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
                   <Upload size={22} className="text-muted-foreground" />
                 </div>
-                <p className="mb-1 text-sm font-semibold text-foreground">{t('import.dragOrClick')}</p>
+                <p className="mb-1 text-app-body font-semibold text-foreground">{t('import.dragOrClick')}</p>
                 <p className="text-xs text-muted-foreground">{t('assetImport.chooseHint')}</p>
                 <button
                   className="mt-2 flex items-center gap-1 text-xs text-primary transition-colors hover:text-primary/80"
@@ -231,7 +231,7 @@ export function AssetImportPanel() {
       {preview && !needsMapping && (
         <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
           <div className="border-b border-border px-4 py-4 sm:px-5">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-app-body">
               <span className="font-semibold text-foreground">
                 {t('assetImport.summaryOrders', { count: importable })}
               </span>
@@ -253,7 +253,7 @@ export function AssetImportPanel() {
               transactions side. */}
           <div className="border-b border-border bg-muted/50 px-4 py-4 sm:px-5">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-              <Label htmlFor="asset-import-wallet" className="shrink-0 whitespace-nowrap text-sm text-muted-foreground">
+              <Label htmlFor="asset-import-wallet" className="shrink-0 whitespace-nowrap text-app-body text-muted-foreground">
                 {t('assetImport.importTo')}
               </Label>
               <select
@@ -272,7 +272,7 @@ export function AssetImportPanel() {
 
           {walletWarnings.length > 0 && (
             <div className="border-b border-border bg-blue-50 px-4 py-3 dark:bg-blue-950 sm:px-5">
-              <p className="mb-2 flex items-center gap-2 text-sm font-medium text-blue-700 dark:text-blue-300">
+              <p className="mb-2 flex items-center gap-2 text-app-body font-medium text-blue-700 dark:text-blue-300">
                 <Info size={14} />
                 {t('assetImport.walletWarningTitle')}
               </p>
@@ -288,7 +288,7 @@ export function AssetImportPanel() {
 
           {rowErrors.length > 0 && (
             <div className="border-b border-border bg-amber-500/10 px-4 py-3 sm:px-5">
-              <p className="mb-2 flex items-center gap-2 text-sm font-medium text-amber-700 dark:text-amber-400">
+              <p className="mb-2 flex items-center gap-2 text-app-body font-medium text-amber-700 dark:text-amber-400">
                 <AlertTriangle size={14} />
                 {t('assetImport.rowsSkipped', { count: rowErrors.length })}
               </p>
@@ -312,7 +312,7 @@ export function AssetImportPanel() {
 
           {importable > 0 && (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-app-body">
                 <thead className="bg-muted/40 text-xs uppercase text-muted-foreground">
                   <tr>
                     <th className="px-3 py-2 text-left sm:px-5">{t('assetImport.field.ticker')}</th>

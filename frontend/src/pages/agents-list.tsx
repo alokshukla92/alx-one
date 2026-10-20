@@ -56,19 +56,19 @@ export default function AgentsListPage() {
         }
       />
 
-      <p className="text-sm text-muted-foreground mb-6 max-w-2xl">{t('agents.subtitle')}</p>
+      <p className="text-app-body text-muted-foreground mb-6 max-w-2xl">{t('agents.subtitle')}</p>
 
       {isLoading ? (
-        <div className="bg-card rounded-xl border border-border shadow-sm p-6 text-sm text-muted-foreground">
+        <div className="alx-panel p-6 text-app-body text-muted-foreground">
           {t('agents.loading')}
         </div>
       ) : (list?.length ?? 0) === 0 ? (
-        <div className="bg-card rounded-xl border border-border shadow-sm p-10 text-center">
+        <div className="alx-panel p-10 text-center">
           <div className="h-12 w-12 mx-auto rounded-full bg-muted flex items-center justify-center mb-3">
             <Bot className="h-6 w-6 text-muted-foreground" />
           </div>
           <h2 className="text-base font-semibold">{t('agents.empty.title')}</h2>
-          <p className="text-sm text-muted-foreground mt-1 max-w-md mx-auto">{t('agents.empty.subtitle')}</p>
+          <p className="text-app-body text-muted-foreground mt-1 max-w-md mx-auto">{t('agents.empty.subtitle')}</p>
           {canWrite && (
             <Button size="sm" className="gap-1.5 h-8 mt-4" onClick={() => setCreateOpen(true)}>
               <Plus size={13} /> {t('agents.empty.create')}
@@ -76,7 +76,7 @@ export default function AgentsListPage() {
           )}
         </div>
       ) : (
-        <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="alx-panel overflow-hidden">
           <div className="divide-y divide-border">
             {list?.map((a) => (
               <div
@@ -92,7 +92,7 @@ export default function AgentsListPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <div className="text-sm font-semibold truncate group-hover:text-primary transition-colors">
+                      <div className="text-app-body font-semibold truncate group-hover:text-primary transition-colors">
                         {a.name}
                       </div>
                       {a.is_default && (
@@ -125,7 +125,7 @@ export default function AgentsListPage() {
                       })()}
                     </div>
                     {a.description && (
-                      <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{a.description}</p>
+                      <p className="text-app-body text-muted-foreground mt-1 line-clamp-1">{a.description}</p>
                     )}
                     <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground">
                       <span className="inline-flex items-center gap-1" title={t('agents.conversationsCount', 'Conversations')}>

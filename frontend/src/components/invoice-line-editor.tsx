@@ -91,7 +91,7 @@ export function InvoiceLineEditor({
           data-testid="invoice-add-line"
           className="w-full rounded-lg border border-dashed border-border px-4 py-5 text-center hover:border-primary/40 hover:bg-primary/[0.02] transition-colors"
         >
-          <span className="flex items-center justify-center gap-1.5 text-sm font-medium text-foreground">
+          <span className="flex items-center justify-center gap-1.5 text-app-body font-medium text-foreground">
             <Plus className="h-4 w-4" />
             {t('invoices.field.addLine')}
           </span>
@@ -195,7 +195,7 @@ export function InvoiceLineEditor({
                     {t('invoices.column.amount')}
                   </span>
                   <span
-                    className="text-sm font-medium tabular-nums"
+                    className="text-app-body font-medium tabular-nums"
                     data-testid={`invoice-line-amount-${index}`}
                   >
                     {money(lineAmount(line))}
@@ -242,7 +242,7 @@ export function InvoiceLineEditor({
             <span className="text-xs text-muted-foreground">
               {t('invoices.field.lineCount', { count: rows.length })}
             </span>
-            <span className="text-sm">
+            <span className="text-app-body">
               <span className="text-muted-foreground mr-2">{t('invoices.column.total')}</span>
               <span className="font-semibold tabular-nums" data-testid="invoice-lines-total">
                 {money(total)}

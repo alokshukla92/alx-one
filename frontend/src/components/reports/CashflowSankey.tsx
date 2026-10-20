@@ -277,7 +277,7 @@ export function CashflowSankey({ composition, currency, locale }: CashflowSankey
 
   if (!hasData) {
     return (
-      <p className="text-muted-foreground text-sm text-center py-16">{t('reports.noData')}</p>
+      <p className="text-muted-foreground text-app-body text-center py-16">{t('reports.noData')}</p>
     )
   }
 

@@ -37,14 +37,14 @@ function CounterpartCard({ label, description, account, date, amount, currency, 
       <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground mb-1">
         {label}
       </p>
-      <p className="text-sm font-semibold text-foreground truncate" title={description}>
+      <p className="text-app-body font-semibold text-foreground truncate" title={description}>
         {description}
       </p>
       <p className="text-xs text-muted-foreground truncate">{account}</p>
       <p className="text-xs text-muted-foreground mt-1">
         {new Date(date + 'T00:00:00').toLocaleDateString(dateLocale)}{/* date order from setting, words from app language */}
       </p>
-      <p className={`text-sm font-bold tabular-nums ${colorClass} mt-2`}>
+      <p className={`text-app-body font-bold tabular-nums ${colorClass} mt-2`}>
         {sign}
         {formatCurrency(amount, currency, locale)}
       </p>
@@ -193,7 +193,7 @@ export function LinkTransferDialog({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder={t('transactions.linkTransferSearchPlaceholder')}
-                className="w-full pl-9 pr-3 py-2 text-sm rounded-md border border-border bg-card text-foreground focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                className="w-full pl-9 pr-3 py-2 text-app-body rounded-md border border-border bg-card text-foreground focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
               />
             </div>
 
@@ -228,7 +228,7 @@ export function LinkTransferDialog({
                         >
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2 min-w-0">
-                              <p className="text-sm font-semibold text-foreground truncate min-w-0 flex-1">
+                              <p className="text-app-body font-semibold text-foreground truncate min-w-0 flex-1">
                                 {c.description}
                               </p>
                               {isBest && (
@@ -242,7 +242,7 @@ export function LinkTransferDialog({
                               {account ? getAccountName(account) : '—'} · {new Date(c.date + 'T00:00:00').toLocaleDateString(dateLocale)}
                             </p>
                           </div>
-                          <p className={`text-sm font-bold tabular-nums ${colorClass} shrink-0`}>
+                          <p className={`text-app-body font-bold tabular-nums ${colorClass} shrink-0`}>
                             {sign}
                             {formatCurrency(amount, c.currency, locale)}
                           </p>
@@ -266,7 +266,7 @@ export function LinkTransferDialog({
                   <select
                     value={counterpartAccountId}
                     onChange={(e) => setCounterpartAccountId(e.target.value)}
-                    className="flex-1 min-w-0 px-3 py-2 text-sm rounded-md border border-border bg-card text-foreground focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                    className="flex-1 min-w-0 px-3 py-2 text-app-body rounded-md border border-border bg-card text-foreground focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                   >
                     <option value="">{t('transactions.createCounterpartSelectAccount')}</option>
                     {manualCounterpartAccounts.map((a) => (

@@ -209,7 +209,7 @@ export function TransactionDrillDown({
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-border shrink-0">
-          <h2 className="text-sm font-semibold text-foreground truncate pr-4">
+          <h2 className="text-app-body font-semibold text-foreground truncate pr-4">
             {filter?.title}
           </h2>
           <button
@@ -237,7 +237,7 @@ export function TransactionDrillDown({
               ))}
             </div>
           ) : displayItems.length === 0 ? (
-            <p className="text-muted-foreground text-sm text-center py-12">
+            <p className="text-muted-foreground text-app-body text-center py-12">
               {t('dashboard.drillDownEmpty')}
             </p>
           ) : (
@@ -259,7 +259,7 @@ export function TransactionDrillDown({
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-foreground truncate">{item.description}</p>
+                      <p className="text-app-body font-medium text-foreground truncate">{item.description}</p>
                       {item.isProjected && (
                         <ProjectedTransactionBadge />
                       )}
@@ -284,7 +284,7 @@ export function TransactionDrillDown({
                   </div>
                   <div className="text-right shrink-0">
                     <span
-                      className={`text-sm font-semibold tabular-nums ${
+                      className={`text-app-body font-semibold tabular-nums ${
                         item.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'
                       }`}
                     >
@@ -329,7 +329,7 @@ export function TransactionDrillDown({
                 )}
                 <div className="flex items-center justify-between gap-4 border-t border-border pt-2 mt-2">
                   <span className="text-xs font-medium text-muted-foreground">{t('dashboard.drillDownShownTotal')}</span>
-                  <span className="text-sm font-bold tabular-nums text-foreground">{mask(formatCurrency(absTotal, userCurrency, locale))}</span>
+                  <span className="text-app-body font-bold tabular-nums text-foreground">{mask(formatCurrency(absTotal, userCurrency, locale))}</span>
                 </div>
               </div>
             ) : (
@@ -340,7 +340,7 @@ export function TransactionDrillDown({
                     total: mask(formatCurrency(absTotal, userCurrency, locale)),
                   })}
                 </span>
-                <span className="text-sm font-bold tabular-nums text-foreground">
+                <span className="text-app-body font-bold tabular-nums text-foreground">
                   {mask(formatCurrency(absTotal, userCurrency, locale))}
                 </span>
               </div>

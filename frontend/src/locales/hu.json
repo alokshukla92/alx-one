@@ -132,7 +132,9 @@
     "agents": "Ügynökök",
     "aiAgents": "AI-ügynökök",
     "collapseSidebar": "Oldalsáv összecsukása",
-    "expandSidebar": "Oldalsáv kinyitása"
+    "expandSidebar": "Oldalsáv kinyitása",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "Számlázás",

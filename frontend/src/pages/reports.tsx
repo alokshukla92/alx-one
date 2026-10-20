@@ -33,26 +33,10 @@ import type { ReportResponse, CategoryTrendItem } from '@/types'
 import { formatCurrency } from '@/lib/format'
 import { localDateString, todayInTimezone } from '@/lib/date-utils'
 import { useEffectiveTimezone } from '@/hooks/use-timezone'
+import { CHART_PRIMARY, CHART_SERIES_PALETTE } from '@/lib/chart-colors'
 
-// A small qualitative palette of well-separated hues for the composition
-// detail ring. Capped to a handful of slices, distinct colours make each
-// holding easy to match against its legend entry (which a same-hue ramp
-// across 15+ near-identical slices never could).
-const SLICE_COLORS = [
-  '#6366F1', // indigo
-  '#F59E0B', // amber
-  '#10B981', // emerald
-  '#EC4899', // pink
-  '#0EA5E9', // sky
-  '#8B5CF6', // violet
-  '#F97316', // orange
-  '#14B8A6', // teal
-  '#84CC16', // lime
-  '#D946EF', // fuchsia
-  '#F43F5E', // rose
-  '#06B6D4', // cyan
-]
-const OTHER_SLICE_COLOR = '#9CA3AF'
+const SLICE_COLORS = CHART_SERIES_PALETTE
+const OTHER_SLICE_COLOR = '#A0A0A0'
 
 function formatCompact(value: number, currency = 'USD', locale = 'en-US') {
   return new Intl.NumberFormat(locale, {
@@ -349,7 +333,7 @@ export default function ReportsPage() {
             key,
             label: orig?.label ?? key,
             value: Math.abs(rawValue as number),
-            color: orig?.color ?? '#6366F1',
+            color: orig?.color ?? '#A8ED6B',
           }
         })
         .filter((b) => b.value > 0)
@@ -358,7 +342,7 @@ export default function ReportsPage() {
   const compositionBreakdownData = snapshotBreakdownData ?? breakdownData
 
   const changePrefix = (summary?.change_amount ?? 0) >= 0 ? '+' : ''
-  const changeColor = (summary?.change_amount ?? 0) >= 0 ? 'text-emerald-600' : 'text-rose-500'
+  const changeColor = (summary?.change_amount ?? 0) >= 0 ? 'alx-amount-income' : 'text-destructive'
 
   const tooltipStyle = {
     background: 'var(--card)',
@@ -591,16 +575,13 @@ export default function ReportsPage() {
                 </span>
               </div>
             )}
-            <div className="flex items-center rounded-lg border border-border bg-card overflow-hidden">
+            <div className="alx-segmented overflow-hidden">
               {rangeOptions.map((opt) => (
                 <button
                   key={opt.key}
+                  type="button"
                   onClick={() => { setRangeKey(opt.key); setSelectedDate(null) }}
-                  className={`px-3 py-1.5 text-xs font-semibold transition-colors ${
-                    rangeKey === opt.key
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                  }`}
+                  className={rangeKey === opt.key ? 'is-active' : 'text-muted-foreground hover:text-foreground'}
                 >
                   {t(`reports.${RANGE_LABELS[opt.key]}`)}
                 </button>
@@ -626,16 +607,13 @@ export default function ReportsPage() {
                 />
               )}
             </div>
-            <div className={`flex items-center rounded-lg border border-border bg-card overflow-hidden ${isMoneyMap ? 'hidden' : ''}`}>
+            <div className={`alx-segmented overflow-hidden ${isMoneyMap ? 'hidden' : ''}`}>
               {intervalOptions.map((opt) => (
                 <button
                   key={opt.key}
+                  type="button"
                   onClick={() => { setInterval(opt.value); setSelectedDate(null) }}
-                  className={`px-2.5 py-1.5 text-xs font-semibold transition-colors ${
-                    interval === opt.value
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                  }`}
+                  className={interval === opt.value ? 'is-active' : 'text-muted-foreground hover:text-foreground'}
                 >
                   {t(`reports.${INTERVAL_LABELS[opt.key]}`)}
                 </button>
@@ -652,7 +630,7 @@ export default function ReportsPage() {
             key={tab.key}
             onClick={() => { if (tab.enabled) handleSelectTab(tab.key) }}
             disabled={!tab.enabled}
-            className={`relative px-4 py-2.5 text-sm font-medium transition-colors ${
+            className={`relative px-4 py-2.5 text-app-body font-medium transition-colors ${
               activeTab === tab.key
                 ? 'text-foreground'
                 : tab.enabled
@@ -677,14 +655,14 @@ export default function ReportsPage() {
         <div className="flex items-center justify-between gap-3 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 rounded-lg px-4 py-2.5 mb-5">
           <div className="flex items-center gap-2.5 min-w-0">
             <AlertCircle size={16} className="shrink-0 text-rose-600 dark:text-rose-400" />
-            <span className="text-sm text-rose-900 dark:text-rose-200 truncate">
+            <span className="text-app-body text-rose-900 dark:text-rose-200 truncate">
               {extractApiError(error, t('reports.loadError'))}
             </span>
           </div>
           <button
             type="button"
             onClick={() => refetch()}
-            className="shrink-0 text-sm font-semibold text-rose-600 dark:text-rose-400 hover:underline"
+            className="shrink-0 text-app-body font-semibold text-rose-600 dark:text-rose-400 hover:underline"
           >
             {t('common.retry')}
           </button>
@@ -694,7 +672,7 @@ export default function ReportsPage() {
       {!isError && (
       <>
       {/* Hero Card */}
-      <div className="bg-card rounded-xl border border-border shadow-sm mb-5">
+      <div className="alx-panel mb-5">
         <div className="px-5 py-4">
           {isLoading ? (
             <div className="flex items-center gap-8">
@@ -708,15 +686,15 @@ export default function ReportsPage() {
           ) : (
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <p className="text-xs font-medium text-muted-foreground mb-0.5 uppercase tracking-wider">
+                <p className="text-[13px] text-muted-foreground mb-0.5">
                   {t(currentTab.labelKey)}
                 </p>
                 <div className="flex items-baseline gap-3">
-                  <p className="text-3xl font-bold tabular-nums text-foreground">
+                  <p className="alx-stat-value-lg text-foreground">
                     {mask(formatCurrency(summary?.primary_value ?? 0, userCurrency, locale))}
                   </p>
                   {summary?.change_percent !== null && summary?.change_percent !== undefined && (
-                    <span className={`text-sm font-semibold tabular-nums ${changeColor}`}>
+                    <span className={`text-app-body font-medium tabular-nums ${changeColor}`}>
                       {changePrefix}{summary.change_percent.toFixed(1)}%
                     </span>
                   )}
@@ -783,14 +761,14 @@ export default function ReportsPage() {
 
       {/* Flow (Sankey) */}
       {isMoneyMap && (
-        <div className="bg-card rounded-xl border border-border shadow-sm mb-5">
+        <div className="alx-panel mb-5">
           <div className="px-5 pt-5 pb-2 flex items-center justify-between">
-            <p className="text-sm font-semibold text-foreground">
+            <p className="text-app-body font-semibold text-foreground">
               {t('reports.moneyMap')}
             </p>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#10B981' }} />
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: CHART_PRIMARY }} />
                 <span className="text-[11px] text-muted-foreground">{t('reports.income')}</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -820,16 +798,16 @@ export default function ReportsPage() {
       {!isMoneyMap && (
       <>
       {/* Main Trend Chart */}
-      <div className="bg-card rounded-xl border border-border shadow-sm mb-5">
+      <div className="alx-panel mb-5">
         <div className="px-5 pt-5 pb-2 flex items-center justify-between">
-          <p className="text-sm font-semibold text-foreground">
+          <p className="text-app-body font-semibold text-foreground">
             {t(currentTab.labelKey)} · {t('reports.trend')}
           </p>
           {meta && (
             <div className="flex items-center gap-3">
               {meta.type === 'net_worth' ? (
                 <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#6366F1' }} />
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#A8ED6B' }} />
                   <span className="text-[11px] text-muted-foreground">
                     {t('reports.netWorth')}
                   </span>
@@ -839,7 +817,7 @@ export default function ReportsPage() {
                   <div key={key} className="flex items-center gap-1.5">
                     <div
                       className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: colorMap[key] || '#6366F1' }}
+                      style={{ backgroundColor: colorMap[key] || '#A8ED6B' }}
                     />
                     <span className="text-[11px] text-muted-foreground">
                       {t(`reports.${key}`, { defaultValue: key })}
@@ -849,7 +827,7 @@ export default function ReportsPage() {
               )}
               {meta.type === 'income_expenses' && (
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-0 border-t-2 border-dashed" style={{ borderColor: '#6366F1' }} />
+                  <div className="w-3 h-0 border-t-2 border-dashed" style={{ borderColor: '#A8ED6B' }} />
                   <span className="text-[11px] text-muted-foreground">
                     {t('reports.netIncome')}
                   </span>
@@ -857,7 +835,7 @@ export default function ReportsPage() {
               )}
               {meta.type === 'cash_flow' && (
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-0 border-t-2 border-dashed" style={{ borderColor: '#6366F1' }} />
+                  <div className="w-3 h-0 border-t-2 border-dashed" style={{ borderColor: '#A8ED6B' }} />
                   <span className="text-[11px] text-muted-foreground">
                     {meta.baseline_active ? t('reports.forecastBaseline') : t('reports.forecast')}
                   </span>
@@ -879,8 +857,8 @@ export default function ReportsPage() {
                   <AreaChart data={chartData} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
                     <defs>
                       <linearGradient id="cashFlowGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#6366F1" stopOpacity={0.2} />
-                        <stop offset="95%" stopColor="#6366F1" stopOpacity={0.02} />
+                        <stop offset="5%" stopColor="#A8ED6B" stopOpacity={0.2} />
+                        <stop offset="95%" stopColor="#A8ED6B" stopOpacity={0.02} />
                       </linearGradient>
                     </defs>
                     <XAxis
@@ -912,12 +890,12 @@ export default function ReportsPage() {
                         return (
                           <div style={tooltipStyle} className="px-3 py-2">
                             <p className="text-xs font-medium mb-1">{label}</p>
-                            <p className="text-xs" style={{ color: '#6366F1' }}>
+                            <p className="text-xs" style={{ color: '#A8ED6B' }}>
                               {t('reports.balance', { defaultValue: 'Balance' })}:{' '}
                               {privacyMode ? MASK : formatCurrency(balance, userCurrency, locale)}
                             </p>
                             {inflow > 0 && (
-                              <p className="text-xs" style={{ color: '#10B981' }}>
+                              <p className="text-xs" style={{ color: CHART_PRIMARY }}>
                                 {t('reports.inflow')}:{' '}
                                 {privacyMode ? MASK : `+${formatCurrency(inflow, userCurrency, locale)}`}
                               </p>
@@ -958,24 +936,24 @@ export default function ReportsPage() {
                     <Area
                       type="monotone"
                       dataKey="valuePast"
-                      stroke="#6366F1"
+                      stroke="#A8ED6B"
                       strokeWidth={2.5}
                       fill="url(#cashFlowGrad)"
                       dot={false}
-                      activeDot={{ r: 4, fill: '#6366F1' }}
+                      activeDot={{ r: 4, fill: '#A8ED6B' }}
                       isAnimationActive={false}
                       connectNulls={false}
                     />
                     <Area
                       type="monotone"
                       dataKey="valueForecast"
-                      stroke="#6366F1"
+                      stroke="#A8ED6B"
                       strokeWidth={2.5}
                       strokeDasharray="6 3"
                       fill="url(#cashFlowGrad)"
                       fillOpacity={0.4}
                       dot={false}
-                      activeDot={{ r: 4, fill: '#6366F1' }}
+                      activeDot={{ r: 4, fill: '#A8ED6B' }}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -1013,18 +991,18 @@ export default function ReportsPage() {
                   contentStyle={tooltipStyle}
                 />
                 <ReferenceLine y={0} stroke="var(--border)" strokeDasharray="3 3" />
-                  <Bar dataKey="income" fill="#10B981" radius={[4, 4, 0, 0]} maxBarSize={20} />
+                  <Bar dataKey="income" fill={CHART_PRIMARY} radius={[4, 4, 0, 0]} maxBarSize={20} />
                   <Bar dataKey="expenses" fill="#F43F5E" radius={[4, 4, 0, 0]} maxBarSize={20} />
                   <Bar dataKey="projectedIncome" fill="#34D399" radius={[4, 4, 0, 0]} maxBarSize={20} fillOpacity={0.65} />
                   <Bar dataKey="projectedExpenses" fill="#FB7185" radius={[4, 4, 0, 0]} maxBarSize={20} fillOpacity={0.65} />
                 <Line
                   type="monotone"
                   dataKey="value"
-                  stroke="#6366F1"
+                  stroke="#A8ED6B"
                   strokeWidth={2}
                   strokeDasharray="6 3"
                   dot={false}
-                  activeDot={{ r: 4, fill: '#6366F1' }}
+                  activeDot={{ r: 4, fill: '#A8ED6B' }}
                 />
               </ComposedChart>
             </ResponsiveContainer>
@@ -1033,8 +1011,8 @@ export default function ReportsPage() {
               <AreaChart data={chartData} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="netWorthGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#6366F1" stopOpacity={0.2} />
-                    <stop offset="95%" stopColor="#6366F1" stopOpacity={0.02} />
+                    <stop offset="5%" stopColor="#A8ED6B" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#A8ED6B" stopOpacity={0.02} />
                   </linearGradient>
                 </defs>
                 <XAxis
@@ -1063,11 +1041,11 @@ export default function ReportsPage() {
                     const value = (payload[0]?.value as number) ?? 0
                     const change = point.change ?? null
                     const changeSign = change !== null && change >= 0 ? '+' : ''
-                    const changeColor = change !== null ? (change >= 0 ? '#10B981' : '#F43F5E') : ''
+                    const changeColor = change !== null ? (change >= 0 ? CHART_PRIMARY : '#D64545') : ''
                     return (
                       <div style={tooltipStyle} className="px-3 py-2">
                         <p className="text-xs font-medium mb-1">{label}</p>
-                        <p className="text-xs" style={{ color: '#6366F1' }}>
+                        <p className="text-xs" style={{ color: '#A8ED6B' }}>
                           {t(currentTab.labelKey)}:{' '}
                           {privacyMode ? MASK : formatCurrency(value, userCurrency, locale)}
                         </p>
@@ -1084,17 +1062,17 @@ export default function ReportsPage() {
                 <Area
                   type="monotone"
                   dataKey="value"
-                  stroke="#6366F1"
+                  stroke="#A8ED6B"
                   strokeWidth={2.5}
                   fill="url(#netWorthGrad)"
                   dot={false}
-                  activeDot={{ r: 4, fill: '#6366F1' }}
+                  activeDot={{ r: 4, fill: '#A8ED6B' }}
                 />
               </AreaChart>
             </ResponsiveContainer>
             )
           ) : (
-            <p className="text-muted-foreground text-sm text-center py-16">
+            <p className="text-muted-foreground text-app-body text-center py-16">
               {t('reports.noData')}
             </p>
           )}
@@ -1104,10 +1082,10 @@ export default function ReportsPage() {
       {/* Breakdown: Donut + Grouped Bar */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
         {/* Composition widget — summary ring + ranked, labelled detail bars */}
-        <div className={`rounded-xl border shadow-sm transition-colors ${selectedDate ? 'bg-primary/5 border-primary/50' : 'bg-card border-border'}`}>
+        <div className={`alx-panel transition-colors ${selectedDate ? 'ring-1 ring-[var(--color-primary)]/40' : ''}`}>
           <div className="px-5 pt-4 pb-2 flex flex-col gap-2 min-[635px]:flex-row min-[635px]:items-start min-[635px]:justify-between lg:flex-col lg:items-start xl:flex-row xl:items-start xl:justify-between">
             <div className="flex flex-col">
-              <p className="text-sm font-semibold text-foreground">{t('reports.composition')}</p>
+              <p className="text-app-body font-semibold text-foreground">{t('reports.composition')}</p>
               {selectedDate && (
                 <span className="text-xs text-primary font-medium">{t('reports.asOf', { date: selectedDate })}</span>
               )}
@@ -1325,17 +1303,17 @@ export default function ReportsPage() {
                   )
                 })()
               ) : (
-                <p className="text-muted-foreground text-sm text-center py-16">{t('reports.noData')}</p>
+                <p className="text-muted-foreground text-app-body text-center py-16">{t('reports.noData')}</p>
               )
             }
           </div>
         </div>
 
         {/* Evolution / Category Sparklines */}
-        <div className={`lg:col-span-2 rounded-xl border shadow-sm transition-colors ${selectedDate && meta?.type !== 'income_expenses' ? 'bg-primary/5 border-primary/50' : 'bg-card border-border'}`}>
+        <div className={`lg:col-span-2 alx-panel transition-colors ${selectedDate && meta?.type !== 'income_expenses' ? 'ring-1 ring-[var(--color-primary)]/40' : ''}`}>
           <div className="px-5 pt-5 pb-2 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <p className="text-sm font-semibold text-foreground">
+              <p className="text-app-body font-semibold text-foreground">
                 {meta?.type === 'income_expenses'
                   ? t('reports.categoryTrends')
                   : meta?.type === 'cash_flow'
@@ -1414,7 +1392,7 @@ export default function ReportsPage() {
                 )
                 if (allGroupItems.length === 0) {
                   return (
-                    <p className="text-muted-foreground text-sm text-center py-16">
+                    <p className="text-muted-foreground text-app-body text-center py-16">
                       {t('reports.noData')}
                     </p>
                   )
@@ -1562,10 +1540,10 @@ export default function ReportsPage() {
                     const isNetWorth = meta.type === 'net_worth'
                     const allSeries = meta.type === 'cash_flow'
                       ? [
-                          { key: 'inflow', color: '#10B981' },
+                          { key: 'inflow', color: CHART_PRIMARY },
                           { key: 'outflow', color: '#F43F5E' },
                         ]
-                      : meta.series_keys.map((k) => ({ key: k, color: colorMap[k] || '#6366F1' }))
+                      : meta.series_keys.map((k) => ({ key: k, color: colorMap[k] || '#A8ED6B' }))
                     const filteredSeries = allSeries.filter(({ key }) =>
                       chartData.some((d) => { const v = d[key]; return typeof v === 'number' && v !== 0 })
                     )
@@ -1605,18 +1583,18 @@ export default function ReportsPage() {
                       type="monotone"
                       dataKey="value"
                       name={t('reports.netWorth', { defaultValue: 'Net Worth' })}
-                      stroke="#10B981"
+                      stroke={CHART_PRIMARY}
                       strokeWidth={2}
                       strokeDasharray="6 3"
                       dot={false}
-                      activeDot={{ r: 4, fill: '#10B981' }}
+                      activeDot={{ r: 4, fill: CHART_PRIMARY }}
                       isAnimationActive={false}
                     />
                   )}
                 </ComposedChart>
               </ResponsiveContainer>
             ) : (
-              <p className="text-muted-foreground text-sm text-center py-16">
+              <p className="text-muted-foreground text-app-body text-center py-16">
                 {t('reports.noData')}
               </p>
             )}

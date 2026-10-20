@@ -249,9 +249,9 @@ export default function AccountsPage() {
       ) : (
         <div className="space-y-6">
           {/* Manual Accounts */}
-          <div className="bg-card rounded-xl border border-border shadow-sm">
+          <div className="alx-panel">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-border">
-              <h2 className="text-sm font-medium text-muted-foreground">{t('accounts.manualAccounts')}</h2>
+              <h2 className="text-xs font-medium text-muted-foreground">{t('accounts.manualAccounts')}</h2>
             </div>
             {manualAccounts.length > 0 ? (
               <div className="divide-y divide-muted">
@@ -272,8 +272,8 @@ export default function AccountsPage() {
                       <Link to={`/accounts/${acc.id}`} className="flex items-center gap-3 flex-1 min-w-0">
                         <AccountIcon account={acc} />
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium text-foreground truncate">{getAccountName(acc)}</p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-app-body font-normal text-foreground truncate">{getAccountName(acc)}</p>
+                          <p className="text-[13px] text-muted-foreground">
                             {t(cfg.label)}
                             {accountMask && <> · <span className="tabular-nums">{accountMask}</span></>}
                             {acc.shared_balance_group && <> · <span>{t('accounts.sharedCreditBalance')}</span></>}
@@ -282,7 +282,7 @@ export default function AccountsPage() {
                         </div>
                       </Link>
                       <div className="shrink-0 text-right">
-                        <p className={`text-xs sm:text-sm font-semibold tabular-nums ${(acc.type === 'credit_card' ? bal > 0 : bal < 0) ? 'text-rose-500' : 'text-foreground'}`}>
+                        <p className={`text-app-body font-medium tabular-nums ${(acc.type === 'credit_card' ? bal > 0 : bal < 0) ? 'text-rose-500' : 'text-foreground'}`}>
                           {mask(formatCurrency(bal, acc.currency, locale))}
                         </p>
                         {isCC && acc.available_credit != null ? (
@@ -310,7 +310,7 @@ export default function AccountsPage() {
               </div>
             ) : (
               <div className="px-5 py-8 text-center">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-app-body text-muted-foreground">
                   {t(activeAccountIds ? 'accounts.emptyFiltered' : 'accounts.noManualAccounts')}
                 </p>
               </div>
@@ -325,7 +325,7 @@ export default function AccountsPage() {
                 const needsReconnect = conn.status !== 'active'
                 const syncPending = syncMutation.isPending && syncMutation.variables === conn.id
                 return (
-                  <div key={conn.id} className="bg-card rounded-xl border border-border shadow-sm">
+                  <div key={conn.id} className="alx-panel">
                     {/* Connection header */}
                     <div className="flex items-center justify-between px-5 py-3.5 border-b border-border">
                       <div className="flex items-center gap-3">
@@ -336,7 +336,7 @@ export default function AccountsPage() {
                         />
                         <div>
                           <div className="flex items-center gap-2">
-                            <p className="text-sm font-semibold text-foreground">{getConnectionName(conn, t)}</p>
+                            <p className="text-app-body font-medium text-foreground">{getConnectionName(conn, t)}</p>
                             <Badge
                               variant={conn.status === 'active' ? 'default' : 'secondary'}
                               className={
@@ -422,8 +422,8 @@ export default function AccountsPage() {
                               <Link to={`/accounts/${acc.id}`} className="flex items-center gap-3 flex-1 min-w-0">
                                 <AccountIcon account={acc} />
                                 <div className="min-w-0 flex-1">
-                                  <p className="text-sm font-medium text-foreground truncate">{getAccountName(acc)}</p>
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-app-body font-normal text-foreground truncate">{getAccountName(acc)}</p>
+                                  <p className="text-[13px] text-muted-foreground">
                                     {t(cfg.label)}
                                     {accountMask && <> · <span className="tabular-nums">{accountMask}</span></>}
                                     {acc.shared_balance_group && <> · <span>{t('accounts.sharedCreditBalance')}</span></>}
@@ -432,7 +432,7 @@ export default function AccountsPage() {
                                 </div>
                               </Link>
                               <div className="shrink-0 text-right">
-                                <p className={`text-xs sm:text-sm font-semibold tabular-nums ${(acc.type === 'credit_card' ? bal > 0 : bal < 0) ? 'text-rose-500' : 'text-foreground'}`}>
+                                <p className={`text-app-body font-medium tabular-nums ${(acc.type === 'credit_card' ? bal > 0 : bal < 0) ? 'text-rose-500' : 'text-foreground'}`}>
                                   {mask(formatCurrency(bal, acc.currency, locale))}
                                 </p>
                                 {isCC && acc.available_credit != null ? (
@@ -459,7 +459,7 @@ export default function AccountsPage() {
                       </div>
                     ) : (
                       <div className="px-5 py-4">
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-app-body text-muted-foreground">
                           {t(activeAccountIds ? 'accounts.emptyFiltered' : 'accounts.noAccountsFound')}
                         </p>
                       </div>
@@ -470,15 +470,15 @@ export default function AccountsPage() {
             </div>
           ) : (
             <div className="bg-card rounded-xl border border-dashed border-border p-8 text-center">
-              <p className="text-sm text-muted-foreground">{t('accounts.noBankConnections')}</p>
+              <p className="text-app-body text-muted-foreground">{t('accounts.noBankConnections')}</p>
             </div>
           )}
 
           {/* Closed Accounts */}
           {closedAccounts.length > 0 && (
-            <div className="bg-card rounded-xl border border-border shadow-sm opacity-60">
+            <div className="alx-panel opacity-60">
               <div className="flex items-center justify-between px-5 py-3.5 border-b border-border">
-                <h2 className="text-sm font-medium text-muted-foreground">{t('accounts.closedAccounts')}</h2>
+                <h2 className="text-xs font-medium text-muted-foreground">{t('accounts.closedAccounts')}</h2>
               </div>
               <div className="divide-y divide-muted">
                 {closedAccounts.map((acc) => {
@@ -486,7 +486,7 @@ export default function AccountsPage() {
                     <div key={acc.id} className="flex items-center px-5 py-3">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         <AccountIcon account={acc} />
-                        <p className="text-sm font-medium text-muted-foreground truncate">{getAccountLabel(acc)}</p>
+                        <p className="text-app-body font-normal text-muted-foreground truncate">{getAccountLabel(acc)}</p>
                       </div>
                       {canWrite && (
                         <Button
@@ -499,7 +499,7 @@ export default function AccountsPage() {
                           {t('accounts.reopen')}
                         </Button>
                       )}
-                      <p className="text-sm font-semibold tabular-nums text-muted-foreground w-32 text-right">
+                      <p className="text-app-body font-medium tabular-nums text-muted-foreground w-32 text-right">
                         {mask(formatCurrency(Number(acc.current_balance), acc.currency, locale))}
                       </p>
                     </div>
@@ -517,7 +517,7 @@ export default function AccountsPage() {
           <DialogHeader>
             <DialogTitle>{t('accounts.confirmDeleteTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {t('accounts.confirmDeleteDesc')}
           </p>
           <DialogFooter>
@@ -541,7 +541,7 @@ export default function AccountsPage() {
           <DialogHeader>
             <DialogTitle>{t('accounts.confirmDisconnectTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {t('accounts.confirmDisconnectDesc', { institution: disconnectingConnection ? getConnectionName(disconnectingConnection, t) : '' })}
           </p>
           <DialogFooter>
@@ -565,11 +565,11 @@ export default function AccountsPage() {
           <DialogHeader>
             <DialogTitle>{t('accounts.close')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {t('accounts.confirmClose')}
           </p>
           {accountsList?.find(a => a.id === closingAccountId)?.connection_id && (
-            <p className="text-sm text-amber-600 font-medium">
+            <p className="text-app-body text-amber-600 font-medium">
               {t('accounts.confirmCloseBank')}
             </p>
           )}
@@ -770,7 +770,7 @@ function AccountDialog({
             <div className="space-y-2">
               <Label>{t('accounts.accountType')}</Label>
               <select
-                className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full border border-border rounded-lg px-3 py-2 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
@@ -787,7 +787,7 @@ function AccountDialog({
                 <div className="space-y-2">
                   <Label>{t('accounts.accountType')}</Label>
                   <select
-                    className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full border border-border rounded-lg px-3 py-2 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                     value={type}
                     onChange={(e) => setType(e.target.value)}
                   >
@@ -799,7 +799,7 @@ function AccountDialog({
                 <div className="space-y-2">
                   <Label>{t('accounts.currency')}</Label>
                   <select
-                    className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full border border-border rounded-lg px-3 py-2 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
                   >

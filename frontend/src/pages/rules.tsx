@@ -32,7 +32,7 @@ import { findCategoryReference, getRuleCategoryName } from '@/lib/category-refer
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -54,7 +54,7 @@ function SectionHeader({
   return (
     <div className="px-4 sm:px-5 py-4 border-b border-border flex flex-wrap items-start justify-between gap-2">
       <div>
-        <p className="text-sm font-semibold text-foreground">{title}</p>
+        <p className="text-app-body font-semibold text-foreground">{title}</p>
         {hint && <p className="text-xs text-muted-foreground mt-0.5">{hint}</p>}
       </div>
       {action}
@@ -633,7 +633,7 @@ export default function RulesPage() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm font-semibold text-foreground">{rule.name}</p>
+                      <p className="text-app-body font-semibold text-foreground">{rule.name}</p>
                       {!rule.is_active && (
                         <span className="text-[10px] font-semibold bg-muted text-muted-foreground px-1.5 py-0 rounded-full">
                           {t('rules.inactive')}
@@ -688,7 +688,7 @@ export default function RulesPage() {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground text-center py-10">
+          <p className="text-app-body text-muted-foreground text-center py-10">
             {hasFilters ? t('rules.noFilterResults') : t('rules.empty')}
           </p>
         )}
@@ -723,7 +723,7 @@ export default function RulesPage() {
           <DialogHeader>
             <DialogTitle>{t('rules.importConfirmTitle')}</DialogTitle>
           </DialogHeader>
-          <div className="space-y-3 text-sm text-muted-foreground">
+          <div className="space-y-3 text-app-body text-muted-foreground">
             <p>{t('rules.importConfirmDescription', { count: pendingImport?.rules.length ?? 0, file: pendingImportName })}</p>
             <p className="font-medium text-amber-600">{t('rules.importOverwriteWarning')}</p>
           </div>
@@ -839,7 +839,7 @@ function RulePacksDialog({ open, onClose }: { open: boolean; onClose: () => void
             >
               <span className="text-2xl">{pack.flag}</span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-foreground">{pack.name}</p>
+                <p className="text-app-body font-semibold text-foreground">{pack.name}</p>
                 <p className="text-xs text-muted-foreground">
                   {t('rules.packRuleCount', { count: pack.rule_count })}
                 </p>

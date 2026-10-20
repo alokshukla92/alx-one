@@ -69,7 +69,7 @@ export function CollectionSelector({ variant = 'sidebar' }: { variant?: 'sidebar
             page scrollbar and shifts the layout under the sticky bar. */}
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 w-full rounded-lg border border-sidebar-border/60 bg-sidebar-accent/30 px-2.5 py-1.5 text-left hover:bg-sidebar-accent/50 transition-colors">
+            <button className="flex items-center gap-2 w-full rounded-xl border border-sidebar-border bg-muted px-2.5 py-1.5 text-left hover:bg-sidebar-accent transition-colors">
               {activeCollection ? (
                 <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: activeCollection.color }} />
               ) : (
@@ -92,7 +92,7 @@ export function CollectionSelector({ variant = 'sidebar' }: { variant?: 'sidebar
   // color and gains a one-click clear, so the filtered state is impossible to
   // miss. Idle ("All accounts") it stays quiet.
   return (
-    <div className="sticky top-0 z-30 -mx-6 mb-6 border-b border-border/60 bg-background/80 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/65 lg:-mx-6">
+    <div className="sticky top-0 z-30 -mx-5 mb-5 border-b border-border/60 bg-background px-5 sm:-mx-6 sm:mb-6 sm:px-6 lg:-mx-6">
       <div className="flex h-12 max-w-7xl items-center gap-2">
         <span className="text-[11px] font-medium uppercase tracking-[0.1em] text-muted-foreground/70">
           {t('collections.viewing')}

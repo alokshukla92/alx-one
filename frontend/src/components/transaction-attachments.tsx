@@ -355,7 +355,7 @@ export function TransactionAttachments({
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 text-sm font-medium">
+      <div className="flex items-center gap-2 text-app-body font-medium">
         <Paperclip size={14} />
         {t('transactions.attachments')}
         {hasAttachments && (

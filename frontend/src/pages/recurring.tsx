@@ -34,7 +34,7 @@ const TH = 'text-xs font-medium text-muted-foreground py-3'
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -43,7 +43,7 @@ function SectionCard({ children }: { children: React.ReactNode }) {
 function SectionHeader({ title, action }: { title: string; action?: React.ReactNode }) {
   return (
     <div className="px-4 sm:px-5 py-4 border-b border-border flex flex-wrap items-center justify-between gap-2">
-      <p className="text-sm font-semibold text-foreground">{title}</p>
+      <p className="text-app-body font-semibold text-foreground">{title}</p>
       {action}
     </div>
   )
@@ -198,8 +198,8 @@ function RecurringTab() {
             <tbody>
               {recurringList.map((rt) => (
                 <tr key={rt.id} className="border-b border-border last:border-0 hover:bg-muted transition-colors">
-                  <td className="py-3 pl-4 sm:pl-5 text-sm font-medium text-foreground">{rt.description}</td>
-                  <td className={`py-3 text-xs sm:text-sm font-bold tabular-nums ${rt.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
+                  <td className="py-3 pl-4 sm:pl-5 text-app-body font-medium text-foreground">{rt.description}</td>
+                  <td className={`py-3 text-xs sm:text-app-body font-bold tabular-nums ${rt.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
                     {mask(`${rt.type === 'credit' ? '+' : '−'}${formatCurrency(rt.amount, rt.currency, locale)}`)}
                     {rt.currency !== userCurrency && rt.amount_primary != null && (
                       <div className="flex items-center gap-1 text-[11px] font-normal text-muted-foreground">
@@ -256,7 +256,7 @@ function RecurringTab() {
             </tbody>
           </table>
         ) : (
-          <p className="text-sm text-muted-foreground text-center py-10">{t('recurring.empty')}</p>
+          <p className="text-app-body text-muted-foreground text-center py-10">{t('recurring.empty')}</p>
         )}
       </SectionCard>
 
@@ -343,7 +343,7 @@ function RecurringForm({
   const [isActive, setIsActive] = useState(recurring?.is_active ?? true)
   const [autoGenerate, setAutoGenerate] = useState(recurring?.auto_generate ?? true)
 
-  const selectClass = 'w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary'
+  const selectClass = 'w-full border border-border rounded-lg px-3 py-2 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary'
 
   return (
     <form
@@ -468,7 +468,7 @@ function RecurringForm({
           onChange={(e) => setAutoGenerate(e.target.checked)}
           className="h-4 w-4 mt-0.5 rounded border-border"
         />
-        <span className="text-sm text-foreground">
+        <span className="text-app-body text-foreground">
           {t('recurring.autoGenerate')}
           <span className="block text-xs text-muted-foreground">{t('recurring.autoGenerateHelp')}</span>
         </span>
@@ -481,7 +481,7 @@ function RecurringForm({
             onChange={(e) => setIsActive(e.target.checked)}
             className="h-4 w-4 rounded border-border"
           />
-          <span className="text-sm text-foreground">{t('recurring.active')}</span>
+          <span className="text-app-body text-foreground">{t('recurring.active')}</span>
         </label>
       )}
       <DialogFooter>

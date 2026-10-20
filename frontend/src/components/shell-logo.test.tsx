@@ -1,45 +1,47 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi, beforeEach } from 'vitest'
 
 import { ShellLogo } from '@/components/shell-logo'
 import { renderWithProviders } from '@/test/utils'
 
+const useThemeMock = vi.fn(() => ({ resolvedTheme: 'light' }))
+
+vi.mock('next-themes', () => ({
+  useTheme: () => useThemeMock(),
+}))
+
 describe('ShellLogo', () => {
-  it('renders an svg at the default size', () => {
+  beforeEach(() => {
+    useThemeMock.mockReturnValue({ resolvedTheme: 'light' })
+  })
+
+  it('renders the light app icon by default after mount', () => {
     const { container } = renderWithProviders(<ShellLogo />)
 
-    const svg = container.querySelector('svg')!
-    expect(svg).toBeInTheDocument()
-    expect(svg).toHaveAttribute('width', '24')
-    expect(svg).toHaveAttribute('height', '24')
+    expect(container.querySelector('img')).toHaveAttribute('src', '/alx-app-icon.svg')
   })
 
-  it('honours an explicit size on both axes', () => {
-    const { container } = renderWithProviders(<ShellLogo size={64} />)
-
-    const svg = container.querySelector('svg')!
-    expect(svg).toHaveAttribute('width', '64')
-    expect(svg).toHaveAttribute('height', '64')
-  })
-
-  it('keeps the viewBox fixed so the mark never distorts', () => {
-    const { container } = renderWithProviders(<ShellLogo size={120} />)
-
-    const svg = container.querySelector('svg')!
-    expect(svg).toHaveAttribute('viewBox', '0 0 460 460')
-    expect(svg).toHaveAttribute('preserveAspectRatio', 'xMidYMid meet')
-  })
-
-  it('fills from currentColor, so it follows the theme', () => {
+  it('uses the dark app icon when the theme is dark', () => {
+    useThemeMock.mockReturnValue({ resolvedTheme: 'dark' })
     const { container } = renderWithProviders(<ShellLogo />)
 
-    expect(container.querySelector('g')).toHaveAttribute('fill', 'currentColor')
+    expect(container.querySelector('img')).toHaveAttribute('src', '/alx-app-icon-dark.svg')
   })
 
-  it('accepts a className', () => {
-    const { container } = renderWithProviders(
-      <ShellLogo className="text-primary" />,
-    )
+  it('honours an explicit size', () => {
+    const { container } = renderWithProviders(<ShellLogo size={64} tone="light" />)
 
-    expect(container.querySelector('svg')).toHaveClass('text-primary')
+    expect(container.querySelector('img')).toHaveAttribute('width', '64')
+  })
+
+  it('uses the mark variant', () => {
+    const { container } = renderWithProviders(<ShellLogo variant="mark" tone="light" />)
+
+    expect(container.querySelector('img')).toHaveAttribute('src', '/alx-mark.svg')
+  })
+
+  it('loads the full wordmark svg for the full variant', () => {
+    const { container } = renderWithProviders(<ShellLogo variant="full" size={100} />)
+
+    expect(container.querySelector('svg')).toHaveAttribute('viewBox', '0 0 786 676')
   })
 })

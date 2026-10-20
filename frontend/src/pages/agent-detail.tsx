@@ -65,8 +65,8 @@ export default function AgentDetailPage() {
     },
   })
 
-  if (isLoading) return <div className="p-6 text-sm text-muted-foreground">{t('agents.loading')}</div>
-  if (!agent) return <div className="p-6 text-sm text-muted-foreground">{t('agents.detail.notFound')}</div>
+  if (isLoading) return <div className="p-6 text-app-body text-muted-foreground">{t('agents.loading')}</div>
+  if (!agent) return <div className="p-6 text-app-body text-muted-foreground">{t('agents.detail.notFound')}</div>
 
   return (
     // Height has to account for the AppLayout's chrome around <Outlet />:
@@ -137,7 +137,7 @@ export default function AgentDetailPage() {
               {conversationId === null && (
                 <button
                   onClick={() => pickConversation(null)}
-                  className="w-full text-left px-3 py-2 text-sm bg-muted flex items-center gap-2 truncate text-muted-foreground italic"
+                  className="w-full text-left px-3 py-2 text-app-body bg-muted flex items-center gap-2 truncate text-muted-foreground italic"
                 >
                   <MessageSquare className="h-3.5 w-3.5 shrink-0" />
                   <span className="truncate">{t('agents.detail.newConversation')}</span>

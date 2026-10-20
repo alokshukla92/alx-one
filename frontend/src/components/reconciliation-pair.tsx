@@ -114,7 +114,7 @@ function PromiseLine({
     // being asked is about two accounts.
     return (
       <div className="space-y-0.5">
-        <p className="text-sm font-medium text-foreground truncate">
+        <p className="text-app-body font-medium text-foreground truncate">
           {side.label ?? t('reconciliation.pair.otherLeg')}
         </p>
         <Facts
@@ -131,7 +131,7 @@ function PromiseLine({
   if (side.kind !== 'invoice') {
     return (
       <div>
-        <p className="text-sm font-medium text-foreground">
+        <p className="text-app-body font-medium text-foreground">
           {side.label ?? t('reconciliation.pair.recurringBill')}
         </p>
         <Facts items={[t('reconciliation.pair.recurringBill')]} />
@@ -150,7 +150,7 @@ function PromiseLine({
 
   return (
     <div className="space-y-0.5">
-      <p className="text-sm font-medium text-foreground flex items-center gap-2">
+      <p className="text-app-body font-medium text-foreground flex items-center gap-2">
         {name ?? t('reconciliation.pair.draftInvoice')}
         {invoice.state === 'overdue' && (
           <span className="text-[10px] font-semibold uppercase tracking-wide text-rose-600 dark:text-rose-400">
@@ -323,7 +323,7 @@ export function ReconciliationPair({
                   description on this side and the account on the other
                   asked the reader to hold two different shapes in their
                   head and work out which field to compare with which. */}
-              <p className="text-sm font-medium text-foreground truncate">
+              <p className="text-app-body font-medium text-foreground truncate">
                 {isTransfer ? (accountName ?? transaction.description) : transaction.description}
               </p>
               <Facts

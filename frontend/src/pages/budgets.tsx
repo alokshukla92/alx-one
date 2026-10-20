@@ -40,7 +40,7 @@ const TH = 'text-xs font-medium text-muted-foreground py-3'
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -48,7 +48,7 @@ function SectionCard({ children }: { children: React.ReactNode }) {
 function SectionHeader({ title, action }: { title: string; action?: React.ReactNode }) {
   return (
     <div className="px-4 sm:px-5 py-4 border-b border-border flex flex-wrap items-center justify-between gap-2">
-      <p className="text-sm font-semibold text-foreground">{title}</p>
+      <p className="text-app-body font-semibold text-foreground">{title}</p>
       {action}
     </div>
   )
@@ -162,7 +162,7 @@ export default function BudgetsPage() {
               <PopoverTrigger asChild>
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-2 border border-border rounded-lg px-3 py-1.5 text-sm bg-card text-foreground hover:bg-muted/50 transition-all cursor-pointer min-w-[180px]"
+                  className="inline-flex items-center justify-center gap-2 border border-border rounded-lg px-3 py-1.5 text-app-body bg-card text-foreground hover:bg-muted/50 transition-all cursor-pointer min-w-[180px]"
                 >
                   <CalendarIcon className="size-3.5 text-muted-foreground" />
                   {monthTitle}
@@ -215,7 +215,7 @@ export default function BudgetsPage() {
             <tbody>
               {budgetsList.map((budget) => (
                 <tr key={budget.id} className="border-b border-border last:border-0 hover:bg-muted transition-colors">
-                  <td className="py-3 pl-4 sm:pl-5 text-sm font-medium text-foreground">
+                  <td className="py-3 pl-4 sm:pl-5 text-app-body font-medium text-foreground">
                     <span className="flex items-center gap-1.5">
                       {getCategoryDisplay(budget.category_id)}
                       {budget.is_recurring && (
@@ -225,7 +225,7 @@ export default function BudgetsPage() {
                       )}
                     </span>
                   </td>
-                  <td className="py-3 text-sm font-semibold tabular-nums text-foreground">{mask(formatCurrency(budget.amount, userCurrency, locale))}</td>
+                  <td className="py-3 text-app-body font-semibold tabular-nums text-foreground">{mask(formatCurrency(budget.amount, userCurrency, locale))}</td>
                   {canWrite && (
                     <td className="py-3 pr-4 sm:pr-5">
                       <div className="flex items-center justify-end gap-1">
@@ -254,7 +254,7 @@ export default function BudgetsPage() {
             </tbody>
           </table>
         ) : (
-          <p className="text-sm text-muted-foreground text-center py-10">{t('budgets.empty')}</p>
+          <p className="text-app-body text-muted-foreground text-center py-10">{t('budgets.empty')}</p>
         )}
       </SectionCard>
 
@@ -291,7 +291,7 @@ export default function BudgetsPage() {
                   <Label>{t('budgets.category')}</Label>
                   <select
                     name="category_id"
-                    className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full border border-border rounded-lg px-3 py-2 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                     required
                   >
                     <option value="">{t('budgets.selectCategory')}</option>
@@ -309,7 +309,7 @@ export default function BudgetsPage() {
                 </div>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" name="is_recurring" className="rounded border-border" />
-                  <span className="text-sm text-foreground">{t('budgets.repeatEveryMonth')}</span>
+                  <span className="text-app-body text-foreground">{t('budgets.repeatEveryMonth')}</span>
                 </label>
               </>
             )}

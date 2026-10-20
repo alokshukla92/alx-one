@@ -369,7 +369,7 @@ export default function InvoiceDetailPage() {
                           onClick={() => downloadMutation.mutate()}
                           disabled={downloadMutation.isPending}
                           data-testid="invoice-download-issued"
-                          className="flex-col items-start gap-0.5 text-sm"
+                          className="flex-col items-start gap-0.5 text-app-body"
                         >
                           <span>{t('invoices.statement.asIssued')}</span>
                           <span className="text-[11px] text-muted-foreground">{t('invoices.statement.asIssuedHint')}</span>
@@ -378,7 +378,7 @@ export default function InvoiceDetailPage() {
                           onClick={() => statementMutation.mutate()}
                           disabled={statementMutation.isPending}
                           data-testid="invoice-download-statement"
-                          className="flex-col items-start gap-0.5 text-sm"
+                          className="flex-col items-start gap-0.5 text-app-body"
                         >
                           <span>{t('invoices.statement.title')}</span>
                           <span className="text-[11px] text-muted-foreground">{t('invoices.statement.hint')}</span>
@@ -451,7 +451,7 @@ export default function InvoiceDetailPage() {
                       <DropdownMenuItem
                         onClick={() => setRecurringOpen(true)}
                         data-testid="invoice-make-recurring"
-                        className="gap-2 text-sm"
+                        className="gap-2 text-app-body"
                       >
                         <Repeat className="h-4 w-4 text-muted-foreground" />
                         {t('invoices.schedules.action.makeRecurring')}
@@ -461,7 +461,7 @@ export default function InvoiceDetailPage() {
                       <DropdownMenuItem
                         onClick={() => unlinkScheduleMutation.mutate()}
                         data-testid="invoice-unlink-schedule"
-                        className="gap-2 text-sm"
+                        className="gap-2 text-app-body"
                       >
                         <Unlink className="h-4 w-4 text-muted-foreground" />
                         {t('invoices.schedules.action.unlink')}
@@ -471,7 +471,7 @@ export default function InvoiceDetailPage() {
                       <DropdownMenuItem
                         onClick={() => writeOffMutation.mutate()}
                         data-testid="invoice-writeoff"
-                        className="gap-2 text-sm"
+                        className="gap-2 text-app-body"
                       >
                         <Ban className="h-4 w-4 text-muted-foreground" />
                         {t('invoices.action.writeOff')}
@@ -481,7 +481,7 @@ export default function InvoiceDetailPage() {
                       <DropdownMenuItem
                         onClick={() => reopenMutation.mutate()}
                         data-testid="invoice-reopen"
-                        className="gap-2 text-sm"
+                        className="gap-2 text-app-body"
                       >
                         <RotateCcw className="h-4 w-4 text-muted-foreground" />
                         {t('invoices.action.reopen')}
@@ -491,7 +491,7 @@ export default function InvoiceDetailPage() {
                       <DropdownMenuItem
                         onClick={() => voidMutation.mutate()}
                         data-testid="invoice-void"
-                        className="gap-2 text-sm text-destructive focus:text-destructive"
+                        className="gap-2 text-app-body text-destructive focus:text-destructive"
                       >
                         <CircleSlash className="h-4 w-4" />
                         {t('invoices.action.void')}
@@ -501,7 +501,7 @@ export default function InvoiceDetailPage() {
                       <DropdownMenuItem
                         onClick={() => deleteMutation.mutate()}
                         data-testid="invoice-delete"
-                        className="gap-2 text-sm text-destructive focus:text-destructive"
+                        className="gap-2 text-app-body text-destructive focus:text-destructive"
                       >
                         <Trash2 className="h-4 w-4" />
                         {t('common.delete')}
@@ -539,7 +539,7 @@ export default function InvoiceDetailPage() {
           {offerStatement && (
             <SectionCard>
               <div
-                className="flex flex-wrap items-center gap-3 px-4 sm:px-5 py-3 text-sm"
+                className="flex flex-wrap items-center gap-3 px-4 sm:px-5 py-3 text-app-body"
                 data-testid="invoice-statement-banner"
               >
                 <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
@@ -671,11 +671,11 @@ export default function InvoiceDetailPage() {
                 <tbody>
                   {invoice.installments.map((row, index) => (
                     <tr key={row.id} className="border-b border-border last:border-0" data-testid="invoice-installment-row">
-                      <td className="py-2.5 pl-4 sm:pl-5 text-sm">
+                      <td className="py-2.5 pl-4 sm:pl-5 text-app-body">
                         {row.label ?? `${index + 1}/${invoice.installments.length}`}
                       </td>
                       <td className="py-2.5 text-xs text-muted-foreground tabular-nums">{showDate(row.due_date)}</td>
-                      <td className="py-2.5 text-right text-sm tabular-nums">
+                      <td className="py-2.5 text-right text-app-body tabular-nums">
                         {money(row.amount)}
                         {Number(row.settled) > 0 && Number(row.settled) < Number(row.amount) && (
                           <span className="ml-1.5 text-[11px] text-muted-foreground">
@@ -729,7 +729,7 @@ export default function InvoiceDetailPage() {
                         <p className="text-xs font-medium text-muted-foreground mb-0.5">
                           {field.label}
                         </p>
-                        <p className="text-sm">{field.value}</p>
+                        <p className="text-app-body">{field.value}</p>
                       </div>
                     ))}
                   </div>
@@ -740,11 +740,11 @@ export default function InvoiceDetailPage() {
                     <tbody>
                       {invoice.lines.map((line) => (
                         <tr key={line.id} className="border-b border-border last:border-0">
-                          <td className="py-2.5 text-sm text-foreground">{line.description}</td>
+                          <td className="py-2.5 text-app-body text-foreground">{line.description}</td>
                           <td className="py-2.5 text-right text-xs text-muted-foreground tabular-nums">
                             {Number(line.quantity)} × {money(line.unit_price)}
                           </td>
-                          <td className="py-2.5 text-right text-sm font-medium tabular-nums w-32">
+                          <td className="py-2.5 text-right text-app-body font-medium tabular-nums w-32">
                             {money(line.total)}
                           </td>
                         </tr>
@@ -754,7 +754,7 @@ export default function InvoiceDetailPage() {
                 )}
 
                 {invoice.notes && (
-                  <p className="text-sm text-muted-foreground">{invoice.notes}</p>
+                  <p className="text-app-body text-muted-foreground">{invoice.notes}</p>
                 )}
               </div>
             </SectionCard>
@@ -791,7 +791,7 @@ export default function InvoiceDetailPage() {
                   {invoice.deductions.map((deduction) => (
                     <tr key={deduction.id} data-testid="invoice-deduction" className="border-b border-border last:border-0 bg-muted/20">
                       <td className="py-3 pl-4 sm:pl-5">
-                        <div className="text-sm font-medium text-foreground truncate">
+                        <div className="text-app-body font-medium text-foreground truncate">
                           {t(`invoices.deductions.kind.${deduction.kind}`)}
                           {deduction.tax_kind && (
                             <span className="ml-1.5 text-xs uppercase text-muted-foreground">{deduction.tax_kind}</span>
@@ -802,7 +802,7 @@ export default function InvoiceDetailPage() {
                           {deduction.note ? ` · ${deduction.note}` : ''}
                         </div>
                       </td>
-                      <td className="py-3 text-right text-sm font-bold tabular-nums text-muted-foreground">
+                      <td className="py-3 text-right text-app-body font-bold tabular-nums text-muted-foreground">
                         {money(deduction.amount)}
                       </td>
                       <td className="py-3 pr-4 sm:pr-5 text-right w-16">
@@ -823,7 +823,7 @@ export default function InvoiceDetailPage() {
             )}
             {invoice.allocations.length === 0 ? (
               <p
-                className="px-4 sm:px-5 py-8 text-center text-sm text-muted-foreground"
+                className="px-4 sm:px-5 py-8 text-center text-app-body text-muted-foreground"
                 data-testid="invoice-no-payments"
               >
                 {t('invoices.noPayments')}
@@ -838,7 +838,7 @@ export default function InvoiceDetailPage() {
                       className="border-b border-border last:border-0"
                     >
                       <td className="py-3 pl-4 sm:pl-5">
-                        <div className="text-sm font-medium text-foreground truncate">
+                        <div className="text-app-body font-medium text-foreground truncate">
                           {allocation.transaction?.description ?? t('invoices.linkedPayment')}
                         </div>
                         <div className="text-xs text-muted-foreground tabular-nums mt-0.5">
@@ -861,7 +861,7 @@ export default function InvoiceDetailPage() {
                           })()}
                         </div>
                       </td>
-                      <td className="py-3 text-right text-sm font-bold tabular-nums text-emerald-600">
+                      <td className="py-3 text-right text-app-body font-bold tabular-nums text-emerald-600">
                         {money(allocation.amount)}
                       </td>
                       <td className="py-3 pr-4 sm:pr-5 text-right w-16">
@@ -1156,7 +1156,7 @@ export function LinkPaymentDialog({
 
         <div className="space-y-3 max-h-72 overflow-y-auto">
           {candidates.length === 0 && (
-            <p className="text-sm text-muted-foreground">{t('invoices.noCandidates')}</p>
+            <p className="text-app-body text-muted-foreground">{t('invoices.noCandidates')}</p>
           )}
           {candidates.map((tx) => (
             <button
@@ -1169,11 +1169,11 @@ export function LinkPaymentDialog({
               )}
             >
               <div className="min-w-0">
-                <div className="text-sm truncate">{tx.description}</div>
+                <div className="text-app-body truncate">{tx.description}</div>
                 <div className="text-xs text-muted-foreground tabular-nums">{tx.date}</div>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="text-sm tabular-nums">
+                <span className="text-app-body tabular-nums">
                   {formatCurrency(Number(tx.amount), tx.currency ?? currency, 'en')}
                 </span>
                 {selected === tx.id && <CheckCircle2 className="h-4 w-4 text-primary" />}
@@ -1199,7 +1199,7 @@ export function LinkPaymentDialog({
 
         {selectedTx && difference > 0 && (
           <div className="rounded-lg border border-border bg-muted/30 px-3 py-2.5 space-y-2" data-testid="invoice-difference">
-            <p className="text-sm font-medium">
+            <p className="text-app-body font-medium">
               {t('invoices.deductions.differenceTitle', { difference: formatCurrency(difference, currency, locale) })}
             </p>
             <p className="text-[11px] text-muted-foreground">{t('invoices.deductions.differenceHint')}</p>

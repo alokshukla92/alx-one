@@ -120,7 +120,7 @@ export function McpExternalPanel() {
   ]
 
   return (
-    <div className="mt-8 bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="mt-8 alx-panel overflow-hidden">
       <div className="flex items-start gap-3 px-4 sm:px-5 py-4 border-b border-border">
         <div className="h-10 w-10 rounded-md bg-muted flex items-center justify-center shrink-0">
           <Plug className="h-5 w-5 text-muted-foreground" />
@@ -129,7 +129,7 @@ export function McpExternalPanel() {
           <h2 className="text-base font-semibold">
             {t('agents.mcpExternal.title', 'External MCP access')}
           </h2>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-app-body text-muted-foreground mt-1">
             {t(
               'agents.mcpExternal.subtitle',
               "Plug an external agent (Claude Desktop, ChatGPT, n8n, a custom client) into Securo's built-in MCP server. The token below is scoped to your user and expires in {{days}} days.",

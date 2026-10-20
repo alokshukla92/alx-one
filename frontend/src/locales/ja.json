@@ -132,7 +132,9 @@
     "agents": "エージェント",
     "aiAgents": "AIエージェント",
     "collapseSidebar": "サイドバーを折りたたむ",
-    "expandSidebar": "サイドバーを展開する"
+    "expandSidebar": "サイドバーを展開する",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "請求書",

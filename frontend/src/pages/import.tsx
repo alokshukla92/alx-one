@@ -304,7 +304,7 @@ function TransactionImportPanel() {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 animate-pulse">
                 <FileText size={22} className="text-primary" />
               </div>
-              <p className="text-sm font-semibold text-foreground">{t('import.processing')}</p>
+              <p className="text-app-body font-semibold text-foreground">{t('import.processing')}</p>
               <p className="text-xs text-muted-foreground mt-1">{fileName}</p>
             </>
           ) : fileName && previewData ? (
@@ -312,7 +312,7 @@ function TransactionImportPanel() {
               <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
                 <CheckCircle2 size={22} className="text-emerald-500" />
               </div>
-              <p className="text-sm font-semibold text-foreground">{fileName}</p>
+              <p className="text-app-body font-semibold text-foreground">{fileName}</p>
               <p className="text-xs text-muted-foreground mt-1">
                 {t('import.previewInfo', { count: previewData.transactions.length, format: previewData.detected_format.toUpperCase() })}
               </p>
@@ -328,7 +328,7 @@ function TransactionImportPanel() {
               <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-4">
                 <Upload size={22} className="text-muted-foreground" />
               </div>
-              <p className="text-sm font-semibold text-foreground mb-1">
+              <p className="text-app-body font-semibold text-foreground mb-1">
                 {t('import.dragOrClick')}
               </p>
               <p className="text-xs text-muted-foreground">{t('import.acceptedFormats')}</p>
@@ -356,11 +356,11 @@ function TransactionImportPanel() {
 
       {/* Review section */}
       {previewData && (
-        <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="alx-panel overflow-hidden">
           {/* Header */}
           <div className="px-5 py-4 border-b border-border">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-foreground">{t('import.preview')}</p>
+              <p className="text-app-body font-semibold text-foreground">{t('import.preview')}</p>
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1 text-emerald-600">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
@@ -377,11 +377,11 @@ function TransactionImportPanel() {
           {/* Account picker */}
           <div className="px-4 sm:px-5 py-4 border-b border-border bg-muted/50">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-              <Label className="text-sm text-muted-foreground whitespace-nowrap shrink-0">
+              <Label className="text-app-body text-muted-foreground whitespace-nowrap shrink-0">
                 {t('import.importTo')}
               </Label>
               <select
-                className="flex-1 border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                className="flex-1 border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                 value={selectedAccount}
                 onChange={(e) => setSelectedAccount(e.target.value)}
               >
@@ -437,7 +437,7 @@ function TransactionImportPanel() {
                 <div>
                   <Label className="text-xs text-muted-foreground mb-1 block">{t('import.dateFormat')}</Label>
                   <select
-                    className="w-full border border-border rounded-lg px-3 py-1.5 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full border border-border rounded-lg px-3 py-1.5 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                     value={csvDateFormat}
                     onChange={(e) => { setCsvDateFormat(e.target.value); rePreview({ date_format: e.target.value }) }}
                   >
@@ -455,7 +455,7 @@ function TransactionImportPanel() {
                     onChange={(e) => { setCsvFlipAmount(e.target.checked); rePreview({ flip_amount: e.target.checked }) }}
                     className="rounded border-border text-primary focus:ring-primary"
                   />
-                  <Label htmlFor="flip-amount" className="text-sm text-muted-foreground cursor-pointer">
+                  <Label htmlFor="flip-amount" className="text-app-body text-muted-foreground cursor-pointer">
                     {t('import.flipAmounts')}
                   </Label>
                 </div>}
@@ -467,7 +467,7 @@ function TransactionImportPanel() {
                     onChange={(e) => { setCsvSplitColumns(e.target.checked); rePreview({ split: e.target.checked }) }}
                     className="rounded border-border text-primary focus:ring-primary"
                   />
-                  <Label htmlFor="split-columns" className="text-sm text-muted-foreground cursor-pointer">
+                  <Label htmlFor="split-columns" className="text-app-body text-muted-foreground cursor-pointer">
                     {t('import.splitColumns')}
                   </Label>
                 </div>}
@@ -479,7 +479,7 @@ function TransactionImportPanel() {
                     onChange={(e) => setCsvDetectDuplicates(e.target.checked)}
                     className="rounded border-border text-primary focus:ring-primary"
                   />
-                  <Label htmlFor="detect-duplicates" className="text-sm text-muted-foreground cursor-pointer">
+                  <Label htmlFor="detect-duplicates" className="text-app-body text-muted-foreground cursor-pointer">
                     {t('import.detectDuplicates')}
                   </Label>
                 </div>}
@@ -490,7 +490,7 @@ function TransactionImportPanel() {
                   <div>
                     <Label className="text-xs text-muted-foreground mb-1 block">{t('import.inflowColumn')}</Label>
                     <select
-                      className="w-full border border-border rounded-md px-3 py-1.5 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                      className="w-full border border-border rounded-md px-3 py-1.5 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                       value={csvInflowColumn}
                       onChange={(e) => { setCsvInflowColumn(e.target.value); rePreview({ inflow: e.target.value }) }}
                     >
@@ -501,7 +501,7 @@ function TransactionImportPanel() {
                   <div>
                     <Label className="text-xs text-muted-foreground mb-1 block">{t('import.outflowColumn')}</Label>
                     <select
-                      className="w-full border border-border rounded-md px-3 py-1.5 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                      className="w-full border border-border rounded-md px-3 py-1.5 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                       value={csvOutflowColumn}
                       onChange={(e) => { setCsvOutflowColumn(e.target.value); rePreview({ outflow: e.target.value }) }}
                     >
@@ -524,7 +524,7 @@ function TransactionImportPanel() {
                         <div key={f.key}>
                           <Label className="text-xs text-muted-foreground mb-1 block">{t(f.label)}</Label>
                           <select
-                            className="w-full border border-border rounded-md px-3 py-1.5 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                            className="w-full border border-border rounded-md px-3 py-1.5 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                             value={csvColumnMapping[f.key] ?? ''}
                             onChange={(e) => handleMappingChange(f.key, e.target.value)}
                           >
@@ -572,7 +572,7 @@ function TransactionImportPanel() {
           {/* Footer actions */}
           <div className="px-4 sm:px-5 py-4 border-t border-border flex items-center justify-between">
             <button
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-app-body text-muted-foreground hover:text-foreground transition-colors"
               onClick={handleReset}
             >
               {t('common.cancel')}
@@ -664,7 +664,7 @@ export default function ImportPage() {
             key={value}
             type="button"
             onClick={() => selectTab(value)}
-            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`rounded-md px-3 py-1.5 text-app-body font-medium transition-colors ${
               tab === value ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
             }`}
           >

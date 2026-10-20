@@ -97,17 +97,17 @@ export default function SetupPage() {
               <ShellLogo size={22} className="text-primary" />
             </div>
             <h1 className="text-xl font-semibold tracking-tight">{t('setup.title')}</h1>
-            <p className="text-sm text-muted-foreground mt-1">{t('setup.description')}</p>
+            <p className="text-app-body text-muted-foreground mt-1">{t('setup.description')}</p>
           </div>
           <CardContent className="space-y-4 px-8 pt-4">
             {error && (
-              <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-lg">
+              <div className="p-3 text-app-body text-destructive bg-destructive/10 rounded-lg">
                 {error}
               </div>
             )}
             <div className="flex items-center justify-between gap-4">
               <div className="space-y-1.5 min-w-0 flex-1">
-                <Label className="text-sm flex items-center gap-1.5">
+                <Label className="text-app-body flex items-center gap-1.5">
                   <Globe size={14} />
                   {t('setup.language')}
                 </Label>
@@ -123,7 +123,7 @@ export default function SetupPage() {
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <Label className="text-sm">{t('setup.theme')}</Label>
+                <Label className="text-app-body">{t('setup.theme')}</Label>
                 <div className="flex items-center gap-1">
                   <button
                     type="button"
@@ -155,7 +155,7 @@ export default function SetupPage() {
               </div>
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="name" className="text-sm">{t('setup.name')}</Label>
+              <Label htmlFor="name" className="text-app-body">{t('setup.name')}</Label>
               <Input
                 id="name"
                 type="text"
@@ -166,7 +166,7 @@ export default function SetupPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="email" className="text-sm">{t('auth.email')}</Label>
+              <Label htmlFor="email" className="text-app-body">{t('auth.email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -178,7 +178,7 @@ export default function SetupPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="password" className="text-sm">{t('auth.password')}</Label>
+              <Label htmlFor="password" className="text-app-body">{t('auth.password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -190,7 +190,7 @@ export default function SetupPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="confirmPassword" className="text-sm">{t('setup.confirmPassword')}</Label>
+              <Label htmlFor="confirmPassword" className="text-app-body">{t('setup.confirmPassword')}</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -202,7 +202,7 @@ export default function SetupPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="currency" className="text-sm">{t('setup.currency')}</Label>
+              <Label htmlFor="currency" className="text-app-body">{t('setup.currency')}</Label>
               <CurrencySelect id="currency" value={currency} onChange={setCurrency} />
             </div>
           </CardContent>

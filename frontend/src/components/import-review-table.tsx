@@ -128,7 +128,7 @@ export function ImportReviewTable({
           placeholder={t('import.searchTransactions')}
           value={searchQuery}
           onChange={(e) => { onSearchChange(e.target.value); onPageChange(1) }}
-          className="max-w-xs h-8 text-sm border border-border rounded-md px-3 bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+          className="max-w-xs h-8 text-app-body border border-border rounded-md px-3 bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
         />
         <CategoryFilterDropdown
           categoryIds={filterCategoryIds}
@@ -140,7 +140,7 @@ export function ImportReviewTable({
           label={t('import.filterCategory')}
         />
         <select
-          className="border border-border rounded-md px-3 py-1.5 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+          className="border border-border rounded-md px-3 py-1.5 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
           value={statusFilter}
           onChange={(e) => { onStatusFilterChange(e.target.value as 'all' | 'included' | 'excluded'); onPageChange(1) }}
         >
@@ -204,10 +204,10 @@ export function ImportReviewTable({
                   <TableCell className="py-2.5 text-xs text-muted-foreground whitespace-nowrap">
                     {formatLocalDate(tx.date, dateLocale)}
                   </TableCell>
-                  <TableCell className={`py-2.5 text-sm ${tx.excluded ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
+                  <TableCell className={`py-2.5 text-app-body ${tx.excluded ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                     {tx.description}
                   </TableCell>
-                  <TableCell className={`py-2.5 text-right text-sm font-bold tabular-nums ${tx.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
+                  <TableCell className={`py-2.5 text-right text-app-body font-bold tabular-nums ${tx.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
                     {tx.type === 'credit' ? '+' : '−'}{formatCurrency(Math.abs(Number(tx.amount)), userCurrency, locale)}
                   </TableCell>
                   <TableCell className="py-2.5">
@@ -244,7 +244,7 @@ export function ImportReviewTable({
 
       {/* Pagination */}
       {filtered.length > 10 && (
-        <div className="px-5 py-3 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+        <div className="px-5 py-3 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-app-body">
           {totalPages > 1 ? (
             <div className="flex items-center gap-4">
               <button

@@ -89,7 +89,7 @@ export function TokenConnectDialog({
               ? t(`${i18nKey}.reconnectTitle`, t('accounts.tokenConnect.reconnectTitle'))
               : t(`${i18nKey}.title`, t('accounts.tokenConnect.defaultTitle'))}
           </DialogTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {isReconnect
               ? t(`${i18nKey}.reconnectDescription`, t('accounts.tokenConnect.reconnectDescription'))
               : t(`${i18nKey}.description`, t('accounts.tokenConnect.defaultDescription'))}
@@ -108,7 +108,7 @@ export function TokenConnectDialog({
         {supportsAssetSync && !isReconnect && (
           <div className="flex items-start justify-between gap-4 rounded-lg border border-border p-3">
             <div className="space-y-1">
-              <label htmlFor="token-sync-assets" className="text-sm font-medium text-foreground">
+              <label htmlFor="token-sync-assets" className="text-app-body font-medium text-foreground">
                 {t('connections.syncAssets')}
               </label>
               <p className="text-xs text-muted-foreground">{t('connections.syncAssetsHint')}</p>
@@ -125,12 +125,12 @@ export function TokenConnectDialog({
         )}
 
         <div className="space-y-1.5">
-          <label className="text-sm font-medium" htmlFor="securo-token-input">
+          <label className="text-app-body font-medium" htmlFor="securo-token-input">
             {t('accounts.tokenConnect.tokenLabel')}
           </label>
           <textarea
             id="securo-token-input"
-            className="w-full min-h-[110px] rounded-md border border-input bg-card px-3 py-2 text-sm font-mono resize-y focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-0"
+            className="w-full min-h-[110px] rounded-md border border-input bg-card px-3 py-2 text-app-body font-mono resize-y focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-0"
             placeholder={t('accounts.tokenConnect.tokenPlaceholder')}
             value={token}
             onChange={(e) => setToken(e.target.value)}

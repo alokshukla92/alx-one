@@ -109,7 +109,7 @@ function swap(rules: ReconciliationRule[], from: number, to: number): string[] {
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -370,7 +370,7 @@ function Step({
   return (
     <section className="rounded-lg border border-border">
       <header className="px-3 py-2 bg-muted/40 border-b border-border rounded-t-lg">
-        <p className="text-sm font-semibold text-foreground">
+        <p className="text-app-body font-semibold text-foreground">
           <span className="text-muted-foreground mr-1.5">{index}.</span>
           {title}
         </p>
@@ -408,7 +408,7 @@ function MultiPicker({
       {options.map((option) => (
         <label
           key={option.id}
-          className="flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer hover:bg-muted"
+          className="flex items-center gap-2 px-3 py-1.5 text-app-body cursor-pointer hover:bg-muted"
         >
           <input
             type="checkbox"
@@ -533,7 +533,7 @@ function RuleEditor({ open, node, rule, onClose }: EditorProps) {
   )
 
   const inputClass =
-    'w-full px-3 py-2 text-sm border border-input rounded-md bg-background'
+    'w-full px-3 py-2 text-app-body border border-input rounded-md bg-background'
 
   return (
     <Dialog open={open} onOpenChange={(next) => { if (!next) onClose() }}>
@@ -598,7 +598,7 @@ function RuleEditor({ open, node, rule, onClose }: EditorProps) {
                       onChange={() => setTrigger(value)}
                     />
                     <span>
-                      <span className="text-sm font-medium block">
+                      <span className="text-app-body font-medium block">
                         {t(`reconciliation.trigger.${value}`)}
                       </span>
                       <span className="text-xs text-muted-foreground">
@@ -620,7 +620,7 @@ function RuleEditor({ open, node, rule, onClose }: EditorProps) {
                     type="button"
                     onClick={() => setOutcome(value)}
                     className={cn(
-                      'flex-1 px-3 py-2 rounded-md text-sm font-medium border transition-colors',
+                      'flex-1 px-3 py-2 rounded-md text-app-body font-medium border transition-colors',
                       outcome === value
                         ? 'bg-primary text-primary-foreground border-primary'
                         : 'bg-background border-input text-muted-foreground hover:text-foreground',
@@ -948,7 +948,7 @@ function RuleEditor({ open, node, rule, onClose }: EditorProps) {
                         min={0}
                         max={100}
                         step="0.5"
-                        className="w-20 px-3 py-2 text-sm border border-input rounded-md bg-background"
+                        className="w-20 px-3 py-2 text-app-body border border-input rounded-md bg-background"
                         value={when.amount?.percent ?? '2'}
                         onChange={(e) =>
                           setWhen({
@@ -961,7 +961,7 @@ function RuleEditor({ open, node, rule, onClose }: EditorProps) {
                           })
                         }
                       />
-                      <span className="text-sm text-muted-foreground">%</span>
+                      <span className="text-app-body text-muted-foreground">%</span>
                     </div>
                   )}
                 </div>
@@ -1021,7 +1021,7 @@ function RuleEditor({ open, node, rule, onClose }: EditorProps) {
                               })
                             }
                           />
-                          <span className="text-sm text-muted-foreground">%</span>
+                          <span className="text-app-body text-muted-foreground">%</span>
                         </div>
                       </label>
                     </div>
@@ -1095,7 +1095,7 @@ function RuleEditor({ open, node, rule, onClose }: EditorProps) {
                 min={0}
                 max={1}
                 step="0.05"
-                className="w-28 px-3 py-2 text-sm border border-input rounded-md bg-background"
+                className="w-28 px-3 py-2 text-app-body border border-input rounded-md bg-background"
                 value={when.description_similarity?.min ?? ''}
                 placeholder={t('reconciliation.field.similarityOff')}
                 onChange={(e) =>
@@ -1260,7 +1260,7 @@ export function ReconciliationRules({ canWrite }: { canWrite: boolean }) {
         <SectionCard key={group.node}>
           <div className="px-4 sm:px-5 py-4 border-b border-border flex flex-wrap items-start justify-between gap-2">
             <div>
-              <p className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <p className="text-app-body font-semibold text-foreground flex items-center gap-2">
                 {t(CARD_TITLE[group.node] ?? NODE_TITLE[group.node] ?? group.node)}
                 {!group.active && (
                   <span className="text-[10px] font-semibold bg-muted text-muted-foreground px-1.5 py-0.5 rounded-full">
@@ -1371,7 +1371,7 @@ export function ReconciliationRules({ canWrite }: { canWrite: boolean }) {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <p className="text-sm font-semibold text-foreground">
+                      <p className="text-app-body font-semibold text-foreground">
                         {rule.name || t(SHIPPED_NAME[rule.id] ?? 'reconciliation.rule.unknown')}
                       </p>
                       <OutcomeBadge outcome={rule.outcome} />
@@ -1528,7 +1528,7 @@ export function ReconciliationRules({ canWrite }: { canWrite: boolean }) {
           <DialogHeader>
             <DialogTitle>{t('reconciliation.importConfirmTitle')}</DialogTitle>
           </DialogHeader>
-          <div className="space-y-3 text-sm text-muted-foreground">
+          <div className="space-y-3 text-app-body text-muted-foreground">
             <p>
               {t('reconciliation.importConfirmDescription', {
                 count: (pending?.file.nodes ?? []).reduce(

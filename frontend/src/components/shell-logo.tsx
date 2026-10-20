@@ -1,23 +1,77 @@
+import { useEffect, useState } from 'react'
+import { useTheme } from 'next-themes'
+import { cn } from '@/lib/utils'
+
+export type ShellLogoVariant = 'app' | 'mark' | 'full'
+
 interface ShellLogoProps {
   size?: number
   className?: string
+  variant?: ShellLogoVariant
+  tone?: 'light' | 'onDark' | 'auto'
 }
 
-export function ShellLogo({ size = 24, className }: ShellLogoProps) {
+const FULL_VIEW_BOX = '0 0 786 676'
+const LOGO_WORDMARK_SRC = '/alx-logo.svg'
+
+function resolveAppIconSrc(tone: ShellLogoProps['tone'], isDark: boolean): string {
+  if (tone === 'light') return '/alx-app-icon.svg'
+  if (tone === 'onDark' || isDark) return '/alx-app-icon-dark.svg'
+  return '/alx-app-icon.svg'
+}
+
+function resolveMarkSrc(tone: ShellLogoProps['tone'], isDark: boolean): string {
+  if (tone === 'onDark' || isDark) return '/alx-mark-dark.svg'
+  return '/alx-mark.svg'
+}
+
+export function ShellLogo({
+  size = 24,
+  className,
+  variant = 'app',
+  tone = 'auto',
+}: ShellLogoProps) {
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
+
+  const isDark = mounted && resolvedTheme === 'dark'
+
+  if (variant === 'full') {
+    const height = Math.round(size * (676 / 786))
+    return (
+      <svg
+        width={size}
+        height={height}
+        viewBox={FULL_VIEW_BOX}
+        preserveAspectRatio="xMidYMid meet"
+        xmlns="http://www.w3.org/2000/svg"
+        className={cn((tone === 'onDark' || isDark) && 'opacity-95', className)}
+        shapeRendering="geometricPrecision"
+        role="img"
+        aria-hidden
+      >
+        <image href={LOGO_WORDMARK_SRC} width="786" height="676" preserveAspectRatio="xMidYMin meet" />
+      </svg>
+    )
+  }
+
+  const imgClass = cn('shrink-0 object-contain', className)
+  const src =
+    variant === 'mark'
+      ? resolveMarkSrc(tone, isDark)
+      : resolveAppIconSrc(tone, isDark)
+
   return (
-    <svg
+    <img
+      src={src}
       width={size}
       height={size}
-      viewBox="0 0 460 460"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <g transform="translate(0,460) scale(0.1,-0.1)" fill="currentColor" stroke="none">
-        <path d="M2125 4149 c-222 -23 -430 -97 -652 -232 -66 -40 -103 -68 -103 -79 0 -9 19 -59 41 -110 197 -446 465 -1250 614 -1845 61 -242 56 -233 -140 252 -299 743 -439 1057 -601 1355 -132 242 -116 226 -200 210 -95 -18 -242 -94 -335 -173 -91 -78 -219 -246 -219 -287 0 -11 364 -501 695 -935 75 -99 202 -265 281 -370 79 -104 200 -264 269 -355 69 -90 125 -168 125 -172 0 -10 -239 236 -405 417 -70 77 -172 187 -225 245 -102 111 -597 675 -764 870 -54 63 -101 116 -106 118 -19 7 -147 -149 -188 -231 -69 -137 -83 -193 -89 -352 -5 -137 -5 -143 24 -227 69 -198 189 -332 419 -462 128 -74 473 -256 889 -470 94 -49 289 -150 435 -226 336 -175 381 -189 500 -154 29 8 193 89 364 178 171 90 435 227 586 306 607 316 773 409 857 481 118 101 213 247 249 379 25 94 23 270 -5 375 -33 126 -102 255 -178 336 l-66 70 -30 -28 c-38 -36 -176 -191 -477 -538 -283 -326 -309 -355 -576 -649 -251 -276 -410 -443 -418 -435 -5 5 65 102 260 354 158 206 589 774 936 1235 l176 235 -30 57 c-97 182 -323 356 -529 405 l-71 17 -19 -23 c-33 -41 -190 -338 -282 -535 -121 -259 -232 -522 -433 -1025 -93 -233 -170 -417 -172 -408 -4 18 107 434 219 827 89 308 250 766 403 1143 31 76 56 142 56 148 0 13 -149 108 -245 156 -262 131 -547 182 -840 152z"/>
-        <path d="M949 1318 c-28 -94 -31 -206 -6 -270 53 -136 217 -187 567 -174 239 8 470 29 457 42 -7 7 -985 474 -993 474 -2 0 -13 -33 -25 -72z"/>
-        <path d="M3280 1227 c-185 -89 -406 -196 -492 -237 -106 -50 -151 -77 -140 -81 85 -30 681 -46 782 -20 160 40 232 126 233 277 0 67 -29 225 -42 223 -3 0 -157 -73 -341 -162z"/>
-      </g>
-    </svg>
+      alt=""
+      className={imgClass}
+      decoding="async"
+      draggable={false}
+    />
   )
 }

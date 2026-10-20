@@ -31,7 +31,7 @@ import { cn } from '@/lib/utils'
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -159,7 +159,7 @@ export function ReconciliationQueue({ canWrite }: { canWrite: boolean }) {
   return (
     <SectionCard>
       <div className="px-4 sm:px-5 py-4 border-b border-border">
-        <p className="text-sm font-semibold text-foreground">
+        <p className="text-app-body font-semibold text-foreground">
           {t('reconciliation.queue.title')}
           {suggestions.length > 0 && (
             <span className="ml-2 text-[10px] font-semibold bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 px-1.5 py-0.5 rounded-full">
@@ -175,7 +175,7 @@ export function ReconciliationQueue({ canWrite }: { canWrite: boolean }) {
       {suggestions.length === 0 ? (
         <div className="py-10 text-center">
           <CircleCheck size={20} className="mx-auto text-emerald-500 mb-2" />
-          <p className="text-sm text-muted-foreground">{t('reconciliation.queue.empty')}</p>
+          <p className="text-app-body text-muted-foreground">{t('reconciliation.queue.empty')}</p>
         </div>
       ) : (
         <div className="divide-y divide-border">
@@ -189,7 +189,7 @@ export function ReconciliationQueue({ canWrite }: { canWrite: boolean }) {
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <p className="text-app-body font-medium text-foreground flex items-center gap-2">
                     <span className="truncate">
                       {suggestion.transaction?.description ??
                         t('reconciliation.queue.aPayment')}
@@ -257,7 +257,7 @@ export function ReconciliationQueue({ canWrite }: { canWrite: boolean }) {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-sm font-bold tabular-nums text-foreground">
+                  <span className="text-app-body font-bold tabular-nums text-foreground">
                     {money(suggestion.amount, suggestion.scores.currency)}
                   </span>
                   {canWrite && (

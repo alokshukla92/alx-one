@@ -132,7 +132,9 @@
     "agents": "Βοηθοί",
     "aiAgents": "Βοηθοί AI",
     "collapseSidebar": "Σύμπτυξη πλευρικής γραμμής",
-    "expandSidebar": "Ανάπτυξη πλευρικής γραμμής"
+    "expandSidebar": "Ανάπτυξη πλευρικής γραμμής",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "Τιμολόγια",

@@ -28,7 +28,7 @@ import { useWorkspace } from '@/contexts/workspace-context'
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -37,7 +37,7 @@ function SectionHeader({ title, titleExtra, action }: { title: string; titleExtr
   return (
     <div className="px-4 sm:px-5 py-4 border-b border-border flex flex-wrap items-center justify-between gap-2">
       <div className="flex items-center gap-3">
-        <p className="text-sm font-semibold text-foreground">{title}</p>
+        <p className="text-app-body font-semibold text-foreground">{title}</p>
         {titleExtra}
       </div>
       {action}
@@ -52,7 +52,7 @@ export default function CategoriesPage() {
   const [catDialogOpen, setCatDialogOpen] = useState(false)
   const [editingCat, setEditingCat] = useState<Category | null>(null)
   const [formIcon, setFormIcon] = useState('circle-help')
-  const [formColor, setFormColor] = useState('#6366f1')
+  const [formColor, setFormColor] = useState('#12491F')
   const [formTreatAsTransfer, setFormTreatAsTransfer] = useState(false)
   const [formIgnoreTransfer, setFormIgnoreTransfer] = useState(false)
   const [groupDialogOpen, setGroupDialogOpen] = useState(false)
@@ -234,7 +234,7 @@ export default function CategoriesPage() {
   const openCatDialog = (cat: Category | null) => {
     setEditingCat(cat)
     setFormIcon(cat?.icon ?? 'circle-help')
-    setFormColor(cat?.color ?? '#6366f1')
+    setFormColor(cat?.color ?? '#12491F')
     setFormTreatAsTransfer(cat?.treat_as_transfer ?? false)
     setFormIgnoreTransfer(cat?.is_ignored ?? false)
     setCatDialogOpen(true)
@@ -257,7 +257,7 @@ export default function CategoriesPage() {
     <div key={cat.id} className={`flex items-center gap-3 px-4 sm:px-5 pl-6 sm:pl-12 py-2.5 border-b border-border last:border-0 hover:bg-muted transition-colors ${cat.is_hidden ? 'opacity-60' : ''}`}>
       <CategoryIcon icon={cat.icon} color={cat.color} size="md" />
       <div className="flex-1 min-w-0 flex items-center gap-2">
-        <span className="text-sm font-medium text-foreground truncate">{cat.name}</span>
+        <span className="text-app-body font-medium text-foreground truncate">{cat.name}</span>
         {cat.is_hidden && renderHiddenBadge(t('categories.hiddenBadge'))}
         {cat.treat_as_transfer && (
           <span
@@ -316,7 +316,7 @@ export default function CategoriesPage() {
     <div>
       <PageHeader section={t('categories.title')} title={t('categories.title')} />
 
-      <p className="mb-4 text-sm text-muted-foreground">
+      <p className="mb-4 text-app-body text-muted-foreground">
         {t('categories.hiddenScopeDescription')}
       </p>
 
@@ -365,7 +365,7 @@ export default function CategoriesPage() {
                   >
                     {isCollapsed ? <ChevronRight size={14} className="text-muted-foreground shrink-0" /> : <ChevronDown size={14} className="text-muted-foreground shrink-0" />}
                     <CategoryIcon icon={group.icon} color={group.color} size="md" />
-                    <span className="text-sm font-semibold" style={{ color: group.color }}>{group.name}</span>
+                    <span className="text-app-body font-semibold" style={{ color: group.color }}>{group.name}</span>
                     {group.is_hidden && renderHiddenBadge(t('groups.hiddenBadge'))}
                     <span className="text-xs text-muted-foreground">({group.categories.length})</span>
                   </button>
@@ -406,7 +406,7 @@ export default function CategoriesPage() {
           {ungrouped.length > 0 && (
             <div>
               <div className="px-5 py-3 border-b border-border bg-muted/40">
-                <span className="text-sm font-semibold text-muted-foreground">{t('groups.noGroup')}</span>
+                <span className="text-app-body font-semibold text-muted-foreground">{t('groups.noGroup')}</span>
               </div>
               {ungrouped.map(renderCategoryItem)}
             </div>
@@ -451,7 +451,7 @@ export default function CategoriesPage() {
                 <select
                   name="group_id"
                   defaultValue={editingCat?.group_id ?? ''}
-                  className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full border border-border rounded-lg px-3 py-2 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">{t('categories.noGroup')}</option>
                   {groups?.filter((g) => !g.is_hidden || g.id === editingCat?.group_id).map((g) => (
@@ -479,7 +479,7 @@ export default function CategoriesPage() {
                     className="h-4 w-4 mt-0.5 rounded border-border shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <span className="text-sm font-medium text-foreground">{t('categories.treatAsTransfer')}</span>
+                    <span className="text-app-body font-medium text-foreground">{t('categories.treatAsTransfer')}</span>
                     <p className="text-xs text-muted-foreground mt-0.5">{t('categories.treatAsTransferDesc')}</p>
                   </div>
                 </label>
@@ -491,7 +491,7 @@ export default function CategoriesPage() {
                     className="h-4 w-4 mt-0.5 rounded border-border shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <span className="text-sm font-medium text-foreground">{t('categories.ignoreTransfer')}</span>
+                    <span className="text-app-body font-medium text-foreground">{t('categories.ignoreTransfer')}</span>
                     <p className="text-xs text-muted-foreground mt-0.5">{t('categories.ignoreTransferDesc')}</p>
                   </div>
                 </label>
@@ -604,7 +604,7 @@ export default function CategoriesPage() {
                 .map(([label, count]) => (
                   <li
                     key={label}
-                    className="flex items-center justify-between px-3 py-2 text-sm"
+                    className="flex items-center justify-between px-3 py-2 text-app-body"
                   >
                     <span className="text-muted-foreground">{t(label)}</span>
                     <span className="font-medium text-foreground tabular-nums">{count}</span>
@@ -655,12 +655,12 @@ export default function CategoriesPage() {
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-app-body text-muted-foreground">
               {t('categories.hideWithRulesDescription', { count: hidingCategory?.rules.length ?? 0 })}
             </p>
             <ul className="max-h-40 overflow-y-auto rounded-lg border border-border divide-y divide-border">
               {hidingCategory?.rules.map((rule) => (
-                <li key={rule.id} className="px-3 py-2 text-sm text-foreground truncate">
+                <li key={rule.id} className="px-3 py-2 text-app-body text-foreground truncate">
                   {rule.name}
                 </li>
               ))}

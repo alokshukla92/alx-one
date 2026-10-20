@@ -28,7 +28,7 @@ export default function OIDCCallbackPage() {
           </div>
           <div>
             <h1 className="text-xl font-semibold tracking-tight">Signing you in…</h1>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-app-body text-muted-foreground mt-1">
               {accessToken ? 'Completing secure OIDC login.' : 'OIDC login did not return an access token.'}
             </p>
           </div>

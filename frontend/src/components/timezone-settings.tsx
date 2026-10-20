@@ -83,7 +83,7 @@ export function TimezoneSettings() {
       <div className="px-5 py-4 border-b border-border/40">
         <div className="flex items-center gap-2 mb-0.5">
           <CalendarClock size={15} className="text-muted-foreground" />
-          <h2 className="text-sm font-semibold text-foreground">
+          <h2 className="text-app-body font-semibold text-foreground">
             {t('admin.settings.timezoneTitle')}
           </h2>
         </div>
@@ -91,25 +91,25 @@ export function TimezoneSettings() {
       <div className="p-5 space-y-3">
         <div className="space-y-1">
           <Label htmlFor="application-timezone">{t('admin.settings.timezone')}</Label>
-          <p id="application-timezone-help" className="text-sm text-muted-foreground">
+          <p id="application-timezone-help" className="text-app-body text-muted-foreground">
             {t('admin.settings.timezoneHelp')}
           </p>
         </div>
         {timezoneQuery.isError ? (
-          <div role="alert" className="flex flex-wrap items-center gap-3 text-sm text-destructive">
+          <div role="alert" className="flex flex-wrap items-center gap-3 text-app-body text-destructive">
             <span>{t('common.error')}</span>
             <Button variant="outline" size="sm" onClick={() => timezoneQuery.refetch()}>
               {t('common.retry')}
             </Button>
           </div>
         ) : !setting ? (
-          <p role="status" className="text-sm text-muted-foreground">{t('common.loading')}</p>
+          <p role="status" className="text-app-body text-muted-foreground">{t('common.loading')}</p>
         ) : (
           <>
             {savedIsBroken && (
               <div
                 role="alert"
-                className="flex items-start gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-700 dark:text-amber-300"
+                className="flex items-start gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-app-body text-amber-700 dark:text-amber-300"
               >
                 <AlertTriangle size={15} className="mt-0.5 shrink-0" />
                 <span>

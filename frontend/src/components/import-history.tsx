@@ -76,7 +76,7 @@ export function ImportHistory({ entity }: ImportHistoryProps) {
         </div>
       ) : (
         <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-          <table className="w-full text-sm">
+          <table className="w-full text-app-body">
             <thead>
               <tr className="border-b border-border">
                 <th className="px-3 py-3 text-left font-medium text-muted-foreground sm:px-4">{t('import.historyDate')}</th>
@@ -98,7 +98,7 @@ export function ImportHistory({ entity }: ImportHistoryProps) {
             <tbody className="divide-y divide-border">
               {rows.map((log) => (
                 <tr key={log.id} className="hover:bg-muted">
-                  <td className="px-3 py-3 text-xs whitespace-nowrap text-muted-foreground sm:px-4 sm:text-sm">
+                  <td className="px-3 py-3 text-xs whitespace-nowrap text-muted-foreground sm:px-4 sm:text-app-body">
                     {new Date(log.created_at).toLocaleString(dateLocale, { dateStyle: 'short', timeStyle: 'short' })}
                   </td>
                   <td className="max-w-[120px] truncate px-3 py-3 font-mono text-xs text-foreground sm:max-w-none sm:px-4">
@@ -156,14 +156,14 @@ export function ImportHistory({ entity }: ImportHistoryProps) {
           <DialogFooter>
             <button
               onClick={() => setDeleteTarget(null)}
-              className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground"
+              className="px-4 py-2 text-app-body text-muted-foreground hover:text-foreground"
             >
               {t('common.cancel')}
             </button>
             <button
               onClick={() => deleteTarget && deleteMutation.mutate(deleteTarget.id)}
               disabled={deleteMutation.isPending}
-              className="rounded-lg bg-rose-500 px-4 py-2 text-sm text-white hover:bg-rose-600 disabled:opacity-50"
+              className="rounded-lg bg-rose-500 px-4 py-2 text-app-body text-white hover:bg-rose-600 disabled:opacity-50"
             >
               {deleteMutation.isPending ? t('import.deleting') : t('import.deleteAll')}
             </button>

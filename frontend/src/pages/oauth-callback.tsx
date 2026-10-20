@@ -92,7 +92,7 @@ export default function OAuthCallbackPage() {
               <h2 className="text-base font-semibold">
                 {t('accounts.oauthCallback.linkAccountsFirstTitle')}
               </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-app-body text-muted-foreground">
                 {t('accounts.oauthCallback.linkAccountsFirstDesc')}
               </p>
             </div>
@@ -128,7 +128,7 @@ export default function OAuthCallbackPage() {
       <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
       <div className="space-y-1.5 max-w-md">
         <p className="text-base font-medium">{t('accounts.oauthCallback.title')}</p>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-app-body text-muted-foreground">
           {t('accounts.oauthCallback.linking')}
         </p>
         <p className="text-xs text-muted-foreground">

@@ -75,7 +75,7 @@ function formatDate(iso: string, locale: string): string {
   }
 }
 
-const DEFAULT_WORKSPACE_COLOR = '#6366F1'
+const DEFAULT_WORKSPACE_COLOR = '#12491F'
 const DEFAULT_WORKSPACE_ICON = 'briefcase'
 
 export default function WorkspaceSettingsPage() {
@@ -322,7 +322,7 @@ export default function WorkspaceSettingsPage() {
                 </Badge>
               )}
             </div>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-app-body text-muted-foreground mt-1">
               {t('workspace.settingsDescription')}
             </p>
           </div>
@@ -526,7 +526,7 @@ export default function WorkspaceSettingsPage() {
         {membersQuery.isLoading ? (
           <Skeleton className="h-16 w-full" />
         ) : members.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {t('workspace.noMembers')} {canManage && t('workspace.noMembersHint')}
           </p>
         ) : (
@@ -544,7 +544,7 @@ export default function WorkspaceSettingsPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">
+                    <p className="text-app-body font-medium truncate">
                       {m.display_name || m.email}
                       {isMe && (
                         <span className="ml-2 text-xs text-muted-foreground">
@@ -565,7 +565,7 @@ export default function WorkspaceSettingsPage() {
                           role: e.target.value as WorkspaceRole,
                         })
                       }
-                      className="h-9 w-32 rounded-lg border border-input bg-card px-2 text-sm"
+                      className="h-9 w-32 rounded-lg border border-input bg-card px-2 text-app-body"
                     >
                       {(['owner', 'editor', 'viewer'] as WorkspaceRole[]).map((r) => (
                         <option key={r} value={r}>
@@ -609,7 +609,7 @@ export default function WorkspaceSettingsPage() {
           </div>
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-medium">
+              <p className="text-app-body font-medium">
                 {t('workspace.archiveAction', 'Arquivar workspace')}
               </p>
               <p className="text-xs text-muted-foreground mt-0.5">
@@ -668,7 +668,7 @@ export default function WorkspaceSettingsPage() {
                 id="invite-role"
                 value={inviteRole}
                 onChange={(e) => setInviteRole(e.target.value as WorkspaceRole)}
-                className="w-full h-10 rounded-lg border border-input bg-card px-3 text-sm"
+                className="w-full h-10 rounded-lg border border-input bg-card px-3 text-app-body"
               >
                 {(['owner', 'editor', 'viewer'] as WorkspaceRole[]).map((r) => (
                   <option key={r} value={r}>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Securo">
+  <rect width="48" height="48" rx="12" fill="#243028"/>
+  <rect x="9" y="28" width="4.5" height="10" rx="1.25" fill="#9AA89A"/>
+  <rect x="15.5" y="25" width="4.5" height="13" rx="1.25" fill="#9AA89A"/>
+  <rect x="22" y="22" width="4.5" height="16" rx="1.25" fill="#9AA89A"/>
+  <rect x="28.5" y="18" width="4.5" height="20" rx="1.25" fill="#9AA89A"/>
+  <rect x="35" y="12" width="4.5" height="26" rx="1.25" fill="#A8ED6B"/>
+</svg>

@@ -74,6 +74,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
         <BrowserRouter>
+          <div className="min-h-screen font-sans antialiased text-app-body">
           <AuthProvider>
             <WorkspaceProvider>
             <Suspense fallback={<LoadingFallback />}>
@@ -145,6 +146,7 @@ function App() {
             <Toaster />
             </WorkspaceProvider>
           </AuthProvider>
+          </div>
         </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>

@@ -76,7 +76,7 @@ export function InvoiceSuggestions({
     <div className="bg-amber-50/60 dark:bg-amber-950/20 rounded-xl border border-amber-200 dark:border-amber-900/60 overflow-hidden">
       <div className="px-4 sm:px-5 py-3 flex items-center gap-2 border-b border-amber-200 dark:border-amber-900/60">
         <HelpCircle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
-        <p className="text-sm font-semibold text-foreground">
+        <p className="text-app-body font-semibold text-foreground">
           {t('invoices.suggestions.title', { count: mine.length })}
         </p>
       </div>
@@ -89,7 +89,7 @@ export function InvoiceSuggestions({
             data-testid="invoice-suggestion"
           >
             <div className="min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">
+              <p className="text-app-body font-medium text-foreground truncate">
                 {suggestion.transaction?.description ?? t('invoices.linkedPayment')}
               </p>
               <p className="text-xs text-muted-foreground tabular-nums mt-0.5">

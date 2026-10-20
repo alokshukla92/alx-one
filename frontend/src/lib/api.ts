@@ -1669,6 +1669,7 @@ export const admin = {
     light: string | null
     dark: string | null
     font: string | null
+    font_scale: string | null
   }> => {
     const { data } = await api.get('/admin/default-colors')
     return data

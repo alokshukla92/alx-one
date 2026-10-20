@@ -165,7 +165,7 @@ export default function ProductsPage() {
         ) : visible.length === 0 ? (
           <div className="px-5 py-14 text-center" data-testid="products-empty">
             <Package className="h-8 w-8 mx-auto text-muted-foreground/50" />
-            <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto">
+            <p className="mt-3 text-app-body text-muted-foreground max-w-sm mx-auto">
               {search
                 ? t('invoices.products.noneFound')
                 : filter === 'archived'
@@ -201,7 +201,7 @@ export default function ProductsPage() {
                   return (
                     <tr key={product.id} data-testid="product-row" className="border-b border-border last:border-0">
                       <td className="py-3 pl-4 sm:pl-5">
-                        <div className="text-sm font-medium text-foreground truncate">{product.name}</div>
+                        <div className="text-app-body font-medium text-foreground truncate">{product.name}</div>
                         <div className="text-xs text-muted-foreground truncate">
                           {product.description ?? (product.unit ? t('invoices.products.perUnit', { unit: product.unit }) : '')}
                         </div>

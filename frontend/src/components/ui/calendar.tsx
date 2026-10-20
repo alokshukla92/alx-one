@@ -105,7 +105,7 @@ function Calendar({
           onClick={onHeaderClick}
           disabled={view === 'years'}
           className={cn(
-            'text-sm font-medium text-foreground capitalize px-2 py-1 rounded-md transition-colors',
+            'text-app-body font-medium text-foreground capitalize px-2 py-1 rounded-md transition-colors',
             view !== 'years' && 'hover:bg-muted/60 cursor-pointer',
             view === 'years' && 'cursor-default',
           )}
@@ -143,7 +143,7 @@ function Calendar({
                     type="button"
                     onClick={() => onSelect?.(d)}
                     className={cn(
-                      'size-8 inline-flex items-center justify-center rounded-lg text-sm transition-colors',
+                      'size-8 inline-flex items-center justify-center rounded-lg text-app-body transition-colors',
                       !inMonth && 'text-muted-foreground/40',
                       inMonth && !isSelected && 'text-foreground hover:bg-muted/60',
                       today && !isSelected && 'bg-accent text-accent-foreground font-medium',
@@ -176,7 +176,7 @@ function Calendar({
                   setView('days')
                 }}
                 className={cn(
-                  'h-10 rounded-lg text-sm capitalize transition-colors',
+                  'h-10 rounded-lg text-app-body capitalize transition-colors',
                   isCurrent
                     ? 'bg-primary text-primary-foreground font-semibold'
                     : 'text-foreground hover:bg-muted/60',
@@ -203,7 +203,7 @@ function Calendar({
                   setView('months')
                 }}
                 className={cn(
-                  'h-10 rounded-lg text-sm transition-colors',
+                  'h-10 rounded-lg text-app-body transition-colors',
                   isCurrent
                     ? 'bg-primary text-primary-foreground font-semibold'
                     : 'text-foreground hover:bg-muted/60',

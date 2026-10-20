@@ -11,7 +11,12 @@ export const UI_FONT_PRESETS = {
       'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap',
   },
   system: {
-    family: "-apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif",
+    family: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif',
+    googleFontsHref: null,
+  },
+  sf_pro_display: {
+    family:
+      '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif',
     googleFontsHref: null,
   },
   dm_sans: {
@@ -43,7 +48,7 @@ export const UI_FONT_PRESETS = {
 
 export type UiFontId = keyof typeof UI_FONT_PRESETS
 
-export const DEFAULT_UI_FONT: UiFontId = 'inter'
+export const DEFAULT_UI_FONT: UiFontId = 'system'
 
 export const UI_FONT_IDS = Object.keys(UI_FONT_PRESETS) as UiFontId[]
 
@@ -74,6 +79,7 @@ export function applyUiFont(fontId: string | null | undefined) {
   const root = document.documentElement
   // Tailwind v4 bakes Inter into body unless we inherit; override tokens + html font for immediate effect.
   root.style.setProperty('--font-sans', preset.family)
+  root.style.setProperty('--font-mono', preset.family)
   root.style.setProperty('--default-font-family', preset.family)
   root.style.fontFamily = preset.family
   document.body.style.fontFamily = preset.family
@@ -81,5 +87,11 @@ export function applyUiFont(fontId: string | null | undefined) {
     ensureGoogleFontLink(preset.googleFontsHref)
   } else {
     removeGoogleFontLink()
+  }
+  // Inter OpenType features only apply to Inter; clear on system stacks.
+  if (id === 'inter' || id === 'geist') {
+    document.body.style.fontFeatureSettings = '"cv02","cv03","cv04","cv11"'
+  } else {
+    document.body.style.fontFeatureSettings = 'normal'
   }
 }

@@ -11,8 +11,10 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { CurrencySelect } from '@/components/currency-select'
 import { ShellLogo } from '@/components/shell-logo'
+import { resolveBrandThemeSettings } from '@/lib/alxone-brand'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
 import { applyUiFont } from '@/lib/ui-fonts'
+import { applyUiFontScale } from '@/lib/ui-font-scale'
 import { isServerUnreachable } from '@/lib/auth-errors'
 import type { AxiosError } from 'axios'
 
@@ -44,9 +46,11 @@ export default function RegisterPage() {
     }).catch(() => {
       if (active) setChecking(false)
     })
-    adminApi.defaultColors().then(({ light, dark, font }) => {
-      setThemeBasedOnSystem(light, dark, resolvedTheme)
-      applyUiFont(font)
+    adminApi.defaultColors().then(({ light, dark, font, font_scale }) => {
+      const brand = resolveBrandThemeSettings(light, dark, font, font_scale)
+      setThemeBasedOnSystem(brand.light, brand.dark, resolvedTheme)
+      applyUiFont(brand.font)
+      applyUiFontScale(brand.fontScale)
     }).catch(() => {})
     return () => {
       active = false
@@ -106,16 +110,16 @@ export default function RegisterPage() {
               <ShellLogo size={22} className="text-primary" />
             </div>
             <h1 className="text-xl font-semibold tracking-tight">{t('auth.register')}</h1>
-            <p className="text-sm text-muted-foreground mt-1">{t('auth.registerDescription')}</p>
+            <p className="text-app-body text-muted-foreground mt-1">{t('auth.registerDescription')}</p>
           </div>
           <CardContent className="space-y-4 px-8 pt-4">
             {error && (
-              <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-lg">
+              <div className="p-3 text-app-body text-destructive bg-destructive/10 rounded-lg">
                 {error}
               </div>
             )}
             <div className="space-y-1.5">
-              <Label htmlFor="email" className="text-sm">{t('auth.email')}</Label>
+              <Label htmlFor="email" className="text-app-body">{t('auth.email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -126,7 +130,7 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="password" className="text-sm">{t('auth.password')}</Label>
+              <Label htmlFor="password" className="text-app-body">{t('auth.password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -137,7 +141,7 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="confirmPassword" className="text-sm">{t('auth.confirmPassword')}</Label>
+              <Label htmlFor="confirmPassword" className="text-app-body">{t('auth.confirmPassword')}</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -147,7 +151,7 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="currency" className="text-sm">{t('auth.currency')}</Label>
+              <Label htmlFor="currency" className="text-app-body">{t('auth.currency')}</Label>
               <CurrencySelect id="currency" value={currency} onChange={setCurrency} />
             </div>
           </CardContent>
@@ -155,7 +159,7 @@ export default function RegisterPage() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? t('common.loading') : t('auth.register')}
             </Button>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-app-body text-muted-foreground">
               {t('auth.hasAccount')}{' '}
               <Link to="/login" className="text-primary font-medium hover:underline">
                 {t('auth.login')}

@@ -98,7 +98,7 @@ export function TransferDialog({
             <div className="space-y-2">
               <Label>{t('transactions.transferFromAccount')}</Label>
               <select
-                className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                 value={fromAccountId}
                 onChange={(e) => {
                   setFromAccountId(e.target.value)
@@ -121,7 +121,7 @@ export function TransferDialog({
             <div className="space-y-2">
               <Label>{t('transactions.transferToAccount')}</Label>
               <select
-                className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                 value={toAccountId}
                 onChange={(e) => {
                   setToAccountId(e.target.value)
@@ -140,13 +140,13 @@ export function TransferDialog({
           </div>
 
           {isSameAccount && (
-            <div className="flex items-center gap-2 p-3 text-sm bg-destructive/10 text-destructive rounded-md">
+            <div className="flex items-center gap-2 p-3 text-app-body bg-destructive/10 text-destructive rounded-md">
               {t('transactions.transferSameAccount')}
             </div>
           )}
 
           {isCrossCurrency && (
-            <div className="flex items-center gap-2 p-3 text-sm bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md text-blue-700 dark:text-blue-300">
+            <div className="flex items-center gap-2 p-3 text-app-body bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md text-blue-700 dark:text-blue-300">
               <Info size={14} className="shrink-0" />
               {t('transactions.transferCrossCurrency')}
             </div>
@@ -208,7 +208,7 @@ export function TransferDialog({
               <span className="text-muted-foreground font-normal text-xs">({t('transactions.notesHint')})</span>
             </Label>
             <textarea
-              className="w-full border border-input rounded-md px-3 py-2 text-sm bg-card resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-0"
+              className="w-full border border-input rounded-md px-3 py-2 text-app-body bg-card resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-0"
               rows={2}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}

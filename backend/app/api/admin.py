@@ -29,6 +29,15 @@ from app.services import admin_service
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
+# AlxOne default brand (forest green light / lime dark accent)
+ALXONE_THEME_COLOR_LIGHT = "#12491F"
+ALXONE_THEME_COLOR_DARK = "#98E456"
+ALXONE_UI_FONT_DEFAULT = "system"
+ALXONE_UI_FONT_SCALE_DEFAULT = "standard"
+UI_FONT_SCALE_PRESETS = frozenset({"compact", "standard", "comfortable"})
+_LEGACY_THEME_LIGHT = frozenset({"#FFFFFF", "#FFF"})
+_LEGACY_THEME_DARK = frozenset({"#000000", "#000", "#818CF8"})
+
 UI_FONT_PRESETS = {
     "inter",
     "geist",
@@ -38,6 +47,7 @@ UI_FONT_PRESETS = {
     "manrope",
     "source_sans_3",
     "poppins",
+    "sf_pro_display",
 }
 
 ALLOWED_SETTINGS = {
@@ -47,6 +57,7 @@ ALLOWED_SETTINGS = {
     "theme_color_light",
     "theme_color_dark",
     "ui_font",
+    "ui_font_scale",
     "number_format",
     "date_format",
     "timezone",
@@ -184,6 +195,12 @@ async def update_setting(
             detail=f"Invalid value for 'ui_font'. Allowed: {sorted(UI_FONT_PRESETS)}",
         )
 
+    if key == "ui_font_scale" and data.value not in UI_FONT_SCALE_PRESETS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid value for 'ui_font_scale'. Allowed: {sorted(UI_FONT_SCALE_PRESETS)}",
+        )
+
     setting = await admin_service.set_app_setting(session, key, data.value)
     if key == "timezone":
         invalidate_timezone_cache()
@@ -229,6 +246,27 @@ async def registration_status(
     return {"enabled": enabled}
 
 
+def _resolve_default_theme_colors(
+    light_value: str | None,
+    dark_value: str | None,
+    font_value: str | None,
+    font_scale_value: str | None,
+) -> dict[str, str]:
+    light = (light_value or "").strip().upper()
+    dark = (dark_value or "").strip().upper()
+    if not light or light in _LEGACY_THEME_LIGHT:
+        light = ALXONE_THEME_COLOR_LIGHT
+    if not dark or dark in _LEGACY_THEME_DARK:
+        dark = ALXONE_THEME_COLOR_DARK
+    font = (font_value or "").strip() or ALXONE_UI_FONT_DEFAULT
+    if font not in UI_FONT_PRESETS:
+        font = ALXONE_UI_FONT_DEFAULT
+    font_scale = (font_scale_value or "").strip() or ALXONE_UI_FONT_SCALE_DEFAULT
+    if font_scale not in UI_FONT_SCALE_PRESETS:
+        font_scale = ALXONE_UI_FONT_SCALE_DEFAULT
+    return {"light": light, "dark": dark, "font": font, "font_scale": font_scale}
+
+
 @router.get("/default-colors")
 async def default_colors(
     session: AsyncSession = Depends(get_async_session),
@@ -236,11 +274,13 @@ async def default_colors(
     light = await admin_service.get_app_setting(session, "theme_color_light")
     dark = await admin_service.get_app_setting(session, "theme_color_dark")
     font = await admin_service.get_app_setting(session, "ui_font")
-    return {
-        "light": light.value if light else None,
-        "dark": dark.value if dark else None,
-        "font": font.value if font else None,
-    }
+    font_scale = await admin_service.get_app_setting(session, "ui_font_scale")
+    return _resolve_default_theme_colors(
+        light.value if light else None,
+        dark.value if dark else None,
+        font.value if font else None,
+        font_scale.value if font_scale else None,
+    )
 
 
 @router.get("/accounting-mode")

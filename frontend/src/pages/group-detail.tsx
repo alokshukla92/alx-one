@@ -55,7 +55,7 @@ import { formatCurrency } from '@/lib/format'
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -73,7 +73,7 @@ function SectionHeader({
   return (
     <div className="px-4 sm:px-5 py-4 border-b border-border flex flex-wrap items-center justify-between gap-2">
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-foreground">{title}</p>
+        <p className="text-app-body font-semibold text-foreground">{title}</p>
         {description && (
           <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
         )}
@@ -110,7 +110,7 @@ function KpiCard({
         : 'text-foreground'
   const hasBreakdown = !!breakdown && breakdown.length > 0
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4">
+    <div className="alx-panel p-3 sm:p-4">
       <button
         type="button"
         className={`w-full text-left ${hasBreakdown ? 'cursor-pointer' : 'cursor-default'}`}
@@ -695,7 +695,7 @@ export default function GroupDetailPage() {
           }
         />
         {group.members.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground text-sm">
+          <div className="text-center py-8 text-muted-foreground text-app-body">
             {t('splitGroups.noMembers')}
           </div>
         ) : (
@@ -704,7 +704,7 @@ export default function GroupDetailPage() {
               <li key={member.id} className="flex items-center justify-between px-4 py-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium">{member.name}</span>
+                    <span className="text-app-body font-medium">{member.name}</span>
                     {/* "(you)" only marks the actual viewer. is_self
                         identifies the group owner/payer; for non-owner
                         viewers we show that as "(owner)" instead so
@@ -774,10 +774,10 @@ export default function GroupDetailPage() {
                   key={`${line.member_id}-${line.currency}-${idx}`}
                   className="flex items-center justify-between px-4 py-3"
                 >
-                  <div className="text-sm">{label}</div>
+                  <div className="text-app-body">{label}</div>
                   <div className="flex items-center gap-3">
                     <span
-                      className={`text-sm font-semibold tabular-nums ${
+                      className={`text-app-body font-semibold tabular-nums ${
                         positive ? 'text-emerald-600' : 'text-rose-500'
                       }`}
                     >
@@ -816,7 +816,7 @@ export default function GroupDetailPage() {
             })}
           </ul>
         ) : (
-          <div className="text-center py-6 text-muted-foreground text-sm">
+          <div className="text-center py-6 text-muted-foreground text-app-body">
             {t('splitGroups.allSettled')}
           </div>
         )}
@@ -847,7 +847,7 @@ export default function GroupDetailPage() {
             <Skeleton className="h-10 w-full" />
           </div>
         ) : groupTxs.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground text-sm flex flex-col items-center gap-2">
+          <div className="text-center py-8 text-muted-foreground text-app-body flex flex-col items-center gap-2">
             <Receipt size={20} className="opacity-50" />
             {t('splitGroups.noTransactions')}
           </div>
@@ -865,7 +865,7 @@ export default function GroupDetailPage() {
                   size="md"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground truncate">
+                  <p className="text-app-body font-medium text-foreground truncate">
                     {tx.description}
                   </p>
                   <p className="text-xs text-muted-foreground">
@@ -877,7 +877,7 @@ export default function GroupDetailPage() {
                   </p>
                 </div>
                 <span
-                  className={`text-sm font-semibold tabular-nums ml-3 ${
+                  className={`text-app-body font-semibold tabular-nums ml-3 ${
                     tx.type === 'debit' ? 'text-rose-500' : 'text-emerald-600'
                   }`}
                 >
@@ -911,7 +911,7 @@ export default function GroupDetailPage() {
             {settlements.map((s: GroupSettlement) => (
               <li key={s.id} className="flex items-center justify-between px-4 py-3">
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm flex items-center gap-1.5">
+                  <div className="text-app-body flex items-center gap-1.5">
                     <span className="font-medium">{memberName_(s.from_member_id)}</span>
                     <ArrowRight size={12} className="text-muted-foreground" />
                     <span className="font-medium">{memberName_(s.to_member_id)}</span>
@@ -922,7 +922,7 @@ export default function GroupDetailPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-semibold tabular-nums">
+                  <span className="text-app-body font-semibold tabular-nums">
                     {formatCurrency(s.amount, s.currency, locale)}
                   </span>
                   {isOwner && canWrite && (
@@ -941,7 +941,7 @@ export default function GroupDetailPage() {
             ))}
           </ul>
         ) : (
-          <div className="text-center py-6 text-muted-foreground text-sm">
+          <div className="text-center py-6 text-muted-foreground text-app-body">
             {t('splitGroups.noSettlements')}
           </div>
         )}
@@ -1006,7 +1006,7 @@ export default function GroupDetailPage() {
             <div className="space-y-2">
               <Label>{t('splitGroups.from')}</Label>
               <select
-                className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card"
+                className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card"
                 value={settleFrom}
                 onChange={(e) => {
                   setSettleFrom(e.target.value)
@@ -1029,7 +1029,7 @@ export default function GroupDetailPage() {
             <div className="space-y-2">
               <Label>{t('splitGroups.to')}</Label>
               <select
-                className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card"
+                className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card"
                 value={settleTo}
                 onChange={(e) => setSettleTo(e.target.value)}
               >
@@ -1050,7 +1050,7 @@ export default function GroupDetailPage() {
                 <div className="space-y-2">
                   <Label>{t('splitGroups.txAction')}</Label>
                   <select
-                    className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card"
+                    className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card"
                     value={settleTxMode}
                     onChange={(e) => {
                       setSettleTxMode(e.target.value as 'none' | 'create' | 'existing')
@@ -1066,7 +1066,7 @@ export default function GroupDetailPage() {
                   {settleTxMode === 'create' && (
                     <div className="space-y-1">
                       <select
-                        className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card"
+                        className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card"
                         value={settleAccountId}
                         onChange={(e) => setSettleAccountId(e.target.value)}
                       >
@@ -1111,7 +1111,7 @@ export default function GroupDetailPage() {
                                   setSettleCurrency(tx.currency)
                                   setSettleDate(tx.date)
                                 }}
-                                className={`w-full text-left px-3 py-2 text-sm flex items-center justify-between gap-3 ${
+                                className={`w-full text-left px-3 py-2 text-app-body flex items-center justify-between gap-3 ${
                                   picked ? 'bg-primary/10' : 'hover:bg-muted/50'
                                 }`}
                               >
@@ -1170,7 +1170,7 @@ export default function GroupDetailPage() {
             <div className="space-y-2">
               <Label>{t('splitGroups.notes')}</Label>
               <textarea
-                className="w-full border border-input rounded-md px-3 py-2 text-sm bg-card resize-none"
+                className="w-full border border-input rounded-md px-3 py-2 text-app-body bg-card resize-none"
                 rows={2}
                 value={settleNotes}
                 onChange={(e) => setSettleNotes(e.target.value)}

@@ -1,0 +1,71 @@
+/**
+ * AlxOne visual design tokens (reference-matched fintech palette).
+ * Mapped into shadcn semantic variables in index.css.
+ */
+:root {
+  /* Brand (canonical aliases) */
+  --color-primary: #A8ED6B;
+  --color-green-dark: #12491F;
+  --color-green-medium: #236B35;
+  --color-chart-line: #A8ED6B;
+
+  --color-primary-lime: #A8ED6B;
+  --color-primary-hover: #98E456;
+  --color-primary-soft: #F2FCE9;
+  --color-primary-muted: #E7F8D8;
+
+  /* Dark green */
+  --color-green-900: #12491F;
+  --color-green-800: #18552A;
+  --color-green-700: #236B35;
+  --color-green-600: #347D40;
+
+  /* Backgrounds — page is soft green-gray; cards/sidebar stay slightly brighter */
+  --color-background: #F4F6F3;
+  --color-background-muted: #EEF1EC;
+  --color-surface: #FAFBF9;
+  --color-surface-green: #F2FCE9;
+
+  /* Typography */
+  --color-text-primary: #151515;
+  --color-text-secondary: #858585;
+  --color-text-muted: #A0A0A0;
+  --color-text-on-primary: #12491F;
+  --color-text-on-dark: #FFFFFF;
+
+  /* Borders */
+  --color-border: #EEEEEE;
+  --color-border-strong: #E4E7E1;
+
+  /* Financial status */
+  --color-income: #18552A;
+  --color-expense: #151515;
+  --color-danger: #D64545;
+
+  /* Charts */
+  --color-chart-primary: #A8ED6B;
+  --color-chart-fill: #F2FCE9;
+  --color-chart-grid: #EEEEEE;
+  --color-chart-label: #858585;
+
+  /* Effects */
+  --shadow-card: 0 2px 12px rgba(20, 40, 20, 0.035);
+
+  /* Corners */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
+
+  /* Typography scale (default: standard — override via ui_font_scale) */
+  --text-title: 1.5rem;
+  --text-title-lg: 1.625rem;
+  --text-balance: clamp(2.125rem, 4.5vw, 2.75rem);
+  --text-section: 1rem;
+  --text-body: 0.875rem;
+  --text-label: 0.75rem;
+  --text-button: 0.875rem;
+  --leading-body: 1.5;
+  --leading-tight: 1.2;
+}

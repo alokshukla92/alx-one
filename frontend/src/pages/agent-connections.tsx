@@ -62,19 +62,19 @@ export default function AgentConnectionsPage() {
         }
       />
 
-      <p className="text-sm text-muted-foreground mb-6 max-w-2xl">{t('agents.connections.subtitle')}</p>
+      <p className="text-app-body text-muted-foreground mb-6 max-w-2xl">{t('agents.connections.subtitle')}</p>
 
       {isLoading ? (
-        <div className="bg-card rounded-xl border border-border shadow-sm p-6 text-sm text-muted-foreground">
+        <div className="alx-panel p-6 text-app-body text-muted-foreground">
           {t('agents.loading')}
         </div>
       ) : (list?.length ?? 0) === 0 ? (
-        <div className="bg-card rounded-xl border border-border shadow-sm p-10 text-center">
+        <div className="alx-panel p-10 text-center">
           <div className="h-12 w-12 mx-auto rounded-full bg-muted flex items-center justify-center mb-3">
             <Plug className="h-6 w-6 text-muted-foreground" />
           </div>
           <h2 className="text-base font-semibold">{t('agents.connections.empty.title')}</h2>
-          <p className="text-sm text-muted-foreground mt-1 max-w-md mx-auto">
+          <p className="text-app-body text-muted-foreground mt-1 max-w-md mx-auto">
             {t('agents.connections.empty.subtitle')}
           </p>
           {canWrite && (
@@ -84,7 +84,7 @@ export default function AgentConnectionsPage() {
           )}
         </div>
       ) : (
-        <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="alx-panel overflow-hidden">
           <div className="divide-y divide-border">
             {list?.map((c) => {
               const tested = testResults[c.id]
@@ -98,7 +98,7 @@ export default function AgentConnectionsPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-semibold truncate">{c.name}</span>
+                      <span className="text-app-body font-semibold truncate">{c.name}</span>
                       <Badge variant="secondary" className="text-[10px] uppercase tracking-wider px-1.5 py-0">
                         {c.kind}
                       </Badge>

@@ -653,7 +653,7 @@ export default function PayeesPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden mb-4">
+      <div className="alx-panel overflow-hidden mb-4">
         {isLoading ? (
           <div className="p-6 space-y-3">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -770,7 +770,7 @@ export default function PayeesPage() {
                     )}
                   </TableCell>
                   <TableCell className="py-2.5 max-w-0 w-full">
-                    <p className="text-sm font-semibold text-foreground truncate" title={payee.name}>{payee.name}</p>
+                    <p className="text-app-body font-semibold text-foreground truncate" title={payee.name}>{payee.name}</p>
                     {payee.notes && (
                       <p className="text-xs text-muted-foreground mt-0.5 truncate" title={payee.notes}>{payee.notes}</p>
                     )}
@@ -781,7 +781,7 @@ export default function PayeesPage() {
                     )}
                   </TableCell>
                   <TableCell className="py-2.5 text-left">
-                    <span className="text-sm tabular-nums text-muted-foreground">{payee.transaction_count}</span>
+                    <span className="text-app-body tabular-nums text-muted-foreground">{payee.transaction_count}</span>
                   </TableCell>
                   {canWrite && (
                     <TableCell className="py-2.5 pr-4 sm:pr-5">
@@ -834,7 +834,7 @@ export default function PayeesPage() {
                   >
                     {t('common.previous')}
                   </Button>
-                  <span className="text-sm text-muted-foreground tabular-nums">
+                  <span className="text-app-body text-muted-foreground tabular-nums">
                     {safePage} / {totalPages}
                   </span>
                   <Button
@@ -907,7 +907,7 @@ export default function PayeesPage() {
             <div className="space-y-2">
               <Label>{t('payees.type')}</Label>
               <select
-                className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                 value={formType}
                 onChange={(e) => setFormType(e.target.value as FormType)}
               >
@@ -922,7 +922,7 @@ export default function PayeesPage() {
             <div className="space-y-2">
               <Label>{t('payees.notes')}</Label>
               <textarea
-                className="w-full border border-input rounded-md px-3 py-2 text-sm bg-card resize-none focus:outline-none focus:ring-2 focus:ring-ring"
+                className="w-full border border-input rounded-md px-3 py-2 text-app-body bg-card resize-none focus:outline-none focus:ring-2 focus:ring-ring"
                 rows={2}
                 value={formNotes}
                 onChange={(e) => setFormNotes(e.target.value)}
@@ -1072,19 +1072,19 @@ export default function PayeesPage() {
             <DialogTitle>{t('payees.mergeTitle')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">{t('payees.mergeDescription')}</p>
+            <p className="text-app-body text-muted-foreground">{t('payees.mergeDescription')}</p>
             <div className="space-y-1">
               {Array.from(selectedIds).map(id => {
                 const p = payeesList?.find(x => x.id === id)
                 return p ? (
-                  <div key={id} className="text-sm py-1 px-2 rounded bg-muted">{p.name} ({p.transaction_count})</div>
+                  <div key={id} className="text-app-body py-1 px-2 rounded bg-muted">{p.name} ({p.transaction_count})</div>
                 ) : null
               })}
             </div>
             <div className="space-y-2">
               <Label>{t('payees.mergeTarget')}</Label>
               <select
-                className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                 value={mergeTargetId}
                 onChange={(e) => setMergeTargetId(e.target.value)}
               >
@@ -1122,7 +1122,7 @@ export default function PayeesPage() {
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-app-body text-muted-foreground">
               {payeesToDelete.length > 1 ? t('payees.deleteMultipleConfirm', { count: payeesToDelete.length }) : t('payees.deleteConfirm')}
             </p>
           </div>

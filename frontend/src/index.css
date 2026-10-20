@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..800;1,14..32,400..800&display=swap');
+@import "./styles/alxone-tokens.css";
+@import "./styles/alxone-components.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -6,76 +7,91 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #F8F9FB;
-  --foreground: #0F172A;
-  --card: #FFFFFF;
-  --card-foreground: #0F172A;
-  --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
-  --primary: #6366F1;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F1F5F9;
-  --secondary-foreground: #0F172A;
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;
-  --accent: #EEF2FF;
-  --accent-foreground: #4F46E5;
-  --destructive: #F43F5E;
+  /* shadcn semantics ← AlxOne tokens */
+  --background: var(--color-background);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text-primary);
+  --primary: var(--color-green-900);
+  --primary-foreground: var(--color-text-on-dark);
+  --secondary: var(--color-primary-soft);
+  --secondary-foreground: var(--color-green-900);
+  --muted: var(--color-background-muted);
+  --muted-foreground: var(--color-text-secondary);
+  --accent: var(--color-primary-soft);
+  --accent-foreground: var(--color-green-800);
+  --destructive: var(--color-danger);
   --destructive-foreground: #FFFFFF;
-  --border: #E8ECF1;
-  --input: #E8ECF1;
-  --ring: #6366F1;
-  --radius: 0.625rem;
-  --chart-1: #6366F1;
-  --chart-2: #8B5CF6;
-  --chart-3: #10B981;
-  --chart-4: #F59E0B;
-  --chart-5: #F43F5E;
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #0F172A;
-  --sidebar-primary: #6366F1;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F1F5F9;
-  --sidebar-accent-foreground: #4F46E5;
-  --sidebar-border: #E8ECF1;
-  --sidebar-ring: #6366F1;
-  --sidebar-muted: #64748B;
+  --border: var(--color-border);
+  --input: var(--color-border-strong);
+  --ring: var(--color-green-600);
+  --radius: var(--radius-md);
+  --chart-1: var(--color-chart-primary);
+  --chart-2: var(--color-green-800);
+  --chart-3: var(--color-green-600);
+  --chart-4: var(--color-primary-lime);
+  --chart-5: var(--color-danger);
+  --sidebar: var(--color-surface);
+  --sidebar-foreground: var(--color-text-primary);
+  --sidebar-primary: var(--color-green-900);
+  --sidebar-primary-foreground: var(--color-text-on-dark);
+  --sidebar-accent: var(--color-primary-soft);
+  --sidebar-accent-foreground: var(--color-green-900);
+  --sidebar-border: var(--color-border);
+  --sidebar-ring: var(--color-green-600);
+  /* Nav + labels: near-black in light mode (not grey secondary). */
+  --sidebar-muted: var(--color-text-primary);
 }
 
 .dark {
-  --background: #0C0D12;
-  --foreground: #F0F0F5;
-  --card: #16171F;
-  --card-foreground: #F0F0F5;
-  --popover: #16171F;
-  --popover-foreground: #F0F0F5;
-  --primary: #818CF8;
-  --primary-foreground: #FFFFFF;
-  --secondary: #252836;
-  --secondary-foreground: #F0F0F5;
-  --muted: #252836;
-  --muted-foreground: #8A8F9E;
-  --accent: #1E1B4B;
-  --accent-foreground: #A5B4FC;
-  --destructive: #FB7185;
-  --destructive-foreground: #0C0D12;
-  --border: #2A2D3A;
-  --input: #2A2D3A;
-  --ring: #818CF8;
-  --chart-1: #818CF8;
-  --sidebar: #16171F;
-  --sidebar-foreground: #F0F0F5;
-  --sidebar-primary: #818CF8;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #252836;
-  --sidebar-accent-foreground: #A5B4FC;
-  --sidebar-border: #2A2D3A;
-  --sidebar-ring: #818CF8;
-  --sidebar-muted: #8A8F9E;
+  --color-background-muted: #0f1410;
+  --color-surface: #161b17;
+  --color-text-primary: #f4f6f2;
+  --color-text-secondary: #a8afa6;
+  --color-income: #98e456;
+  --color-expense: #f4f6f2;
+  --color-border: #2a322c;
+  --color-border-strong: #343d36;
+  --background: var(--color-background-muted);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text-primary);
+  --primary: #98e456;
+  --primary-foreground: #12491f;
+  --secondary: #1e2a1f;
+  --secondary-foreground: #e7f8d8;
+  --muted: #1a211c;
+  --muted-foreground: var(--color-text-secondary);
+  --accent: #1e2a1f;
+  --accent-foreground: #a8ed6b;
+  --destructive: #e85c5c;
+  --destructive-foreground: #0f1410;
+  --border: var(--color-border);
+  --input: var(--color-border-strong);
+  --ring: #a8ed6b;
+  --chart-1: #a8ed6b;
+  --chart-2: #98e456;
+  --chart-3: #347d40;
+  --sidebar: var(--color-surface);
+  --sidebar-foreground: var(--color-text-primary);
+  --sidebar-primary: #a8ed6b;
+  --sidebar-primary-foreground: #12491f;
+  --sidebar-accent: #1e2a1f;
+  --sidebar-accent-foreground: #e7f8d8;
+  --sidebar-border: var(--color-border);
+  --sidebar-ring: #a8ed6b;
+  --sidebar-muted: var(--color-text-secondary);
 }
 
 @theme inline {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --color-income: var(--color-income);
+  --color-expense: var(--color-expense);
+  --color-brand-lime: var(--color-primary-lime);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -121,17 +137,90 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    font-family: var(--font-sans);
+  }
   body {
-    @apply bg-background text-foreground;
-    /* Inherit from html so runtime --default-font-family / applyUiFont() works (font-sans bakes Inter at build). */
-    font-family: inherit;
-    font-feature-settings: "cv02","cv03","cv04","cv11";
+    @apply bg-background text-foreground font-sans;
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3 {
-    letter-spacing: -0.035em;
+  button,
+  input,
+  select,
+  textarea,
+  kbd {
+    font: inherit;
   }
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  h1 {
+    font-size: var(--text-title-lg);
+    font-weight: 400;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: var(--text-title);
+    font-weight: 400;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+  }
+  h3 {
+    font-size: var(--text-section);
+    font-weight: 500;
+    line-height: var(--leading-tight);
+  }
+  .alx-balance {
+    font-size: var(--text-balance);
+    font-weight: 400;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.03em;
+  }
+}
+
+/* AlxOne body copy — use instead of Tailwind `text-sm` (14px) in app UI. */
+@utility text-app-body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+@utility text-app-label {
+  font-size: var(--text-label);
+  line-height: var(--leading-body);
+}
+
+/* Securo shell sidebar — solid surface, no glass; avoid persistent transform on
+   desktop (subpixel blur on macOS when a fixed layer stays composited). */
+aside[data-sidebar='securo'] {
+  background-color: var(--sidebar);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+@media (min-width: 1024px) {
+  aside[data-sidebar='securo'] {
+    transform: none;
+  }
+}
+
+.alx-panel {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+.alx-success-banner {
+  background: var(--color-primary-soft);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
+  border-radius: var(--radius-md);
 }
 
 /* Recharts focuses its wrapper/surface on click; on macOS this draws a
@@ -144,6 +233,12 @@
 .recharts-wrapper *:focus,
 .recharts-wrapper *:focus-visible {
   outline: none;
+}
+
+.recharts-cartesian-axis-tick text,
+.recharts-legend-item-text,
+.recharts-tooltip-wrapper {
+  font-family: var(--font-sans) !important;
 }
 
 @keyframes securo-highlight-flash {
@@ -192,8 +287,8 @@
   left: -8%;
   width: 62%;
   height: 62%;
-  opacity: 0.55;
-  background: radial-gradient(circle at center, #818cf8 0%, transparent 70%);
+  opacity: 0.5;
+  background: radial-gradient(circle at center, #a8ed6b 0%, transparent 70%);
   animation: securo-aurora-1 24s ease-in-out infinite;
 }
 .securo-aurora-2 {
@@ -201,8 +296,8 @@
   bottom: -18%;
   width: 68%;
   height: 68%;
-  opacity: 0.5;
-  background: radial-gradient(circle at center, #a78bfa 0%, transparent 70%);
+  opacity: 0.45;
+  background: radial-gradient(circle at center, #98e456 0%, transparent 70%);
   animation: securo-aurora-2 29s ease-in-out infinite;
 }
 .securo-aurora-3 {
@@ -210,8 +305,8 @@
   left: 22%;
   width: 46%;
   height: 46%;
-  opacity: 0.4;
-  background: radial-gradient(circle at center, #c4b5fd 0%, transparent 70%);
+  opacity: 0.35;
+  background: radial-gradient(circle at center, #f2fce9 0%, transparent 70%);
   animation: securo-aurora-3 33s ease-in-out infinite;
 }
 

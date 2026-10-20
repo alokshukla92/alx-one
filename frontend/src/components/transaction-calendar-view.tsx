@@ -119,7 +119,7 @@ export function TransactionCalendarView({
 
   if (isLoading) {
     return (
-      <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden mb-4">
+      <div className="alx-panel overflow-hidden mb-4">
         <div className="p-4 border-b border-border flex items-center justify-between">
           <Skeleton className="h-6 w-44" />
           <Skeleton className="h-8 w-32" />
@@ -140,7 +140,7 @@ export function TransactionCalendarView({
 
   return (
     <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start">
-      <section className="min-w-0 flex-1 bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+      <section className="min-w-0 flex-1 alx-panel overflow-hidden">
         <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-border sm:px-5">
           <CalendarLegend />
           <div className="flex flex-wrap items-center gap-2">
@@ -427,7 +427,7 @@ function ActivityBars({
         <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
           {t('transactions.calendarActivityTrend')}
         </p>
-        <p className="flex h-16 items-center justify-center text-sm text-muted-foreground">
+        <p className="flex h-16 items-center justify-center text-app-body text-muted-foreground">
           {t('transactions.calendarNoActivity')}
         </p>
       </div>
@@ -723,7 +723,7 @@ function DayCell({
     >
       <div className="flex items-center justify-between gap-1">
         <span className={cn(
-          'inline-flex size-6 shrink-0 items-center justify-center rounded-full text-sm font-bold tabular-nums',
+          'inline-flex size-6 shrink-0 items-center justify-center rounded-full text-app-body font-bold tabular-nums',
           today && 'bg-primary text-primary-foreground',
           !today && day.in_month && 'text-foreground',
           !today && !day.in_month && 'text-muted-foreground',
@@ -745,7 +745,7 @@ function DayCell({
           <p
             title={mask(formatCurrency(day.ending_balance, currency, locale))}
             className={cn(
-              'whitespace-nowrap text-sm tabular-nums',
+              'whitespace-nowrap text-app-body tabular-nums',
               isLowBalance
                 ? 'rounded-full border border-rose-300 bg-rose-100 px-1.5 py-0.5 font-bold text-rose-700 dark:border-rose-500/50 dark:bg-rose-500/15 dark:text-rose-300'
                 : 'font-semibold text-muted-foreground',
@@ -880,7 +880,7 @@ function DayCellActivity({
   return (
     <div className={cn('mt-3 space-y-0.5', align === 'right' && 'mt-0 text-right')}>
       {activity.hasActual && (
-        <p className={cn('flex flex-wrap items-center gap-x-1.5 text-sm font-semibold tabular-nums', align === 'right' && 'justify-end')}>
+        <p className={cn('flex flex-wrap items-center gap-x-1.5 text-app-body font-semibold tabular-nums', align === 'right' && 'justify-end')}>
           {activity.actualIncome > 0 && (
             <span className="text-emerald-600 dark:text-emerald-400">
               {mask(`+${compactCurrency(activity.actualIncome, currency, locale)}`)}
@@ -996,7 +996,7 @@ function MobileDayRow({
     >
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-foreground">
+          <p className="text-app-body font-semibold text-foreground">
             {parseLocalDate(day.date).toLocaleDateString(dateLocale, { weekday: 'short', day: 'numeric', month: 'short' })}
           </p>
           <p className="text-xs text-muted-foreground">
@@ -1005,7 +1005,7 @@ function MobileDayRow({
         </div>
         <div className="flex flex-col items-end gap-0.5 text-right">
           {metric === 'balance' ? (
-            <p className={cn('text-sm font-bold tabular-nums', day.ending_balance < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400')}>
+            <p className={cn('text-app-body font-bold tabular-nums', day.ending_balance < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400')}>
               {mask(formatCurrency(day.ending_balance, currency, locale))}
             </p>
           ) : (
@@ -1157,7 +1157,7 @@ function SelectedDayPanel({
 
       <div className="min-h-0 divide-y divide-border overflow-y-auto md:flex-1">
         {day.items.length === 0 ? (
-          <p className="px-4 py-8 text-sm text-muted-foreground text-center">{t('transactions.calendarNoItems')}</p>
+          <p className="px-4 py-8 text-app-body text-muted-foreground text-center">{t('transactions.calendarNoItems')}</p>
         ) : (
           day.items.map((item) => (
             <CalendarItemRow
@@ -1180,7 +1180,7 @@ function SelectedDayPanel({
 // `amount` only picks the colour, so the caller stays free to format the string.
 function DayPanelRow({ label, value, amount }: { label: string; value: string; amount: number }) {
   return (
-    <div className="flex items-center justify-between gap-3 text-sm">
+    <div className="flex items-center justify-between gap-3 text-app-body">
       <span className="text-muted-foreground">{label}</span>
       <span
         className={cn(
@@ -1236,7 +1236,7 @@ function CalendarItemRow({
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5">
-          <p className="text-sm font-semibold text-foreground truncate leading-tight">{item.description}</p>
+          <p className="text-app-body font-semibold text-foreground truncate leading-tight">{item.description}</p>
           {item.kind === 'projected' && item.source === 'recurring' && item.status !== 'pending' && (
             <ProjectedTransactionBadge />
           )}
@@ -1271,7 +1271,7 @@ function CalendarItemRow({
         )}
       </div>
       <div className="shrink-0 text-right">
-        <span className={cn('text-sm font-bold tabular-nums', amountColor)}>
+        <span className={cn('text-app-body font-bold tabular-nums', amountColor)}>
           {mask(`${item.is_ignored ? ' ' : item.type === 'credit' ? '+' : '−'}${formatCurrency(Math.abs(item.amount), item.currency, locale)}`)}
         </span>
         {item.amount_primary != null && item.currency !== userCurrency && (

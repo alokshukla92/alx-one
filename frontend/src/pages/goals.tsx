@@ -43,7 +43,7 @@ const PRESET_COLORS = [
   '#8B5CF6', '#EC4899', '#06B6D4', '#F97316',
 ]
 
-const SELECT_CLASS = 'w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary'
+const SELECT_CLASS = 'w-full border border-border rounded-lg px-3 py-2 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary'
 
 function LinkedResourceSelect<T extends { id: string }>({
   name,
@@ -80,7 +80,7 @@ function LinkedResourceSelect<T extends { id: string }>({
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -88,7 +88,7 @@ function SectionCard({ children }: { children: React.ReactNode }) {
 function SectionHeader({ title, action }: { title: string; action?: React.ReactNode }) {
   return (
     <div className="px-4 sm:px-5 py-4 border-b border-border flex flex-wrap items-center justify-between gap-2">
-      <p className="text-sm font-semibold text-foreground">{title}</p>
+      <p className="text-app-body font-semibold text-foreground">{title}</p>
       {action}
     </div>
   )
@@ -98,7 +98,7 @@ function OnTrackBadge({ status, t }: { status: string | null; t: (key: string) =
   if (!status) return null
   const config: Record<string, { bg: string; text: string; key: string }> = {
     ahead: { bg: 'bg-emerald-100 dark:bg-emerald-500/20', text: 'text-emerald-700 dark:text-emerald-400', key: 'goals.onTrackAhead' },
-    on_track: { bg: 'bg-blue-100 dark:bg-blue-500/20', text: 'text-blue-700 dark:text-blue-400', key: 'goals.onTrackOnTrack' },
+    on_track: { bg: 'bg-[var(--color-primary-soft)]', text: 'text-[var(--color-green-medium)]', key: 'goals.onTrackOnTrack' },
     behind: { bg: 'bg-amber-100 dark:bg-amber-500/20', text: 'text-amber-700 dark:text-amber-400', key: 'goals.onTrackBehind' },
     overdue: { bg: 'bg-rose-100 dark:bg-rose-500/20', text: 'text-rose-700 dark:text-rose-400', key: 'goals.onTrackOverdue' },
     achieved: { bg: 'bg-emerald-100 dark:bg-emerald-500/20', text: 'text-emerald-700 dark:text-emerald-400', key: 'goals.onTrackAchieved' },
@@ -106,7 +106,7 @@ function OnTrackBadge({ status, t }: { status: string | null; t: (key: string) =
   const c = config[status]
   if (!c) return null
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${c.bg} ${c.text}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${c.bg} ${c.text}`}>
       {t(c.key)}
     </span>
   )
@@ -115,13 +115,13 @@ function OnTrackBadge({ status, t }: { status: string | null; t: (key: string) =
 function StatusBadge({ status, t }: { status: string; t: (key: string) => string }) {
   const config: Record<string, { bg: string; text: string; key: string }> = {
     active: { bg: 'bg-emerald-100 dark:bg-emerald-500/20', text: 'text-emerald-700 dark:text-emerald-400', key: 'goals.statusActive' },
-    completed: { bg: 'bg-blue-100 dark:bg-blue-500/20', text: 'text-blue-700 dark:text-blue-400', key: 'goals.statusCompleted' },
+    completed: { bg: 'bg-[var(--color-primary-soft)]', text: 'text-[var(--color-green-dark)]', key: 'goals.statusCompleted' },
     paused: { bg: 'bg-amber-100 dark:bg-amber-500/20', text: 'text-amber-700 dark:text-amber-400', key: 'goals.statusPaused' },
     archived: { bg: 'bg-muted', text: 'text-muted-foreground', key: 'goals.statusArchived' },
   }
   const c = config[status] ?? config.active
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${c.bg} ${c.text}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${c.bg} ${c.text}`}>
       {t(c.key)}
     </span>
   )
@@ -148,7 +148,7 @@ export default function GoalsPage() {
   const [statusFilter, setStatusFilter] = useState<string>('active')
   const [deletingGoal, setDeletingGoal] = useState<Goal | null>(null)
   const [selectedIcon, setSelectedIcon] = useState('target')
-  const [selectedColor, setSelectedColor] = useState('#3B82F6')
+  const [selectedColor, setSelectedColor] = useState('#12491F')
   const [targetDate, setTargetDate] = useState('')
 
   const { data: goalsList } = useQuery({
@@ -276,7 +276,7 @@ export default function GoalsPage() {
               const progressColor = goal.percentage >= 100
                 ? 'bg-emerald-500'
                 : goal.percentage >= 60
-                  ? 'bg-blue-500'
+                  ? 'bg-[var(--color-primary)]'
                   : goal.percentage >= 30
                     ? 'bg-amber-400'
                     : 'bg-muted-foreground/30'
@@ -296,7 +296,7 @@ export default function GoalsPage() {
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-semibold text-foreground truncate">{goal.name}</span>
+                        <span className="text-app-body font-semibold text-foreground truncate">{goal.name}</span>
                         <StatusBadge status={goal.status} t={t} />
                         <OnTrackBadge status={goal.on_track} t={t} />
                       </div>
@@ -371,7 +371,7 @@ export default function GoalsPage() {
                         )}
                         {(goal.status === 'active' || goal.status === 'paused') && (
                           <button
-                            className="p-1.5 rounded-md text-muted-foreground hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-colors"
+                            className="p-1.5 rounded-md text-muted-foreground hover:text-[var(--color-green-dark)] hover:bg-[var(--color-primary-soft)] transition-colors"
                             onClick={() => statusMutation.mutate({ id: goal.id, status: 'completed' })}
                             title={t('goals.complete')}
                           >
@@ -418,7 +418,7 @@ export default function GoalsPage() {
             })}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground text-center py-10">{t('goals.empty')}</p>
+          <p className="text-app-body text-muted-foreground text-center py-10">{t('goals.empty')}</p>
         )}
       </SectionCard>
 
@@ -575,7 +575,7 @@ export default function GoalsPage() {
                 <PopoverTrigger asChild>
                   <button
                     type="button"
-                    className="w-full flex items-center gap-3 border border-border rounded-lg px-3 py-2 text-sm bg-card hover:bg-muted/50 transition-colors text-left"
+                    className="w-full flex items-center gap-3 border border-border rounded-lg px-3 py-2 text-app-body bg-card hover:bg-muted/50 transition-colors text-left"
                   >
                     <div
                       className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 text-white"
@@ -634,7 +634,7 @@ export default function GoalsPage() {
           <DialogHeader>
             <DialogTitle>{t('goals.confirmDeleteTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {t('goals.confirmDeleteDesc', { name: deletingGoal?.name })}
           </p>
           <DialogFooter>

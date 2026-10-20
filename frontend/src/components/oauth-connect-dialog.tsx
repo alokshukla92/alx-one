@@ -144,7 +144,7 @@ function OAuthConnectSession({ open, onClose, provider, supportsAssetSync = fals
             )}
             {step === 'country' ? t('accounts.selectCountry') : t('accounts.selectBank')}
           </DialogTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {step === 'country'
               ? t('accounts.selectCountryDesc')
               : t('accounts.selectBankDesc')}
@@ -154,7 +154,7 @@ function OAuthConnectSession({ open, onClose, provider, supportsAssetSync = fals
         {!redirecting && supportsAssetSync && (
           <div className="flex items-start justify-between gap-4 rounded-lg border border-border p-3">
             <div className="space-y-1">
-              <label htmlFor="oauth-sync-assets" className="text-sm font-medium text-foreground">
+              <label htmlFor="oauth-sync-assets" className="text-app-body font-medium text-foreground">
                 {t('connections.syncAssets')}
               </label>
               <p className="text-xs text-muted-foreground">{t('connections.syncAssetsHint')}</p>
@@ -172,18 +172,18 @@ function OAuthConnectSession({ open, onClose, provider, supportsAssetSync = fals
         {redirecting ? (
           <div className="py-12 flex flex-col items-center gap-3">
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-            <p className="text-sm text-muted-foreground">{t('accounts.redirecting')}</p>
+            <p className="text-app-body text-muted-foreground">{t('accounts.redirecting')}</p>
           </div>
         ) : loading ? (
           <div className="flex justify-center py-8">
             <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
           </div>
         ) : error ? (
-          <div className="py-8 text-center text-sm text-destructive">{t('accounts.loadingInstitutionsError')}</div>
+          <div className="py-8 text-center text-app-body text-destructive">{t('accounts.loadingInstitutionsError')}</div>
         ) : step === 'country' ? (
           <div className="space-y-1 pt-2 max-h-[60vh] overflow-y-auto">
             {sortedCountries.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center py-8">
+              <p className="text-app-body text-muted-foreground text-center py-8">
                 {t('accounts.noInstitutionsFound')}
               </p>
             ) : (
@@ -197,7 +197,7 @@ function OAuthConnectSession({ open, onClose, provider, supportsAssetSync = fals
                     <Globe size={14} className="text-muted-foreground" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-foreground">{countryLabel(code)}</p>
+                    <p className="text-app-body font-medium text-foreground">{countryLabel(code)}</p>
                     <p className="text-xs text-muted-foreground">{code}</p>
                   </div>
                 </button>
@@ -207,7 +207,7 @@ function OAuthConnectSession({ open, onClose, provider, supportsAssetSync = fals
         ) : (
           <div className="space-y-1 pt-2 max-h-[60vh] overflow-y-auto">
             {institutions.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center py-8">
+              <p className="text-app-body text-muted-foreground text-center py-8">
                 {t('accounts.noInstitutionsFound')}
               </p>
             ) : (
@@ -232,7 +232,7 @@ function OAuthConnectSession({ open, onClose, provider, supportsAssetSync = fals
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-foreground truncate">
+                    <p className="text-app-body font-medium text-foreground truncate">
                       {inst.display_name}
                     </p>
                   </div>

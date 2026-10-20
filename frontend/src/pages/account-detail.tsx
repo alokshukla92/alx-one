@@ -886,7 +886,7 @@ export default function AccountDetailPage() {
         {/* Title row */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
-            <h1 className="text-2xl sm:text-3xl font-semibold text-foreground tracking-tight truncate">
+            <h1 className="text-2xl font-normal text-foreground tracking-tight truncate">
               {getAccountName(account)}
             </h1>
             <div className="flex items-center gap-2 mt-1 overflow-hidden">
@@ -961,7 +961,7 @@ export default function AccountDetailPage() {
                 <PopoverTrigger asChild>
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-2 min-w-[140px] border border-border rounded-lg px-3 py-1.5 text-sm bg-card text-foreground hover:bg-muted/50 transition-all cursor-pointer capitalize"
+                    className="inline-flex items-center justify-center gap-2 min-w-[140px] border border-border rounded-lg px-3 py-1.5 text-app-body bg-card text-foreground hover:bg-muted/50 transition-all cursor-pointer capitalize"
                   >
                     {activeBill
                       ? format(parseISO(activeBill.due_date + 'T00:00:00'), 'MMM yyyy', {
@@ -1003,7 +1003,7 @@ export default function AccountDetailPage() {
           ) : (
             <>
               <div className="flex items-center gap-2">
-                <label className="text-sm text-muted-foreground hidden md:inline">{t('transactions.from')}</label>
+                <label className="text-app-body text-muted-foreground hidden md:inline">{t('transactions.from')}</label>
                 <DatePickerInput
                   value={filterFrom}
                   onChange={handleFilterFromChange}
@@ -1011,7 +1011,7 @@ export default function AccountDetailPage() {
                 />
               </div>
               <div className="flex items-center gap-2">
-                <label className="text-sm text-muted-foreground hidden md:inline">{t('transactions.to')}</label>
+                <label className="text-app-body text-muted-foreground hidden md:inline">{t('transactions.to')}</label>
                 <DatePickerInput
                   value={filterTo}
                   onChange={handleFilterToChange}
@@ -1066,7 +1066,7 @@ export default function AccountDetailPage() {
 
       {account.is_closed && (
         <div className="flex items-center justify-between rounded-lg border border-border bg-muted px-4 py-3 mb-6">
-          <span className="text-sm text-muted-foreground">{t('accounts.closedBanner')}</span>
+          <span className="text-app-body text-muted-foreground">{t('accounts.closedBanner')}</span>
           {canWrite && (
             <Button
               variant="outline"
@@ -1098,7 +1098,7 @@ export default function AccountDetailPage() {
         })
         const max = Math.max(1, ...totals.map(c => c.total))
         return (
-          <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4 mb-6">
+          <div className="alx-panel p-3 sm:p-4 mb-6">
             <div className="flex items-end gap-2 sm:gap-3 overflow-x-auto pb-1">
               {totals.map((c, i) => {
                 const isCurrent = c.start === filterFrom && c.end === filterTo
@@ -1133,7 +1133,7 @@ export default function AccountDetailPage() {
                     <p className={`text-[10px] sm:text-xs font-medium capitalize ${isCurrent ? 'text-rose-700 dark:text-rose-400' : 'text-muted-foreground'}`}>
                       {label}
                     </p>
-                    <p className={`text-[10px] sm:text-xs font-semibold tabular-nums ${isCurrent ? 'text-foreground' : 'text-muted-foreground'}`}>
+                    <p className={`text-[10px] sm:text-xs font-medium tabular-nums ${isCurrent ? 'text-foreground' : 'text-muted-foreground'}`}>
                       {c.loading ? '—' : mask(formatCurrency(c.total, account.currency, locale))}
                     </p>
                   </button>
@@ -1209,11 +1209,11 @@ export default function AccountDetailPage() {
             : null
         return (
           <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
-            <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4 overflow-hidden">
+            <div className="alx-panel p-3 sm:p-4 overflow-hidden">
               <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-1 truncate">
                 {t('accounts.cycleBillTotal')}
               </p>
-              <p className="text-[length:clamp(0.7rem,3.5vw,1.25rem)] sm:text-2xl font-bold tabular-nums text-foreground">
+              <p className="text-xl sm:text-2xl font-medium tabular-nums text-foreground">
                 {mask(formatCurrency(billTotal, displayCurrency, locale))}
               </p>
               {deltaPct != null && prevCycleLabel && (
@@ -1222,24 +1222,24 @@ export default function AccountDetailPage() {
                 </p>
               )}
             </div>
-            <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4 overflow-hidden">
+            <div className="alx-panel p-3 sm:p-4 overflow-hidden">
               <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-1 flex items-center gap-1 truncate">
                 {t('accounts.availableCredit')}
                 <span className="inline-flex items-center px-1 py-0 rounded text-[8px] sm:text-[9px] font-bold uppercase tracking-wide bg-muted text-muted-foreground shrink-0">
                   {t('accounts.currentTag')}
                 </span>
               </p>
-              <p className="text-[length:clamp(0.7rem,3.5vw,1.25rem)] sm:text-2xl font-bold tabular-nums text-emerald-600">
+              <p className="text-xl sm:text-2xl font-medium tabular-nums text-emerald-600">
                 {account.available_credit != null
                   ? mask(formatCurrency(Number(account.available_credit), account.currency, locale))
                   : '—'}
               </p>
             </div>
-            <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4 overflow-hidden">
+            <div className="alx-panel p-3 sm:p-4 overflow-hidden">
               <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-1 truncate">
                 {t('accounts.dueDate')}
               </p>
-              <p className="text-[length:clamp(0.7rem,3.5vw,1.25rem)] sm:text-2xl font-bold tabular-nums text-foreground">
+              <p className="text-xl sm:text-2xl font-medium tabular-nums text-foreground">
                 {cycleDueDate ? formatFriendlyDate(cycleDueDate, dateLocale) : '—'}
               </p>
               {dueSubtitle && (
@@ -1252,19 +1252,19 @@ export default function AccountDetailPage() {
         )
       })() : (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-6">
-          <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4 overflow-hidden">
+          <div className="alx-panel p-3 sm:p-4 overflow-hidden">
             <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-1 truncate">
               {t('accounts.currentBalance')}
             </p>
-            <p className={`text-[length:clamp(0.7rem,3.5vw,1.25rem)] sm:text-2xl font-bold tabular-nums ${(summary?.current_balance ?? 0) < 0 ? 'text-rose-500' : 'text-emerald-600'}`}>
+            <p className={`text-xl sm:text-2xl font-medium tabular-nums ${(summary?.current_balance ?? 0) < 0 ? 'text-rose-500' : 'text-emerald-600'}`}>
               {mask(formatCurrency(totalBalance, displayCurrency, locale))}
             </p>
           </div>
-          <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4 overflow-hidden">
+          <div className="alx-panel p-3 sm:p-4 overflow-hidden">
             <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-1 truncate">
               {t('accounts.projectedBalance', 'Projected balance')}
             </p>
-            <p className={`text-[length:clamp(0.7rem,3.5vw,1.25rem)] sm:text-2xl font-bold tabular-nums ${projectedBalance < 0 ? 'text-rose-500' : 'text-emerald-600'}`}>
+            <p className={`text-xl sm:text-2xl font-medium tabular-nums ${projectedBalance < 0 ? 'text-rose-500' : 'text-emerald-600'}`}>
               {mask(formatCurrency(projectedBalance, displayCurrency, locale))}
             </p>
             {/* Naming the gap keeps the two cards from reading as a
@@ -1277,11 +1277,11 @@ export default function AccountDetailPage() {
               </p>
             )}
           </div>
-          <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4 overflow-hidden">
+          <div className="alx-panel p-3 sm:p-4 overflow-hidden">
             <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-1 truncate">
               {t('accounts.income')}
             </p>
-            <p className="text-[length:clamp(0.7rem,3.5vw,1.25rem)] sm:text-2xl font-bold tabular-nums text-emerald-600">
+            <p className="text-xl sm:text-2xl font-medium tabular-nums text-emerald-600">
               {mask(formatCurrency(actualIncome, displayCurrency, locale))}
             </p>
             {hasProjectedIncome && (
@@ -1290,11 +1290,11 @@ export default function AccountDetailPage() {
               </p>
             )}
           </div>
-          <div className="bg-card rounded-xl border border-border shadow-sm p-3 sm:p-4 overflow-hidden">
+          <div className="alx-panel p-3 sm:p-4 overflow-hidden">
             <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-1 truncate">
               {t('accounts.expenses')}
             </p>
-            <p className="text-[length:clamp(0.7rem,3.5vw,1.25rem)] sm:text-2xl font-bold tabular-nums text-rose-500">
+            <p className="text-xl sm:text-2xl font-medium tabular-nums text-rose-500">
               {mask(formatCurrency(actualExpenses, displayCurrency, locale))}
             </p>
             {hasProjectedExpenses && (
@@ -1317,7 +1317,7 @@ export default function AccountDetailPage() {
         const rawPct = limit != null && limit > 0 && utilized != null ? (utilized / limit) * 100 : null
         const pct = rawPct != null ? Math.min(100, rawPct) : null
         return (
-          <div className="bg-card rounded-xl border border-border shadow-sm p-4 sm:p-5 mb-6">
+          <div className="alx-panel p-4 sm:p-5 mb-6">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 {account.card_brand && (
@@ -1353,7 +1353,7 @@ export default function AccountDetailPage() {
                   <p className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wide">
                     {t('accounts.utilization')}
                   </p>
-                  <p className={`text-sm font-bold tabular-nums ${rawPct >= 100 ? 'text-rose-500' : 'text-foreground'}`}>{rawPct.toFixed(1)}%</p>
+                  <p className={`text-app-body font-medium tabular-nums ${rawPct >= 100 ? 'text-rose-500' : 'text-foreground'}`}>{rawPct.toFixed(1)}%</p>
                 </div>
                 <div className="h-2 bg-muted/60 rounded-full overflow-hidden mb-2">
                   <div
@@ -1373,7 +1373,7 @@ export default function AccountDetailPage() {
                 <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-0.5">
                   {t('accounts.creditLimit')}
                 </p>
-                <p className="text-sm sm:text-base font-semibold tabular-nums text-foreground">
+                <p className="text-app-body font-medium tabular-nums text-foreground">
                   {limit != null ? mask(formatCurrency(limit, account.currency, locale)) : '—'}
                 </p>
               </div>
@@ -1385,7 +1385,7 @@ export default function AccountDetailPage() {
                 <p className="text-[10px] sm:text-xs font-medium text-muted-foreground mb-0.5">
                   {t('accounts.statementCloseDay')}
                 </p>
-                <p className="text-sm sm:text-base font-semibold tabular-nums text-foreground">
+                <p className="text-app-body font-medium tabular-nums text-foreground">
                   {activeBill
                     ? formatDateStr(closeDateForBill(activeBill.due_date, account.statement_close_day), dateLocale)
                     : (account.statement_close_day && filterTo
@@ -1426,9 +1426,9 @@ export default function AccountDetailPage() {
         const strokeSolid = dataMin >= 0 ? '#10B981' : '#F43F5E'
         const lastBalance = balances.length > 0 ? balances[balances.length - 1] : 0
         return (
-      <div className="bg-card rounded-xl border border-border shadow-sm mb-6">
+      <div className="alx-panel mb-6">
         <div className="px-5 pt-5 pb-3">
-          <p className="text-base font-bold text-foreground">
+          <p className="text-base font-medium text-foreground">
             {isCreditCard ? t('accounts.cycleSpending') : t('dashboard.balanceFlow')}
           </p>
         </div>
@@ -1438,7 +1438,7 @@ export default function AccountDetailPage() {
           ) : cycleEmpty ? (
             <div className="h-full w-full flex flex-col items-center justify-center gap-2 text-muted-foreground">
               <Clock className="h-8 w-8 opacity-40" />
-              <p className="text-sm">{t('accounts.noChargesYet')}</p>
+              <p className="text-app-body">{t('accounts.noChargesYet')}</p>
             </div>
           ) : chartData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
@@ -1534,7 +1534,7 @@ export default function AccountDetailPage() {
               </AreaChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-muted-foreground text-sm text-center py-12">{t('dashboard.noData')}</p>
+            <p className="text-muted-foreground text-app-body text-center py-12">{t('dashboard.noData')}</p>
           )}
         </div>
       </div>
@@ -1542,9 +1542,9 @@ export default function AccountDetailPage() {
       })()}
 
       {/* Transaction table */}
-      <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+      <div className="alx-panel overflow-hidden">
         <div className="px-5 py-4 border-b border-border">
-          <p className="font-semibold text-foreground">{t('transactions.title')}</p>
+          <p className="font-medium text-foreground">{t('transactions.title')}</p>
         </div>
         <div className="p-0">
           {txLoading ? (
@@ -1558,7 +1558,7 @@ export default function AccountDetailPage() {
               {groupedByDate.map((group) => (
                 <div key={group.date}>
                   <div className="bg-muted/80 px-4 py-1.5 border-b border-border">
-                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                       {group.label}
                     </span>
                   </div>
@@ -1593,7 +1593,7 @@ export default function AccountDetailPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-app-body">
                 <thead>
                   <tr className="border-b">
                     <th className="px-2 sm:px-4 py-3 text-left font-medium whitespace-nowrap">{t('transactions.date')}</th>
@@ -1625,7 +1625,7 @@ export default function AccountDetailPage() {
                         </td>
                         <td className="px-3 sm:px-4 py-3 w-full max-w-0">
                           <div className="flex items-center gap-1.5 min-w-0">
-                            <span className="font-semibold text-foreground text-sm truncate">{transactionDescription(tx.description, tx.source, t)}</span>
+                            <span className="font-medium text-foreground text-app-body truncate">{transactionDescription(tx.description, tx.source, t)}</span>
                             <div className="flex items-center gap-1 shrink-0">
                             {isTransfer && (
                               <span className="ml-2 inline-flex items-center gap-1 text-xs text-blue-600 font-normal bg-blue-50 border border-blue-200 rounded px-1.5 py-0.5">
@@ -1646,7 +1646,7 @@ export default function AccountDetailPage() {
                             )}
                             {tx.recurring_transaction_id != null && !isVirtual && (
                               <span
-                                className="text-[10px] font-semibold uppercase tracking-wide text-primary bg-primary/5 border border-primary/10 px-1.5 py-0.5 rounded-full shrink-0"
+                                className="text-[10px] font-medium uppercase tracking-wide text-primary bg-primary/5 border border-primary/10 px-1.5 py-0.5 rounded-full shrink-0"
                                 title={t('transactions.recurringLinkedTooltip')}
                               >
                                 {t('transactions.recurringBadge')}
@@ -1692,13 +1692,13 @@ export default function AccountDetailPage() {
                           {tx.category ? (
                             <span className="flex items-center gap-1.5">
                               <CategoryIcon icon={tx.category.icon} color={tx.category.color} size="sm" />
-                              <span className="text-sm text-muted-foreground">{tx.category.name}</span>
+                              <span className="text-app-body text-muted-foreground">{tx.category.name}</span>
                             </span>
                           ) : (
                             <span className="text-muted-foreground">—</span>
                           )}
                         </td>
-                        <td className={`px-2 sm:px-4 py-3 text-right text-xs sm:text-sm font-semibold tabular-nums whitespace-nowrap ${tx.is_ignored ? 'text-gray-500' : tx.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
+                        <td className={`px-2 sm:px-4 py-3 text-right text-app-body font-medium tabular-nums whitespace-nowrap ${tx.is_ignored ? 'text-gray-500' : tx.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
                           {mask(`${tx.is_ignored ? ' ' : tx.type === 'credit' ? '+' : '-'}${formatCurrency(Math.abs(Number(tx.amount)), tx.currency, locale)}`)}
                           {tx.currency !== userCurrency && tx.amount_primary != null && (
                             <span className="block text-[10px] text-muted-foreground tabular-nums">
@@ -1706,7 +1706,7 @@ export default function AccountDetailPage() {
                             </span>
                           )}
                         </td>
-                        <td className={`px-4 py-3 text-right tabular-nums text-sm hidden sm:table-cell whitespace-nowrap ${(account.type === 'credit_card' ? tx.runningBalance > 0 : tx.runningBalance < 0) ? 'text-rose-500' : 'text-muted-foreground'}`}>
+                        <td className={`px-4 py-3 text-right tabular-nums text-app-body hidden sm:table-cell whitespace-nowrap ${(account.type === 'credit_card' ? tx.runningBalance > 0 : tx.runningBalance < 0) ? 'text-rose-500' : 'text-muted-foreground'}`}>
                           {mask(formatCurrency(tx.runningBalance, displayCurrency, locale))}
                         </td>
                       </tr>

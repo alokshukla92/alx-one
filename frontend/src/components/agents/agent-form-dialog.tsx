@@ -150,7 +150,7 @@ export function AgentFormDialog({ open, onOpenChange, agent }: Props) {
               value={systemPrompt}
               onChange={(e) => setSystemPrompt(e.target.value)}
               rows={6}
-              className="rounded-md border bg-card px-3 py-2 text-sm font-mono"
+              className="rounded-md border bg-card px-3 py-2 text-app-body font-mono"
               placeholder={t('agents.form.systemPromptPlaceholder')}
             />
           </div>
@@ -161,7 +161,7 @@ export function AgentFormDialog({ open, onOpenChange, agent }: Props) {
             <div className="rounded-md border border-dashed p-4 flex items-start gap-3">
               <Plug className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium">
+                <div className="text-app-body font-medium">
                   {t('agents.form.needConnectionTitle', 'Add an LLM connection first')}
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">

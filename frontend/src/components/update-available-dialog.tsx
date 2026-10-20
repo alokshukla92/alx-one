@@ -74,20 +74,20 @@ export function UpdateAvailableDialog({
 
         <div className="space-y-5">
           {!enabled && (
-            <div className="flex items-start gap-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3.5 py-3 text-sm text-amber-700 dark:text-amber-400">
+            <div className="flex items-start gap-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3.5 py-3 text-app-body text-amber-700 dark:text-amber-400">
               <BellOff size={16} className="shrink-0 mt-0.5" />
               <p className="leading-relaxed">{t('update.autoCheckDisabled')}</p>
             </div>
           )}
 
           {enabled && isFetching && !data && (
-            <div className="rounded-lg border bg-muted/40 px-3.5 py-3 text-sm text-muted-foreground">
+            <div className="rounded-lg border bg-muted/40 px-3.5 py-3 text-app-body text-muted-foreground">
               {t('update.checking')}
             </div>
           )}
 
           {enabled && data && !hasUpdate && (
-            <div className="flex items-center gap-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-3 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+            <div className="flex items-center gap-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-3 text-app-body font-medium text-emerald-700 dark:text-emerald-400">
               <CheckCircle2 size={18} className="shrink-0" />
               <span className="flex-1">
                 {t('update.upToDate')}{' '}
@@ -98,7 +98,7 @@ export function UpdateAvailableDialog({
 
           {enabled && hasUpdate && data && (
             <>
-              <div className="flex items-center gap-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-3 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+              <div className="flex items-center gap-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-3 text-app-body font-semibold text-emerald-700 dark:text-emerald-400">
                 <Download size={18} className="shrink-0" />
                 <span className="flex-1">
                   {t('update.newVersionAvailable')}{' '}
@@ -109,10 +109,10 @@ export function UpdateAvailableDialog({
               </div>
 
               <div className="space-y-3">
-                <p className="text-sm text-foreground/80">
+                <p className="text-app-body text-foreground/80">
                   {t('update.description')}
                 </p>
-                <ul className="space-y-2 text-sm text-foreground/80">
+                <ul className="space-y-2 text-app-body text-foreground/80">
                   <li className="flex items-start gap-2.5">
                     <Sparkles
                       size={15}
@@ -127,7 +127,7 @@ export function UpdateAvailableDialog({
                 </ul>
               </div>
 
-              <div className="flex items-start gap-2.5 rounded-lg border border-blue-500/20 bg-blue-500/10 px-3.5 py-3 text-sm text-blue-700 dark:text-blue-300">
+              <div className="flex items-start gap-2.5 rounded-lg border border-blue-500/20 bg-blue-500/10 px-3.5 py-3 text-app-body text-blue-700 dark:text-blue-300">
                 <Info size={16} className="shrink-0 mt-0.5" />
                 <p className="leading-relaxed">
                   {t('update.releaseNotesHintBefore')}{' '}
@@ -160,7 +160,7 @@ export function UpdateAvailableDialog({
           <div className="flex items-center justify-between gap-3 rounded-lg border bg-muted/30 px-3.5 py-2.5">
             <label
               htmlFor="auto-update-check"
-              className="text-sm font-medium cursor-pointer select-none"
+              className="text-app-body font-medium cursor-pointer select-none"
             >
               {t('update.autoCheckToggle')}
             </label>

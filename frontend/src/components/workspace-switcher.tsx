@@ -62,7 +62,7 @@ const ROLE_LABEL_KEY: Record<string, string> = {
 }
 
 // Fallback when a workspace hasn't set its own color yet.
-const DEFAULT_COLOR = '#6366F1'
+const DEFAULT_COLOR = '#12491F'
 
 function workspaceIcon(w: Workspace): string {
   return w.icon || WORKSPACE_KIND_ICON[w.kind as WorkspaceKind] || 'briefcase'
@@ -157,7 +157,8 @@ export function WorkspaceSwitcher({
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
-              'flex items-center gap-3 w-full rounded-lg px-3 py-2.5 text-sm hover:bg-sidebar-accent transition-colors text-left',
+              'flex items-center gap-2 w-full rounded-lg px-2 py-1.5 text-app-body transition-colors text-left',
+              'hover:bg-muted',
               collapsed && 'lg:justify-center lg:px-2',
             )}
             aria-label={current.name}
@@ -170,15 +171,15 @@ export function WorkspaceSwitcher({
               className="shrink-0"
             />
             <div className={cn('flex-1 min-w-0', collapsed && 'lg:hidden')}>
-              <p className="text-xs font-semibold truncate">{current.name}</p>
-              <p className="text-[10px] text-sidebar-muted/70 truncate">
+              <p className="text-xs font-normal truncate text-sidebar-foreground">{current.name}</p>
+              <p className="text-[10px] text-muted-foreground truncate">
                 {user.email}
                 {roleLabel && (
                   <span className="ml-1 uppercase tracking-wide">· {roleLabel}</span>
                 )}
               </p>
             </div>
-            <ChevronsUpDown size={13} className={cn('text-sidebar-muted/60 shrink-0', collapsed && 'lg:hidden')} />
+            <ChevronsUpDown size={13} className={cn('text-sidebar-muted shrink-0', collapsed && 'lg:hidden')} />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-64" side="top">

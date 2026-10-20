@@ -20,7 +20,7 @@ import {
 import { FolderOpen, Plus, Pencil, Trash2 } from 'lucide-react'
 import type { Collection } from '@/types'
 
-const SWATCHES = ['#6366F1', '#0EA5E9', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#8B5CF6', '#64748B']
+const SWATCHES = ['#12491F', '#A8ED6B', '#347D40', '#18552A', '#D64545', '#858585', '#98E456', '#236B35']
 
 export default function CollectionsPage() {
   const { t } = useTranslation()
@@ -80,7 +80,7 @@ export default function CollectionsPage() {
           </Button>
         }
       />
-      <p className="text-sm text-muted-foreground mb-5 max-w-2xl">{t('collections.subtitle')}</p>
+      <p className="text-app-body text-muted-foreground mb-5 max-w-2xl">{t('collections.subtitle')}</p>
 
       <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
         {isLoading ? (
@@ -88,7 +88,7 @@ export default function CollectionsPage() {
         ) : list.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
             <FolderOpen size={32} className="mb-3 opacity-40" />
-            <p className="text-sm">{t('collections.empty')}</p>
+            <p className="text-app-body">{t('collections.empty')}</p>
           </div>
         ) : (
           <div className="divide-y divide-border/40">
@@ -100,7 +100,7 @@ export default function CollectionsPage() {
                   </span>
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground truncate">{c.name}</p>
+                  <p className="text-app-body font-medium text-foreground truncate">{c.name}</p>
                   <p className="text-xs text-muted-foreground">
                     {t('collections.accountCount', { count: c.account_count })}
                     {c.wallet_count > 0 && ` · ${t('collections.walletCount', { count: c.wallet_count })}`}
@@ -229,7 +229,7 @@ function CollectionDialog({
                 <p className="px-3 py-3 text-xs text-muted-foreground">{t('collections.noAccounts')}</p>
               ) : (
                 accounts.map((a) => (
-                  <label key={a.id} className="flex items-center gap-2.5 px-3 py-2 text-sm cursor-pointer hover:bg-muted/40">
+                  <label key={a.id} className="flex items-center gap-2.5 px-3 py-2 text-app-body cursor-pointer hover:bg-muted/40">
                     <input
                       type="checkbox"
                       checked={selected.has(a.id)}
@@ -250,7 +250,7 @@ function CollectionDialog({
               <Label>{t('collections.wallets')}</Label>
               <div className="max-h-44 overflow-y-auto rounded-lg border border-border/60 divide-y divide-border/40">
                 {wallets.map((w) => (
-                  <label key={w.id} className="flex items-center gap-2.5 px-3 py-2 text-sm cursor-pointer hover:bg-muted/40">
+                  <label key={w.id} className="flex items-center gap-2.5 px-3 py-2 text-app-body cursor-pointer hover:bg-muted/40">
                     <input
                       type="checkbox"
                       checked={selectedWallets.has(w.id)}

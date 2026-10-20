@@ -12,8 +12,10 @@ import type { AxiosError } from 'axios'
 import { isServerUnreachable } from '@/lib/auth-errors'
 import { resolveLocalAuthEnabled } from '@/lib/auth-config-utils'
 import { useTheme } from 'next-themes'
+import { resolveBrandThemeSettings } from '@/lib/alxone-brand'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
 import { applyUiFont } from '@/lib/ui-fonts'
+import { applyUiFontScale } from '@/lib/ui-font-scale'
 import {
   isConditionalPasskeySupported,
   isPasskeySupported,
@@ -84,9 +86,11 @@ export default function LoginPage() {
         setOidcConfigFailed(false)
       })
       .catch(() => setOidcConfigFailed(true))
-    adminApi.defaultColors().then(({ light, dark, font }) => {
-      setThemeBasedOnSystem(light, dark, resolvedTheme)
-      applyUiFont(font)
+    adminApi.defaultColors().then(({ light, dark, font, font_scale }) => {
+      const brand = resolveBrandThemeSettings(light, dark, font, font_scale)
+      setThemeBasedOnSystem(brand.light, brand.dark, resolvedTheme)
+      applyUiFont(brand.font)
+      applyUiFontScale(brand.fontScale)
     }).catch(() => {})
   }, [navigate, token, resolvedTheme])
 
@@ -301,7 +305,7 @@ export default function LoginPage() {
               <h1 className="text-xl font-semibold tracking-tight">
                 {selected2faMethod === 'passkey' ? t('auth.passkeySecondFactorTitle') : t('auth.twoFactorTitle')}
               </h1>
-              <p className="text-sm text-muted-foreground mt-1 text-center">
+              <p className="text-app-body text-muted-foreground mt-1 text-center">
                 {selected2faMethod === 'passkey'
                   ? t('auth.passkeySecondFactorDescription')
                   : t('auth.twoFactorDescription')}
@@ -309,7 +313,7 @@ export default function LoginPage() {
             </div>
             <CardContent className="space-y-4 px-8 pt-4">
               {error && (
-                <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-lg">
+                <div className="p-3 text-app-body text-destructive bg-destructive/10 rounded-lg">
                   {error}
                 </div>
               )}
@@ -337,7 +341,7 @@ export default function LoginPage() {
               )}
               {selected2faMethod === 'totp' && (
                 <div className="space-y-1.5">
-                  <Label htmlFor="totp-code" className="text-sm">{t('auth.twoFactor')}</Label>
+                  <Label htmlFor="totp-code" className="text-app-body">{t('auth.twoFactor')}</Label>
                   <Input
                     id="totp-code"
                     type="text"
@@ -354,7 +358,7 @@ export default function LoginPage() {
                 </div>
               )}
               {selected2faMethod === 'passkey' && (
-                <p className="text-sm text-muted-foreground text-center">
+                <p className="text-app-body text-muted-foreground text-center">
                   {t('auth.passkeySecondFactorPrompt')}
                 </p>
               )}
@@ -377,7 +381,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={resetSecondFactor}
-                className="text-sm text-muted-foreground hover:text-foreground"
+                className="text-app-body text-muted-foreground hover:text-foreground"
               >
                 {t('auth.login')}
               </button>
@@ -398,23 +402,23 @@ export default function LoginPage() {
             </div>
             <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{t('alx.platformName')}</p>
             <h1 className="text-xl font-semibold tracking-tight">{t('auth.login')}</h1>
-            <p className="text-sm text-muted-foreground mt-1">{t('auth.loginDescription')}</p>
+            <p className="text-app-body text-muted-foreground mt-1">{t('auth.loginDescription')}</p>
           </div>
           {authConfigLoading && (
-            <CardContent className="px-8 py-6 text-center text-sm text-muted-foreground" role="status">
+            <CardContent className="px-8 py-6 text-center text-app-body text-muted-foreground" role="status">
               {t('common.loading')}
             </CardContent>
           )}
           {oidcConfigFailed && (
             <CardContent className="px-8 py-4">
-              <div role="alert" className="p-3 text-sm text-muted-foreground bg-muted rounded-lg">
+              <div role="alert" className="p-3 text-app-body text-muted-foreground bg-muted rounded-lg">
                 {t('auth.authConfigUnavailable')}
               </div>
             </CardContent>
           )}
           {noAuthMethodConfigured && (
             <CardContent className="px-8 py-4">
-              <div role="alert" className="p-3 text-sm text-destructive bg-destructive/10 rounded-lg">
+              <div role="alert" className="p-3 text-app-body text-destructive bg-destructive/10 rounded-lg">
                 {t('auth.noAuthMethodConfigured')}
               </div>
             </CardContent>
@@ -425,13 +429,13 @@ export default function LoginPage() {
                 <div
                   id="login-error"
                   role="alert"
-                  className="p-3 text-sm text-destructive bg-destructive/10 rounded-lg"
+                  className="p-3 text-app-body text-destructive bg-destructive/10 rounded-lg"
                 >
                   {error}
                 </div>
               )}
               <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-sm">{t('auth.email')}</Label>
+                <Label htmlFor="email" className="text-app-body">{t('auth.email')}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -447,7 +451,7 @@ export default function LoginPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="password" className="text-sm">{t('auth.password')}</Label>
+                <Label htmlFor="password" className="text-app-body">{t('auth.password')}</Label>
                 <Input
                   id="password"
                   type="password"
@@ -495,7 +499,7 @@ export default function LoginPage() {
                 </Button>
               )}
               {localAuthEnabled && registrationEnabled && (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-app-body text-muted-foreground">
                   {t('auth.noAccount')}{' '}
                   <Link to="/register" className="text-primary font-medium hover:underline">
                     {t('auth.register')}

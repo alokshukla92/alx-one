@@ -128,7 +128,7 @@ const ASSET_TYPE_CONFIG: Record<string, { icon: React.ElementType; color: string
   stock: { icon: LineChart, color: 'text-sky-600', bg: 'bg-sky-100' },
   etf: { icon: Layers, color: 'text-teal-600', bg: 'bg-teal-100' },
   crypto: { icon: Bitcoin, color: 'text-orange-600', bg: 'bg-orange-100' },
-  fund: { icon: PieChart, color: 'text-indigo-600', bg: 'bg-indigo-100' },
+  fund: { icon: PieChart, color: 'text-[var(--color-green-700)]', bg: 'bg-[var(--color-primary-soft)]' },
   other: { icon: Package, color: 'text-slate-600', bg: 'bg-slate-100' },
 }
 
@@ -744,7 +744,7 @@ export default function AssetsPage() {
     return (
       <div key={asset.id} className="border-b border-border last:border-b-0">
         <div
-          className="grid items-center gap-2 px-3 py-3 cursor-pointer hover:bg-muted/20 transition-colors text-sm"
+          className="grid items-center gap-2 px-3 py-3 cursor-pointer hover:bg-muted/20 transition-colors text-app-body"
           style={{ gridTemplateColumns: HOLDINGS_GRID }}
           onClick={() => setExpandedId(isExpanded ? null : asset.id)}
         >
@@ -985,7 +985,7 @@ export default function AssetsPage() {
             </div>
             <div className="flex flex-col items-start min-w-0 flex-1">
               <div className="flex items-center gap-2 min-w-0 w-full">
-                <span className="text-sm font-semibold text-foreground truncate">{wallet.name}</span>
+                <span className="text-app-body font-semibold text-foreground truncate">{wallet.name}</span>
                 <span className="text-xs text-muted-foreground shrink-0">
                   · {walletAssets.length} {t('assets.itemsCount')}
                 </span>
@@ -998,7 +998,7 @@ export default function AssetsPage() {
               )}
             </div>
           </button>
-          <span className="text-sm font-bold tabular-nums text-foreground shrink-0">
+          <span className="text-app-body font-bold tabular-nums text-foreground shrink-0">
             {mask(formatCurrency(total, userCurrency, locale))}
           </span>
           {canWrite && (
@@ -1134,7 +1134,7 @@ export default function AssetsPage() {
           )}
 
           {activeAssets.length === 0 && soldAssets.length === 0 && (
-            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden text-center py-16 text-muted-foreground">
+            <div className="alx-panel overflow-hidden text-center py-16 text-muted-foreground">
               <Package size={32} className="mx-auto mb-2 opacity-50" />
               <p>{t('assets.noAssets')}</p>
             </div>
@@ -1176,7 +1176,7 @@ export default function AssetsPage() {
                 </button>
               </div>
               <select
-                className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-sm w-full"
+                className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-app-body w-full"
                 value={formGroupId}
                 onChange={e => setFormGroupId(e.target.value)}
               >
@@ -1192,7 +1192,7 @@ export default function AssetsPage() {
               <div className="space-y-2">
                 <Label>{t('assets.type')}</Label>
                 <select
-                  className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-sm w-full"
+                  className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-app-body w-full"
                   value={formType}
                   onChange={e => setFormType(e.target.value)}
                 >
@@ -1206,7 +1206,7 @@ export default function AssetsPage() {
               <div className="space-y-2">
                 <Label>{t('assets.currency')}</Label>
                 <select
-                  className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-sm w-full disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-app-body w-full disabled:opacity-60 disabled:cursor-not-allowed"
                   value={formCurrency}
                   disabled={formMethod === 'market_price'}
                   onChange={e => setFormCurrency(e.target.value)}
@@ -1227,7 +1227,7 @@ export default function AssetsPage() {
                     key={m}
                     type="button"
                     disabled={!!editingAsset}
-                    className={`px-3 py-2.5 rounded-lg text-sm font-medium border transition-all ${
+                    className={`px-3 py-2.5 rounded-lg text-app-body font-medium border transition-all ${
                       formMethod === m
                         ? 'border-primary bg-primary/10 text-primary shadow-sm'
                         : 'border-border text-muted-foreground hover:border-primary/50 hover:bg-muted/50'
@@ -1278,7 +1278,7 @@ export default function AssetsPage() {
                             className="flex flex-col w-full text-left px-3 py-2 hover:bg-muted transition-colors"
                           >
                             <div className="flex items-center justify-between gap-2">
-                              <span className="font-semibold text-sm truncate">{isBond ? (match.name ?? match.symbol) : match.symbol}</span>
+                              <span className="font-semibold text-app-body truncate">{isBond ? (match.name ?? match.symbol) : match.symbol}</span>
                               {match.exchange && (
                                 <span className="text-xs text-muted-foreground shrink-0">{match.exchange}</span>
                               )}
@@ -1300,7 +1300,7 @@ export default function AssetsPage() {
                 </div>
 
                 {selectedQuote && (
-                  <div className="rounded-lg border border-border bg-card p-3 text-sm">
+                  <div className="rounded-lg border border-border bg-card p-3 text-app-body">
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col min-w-0">
                         <span className="font-semibold truncate">{selectedQuote.symbol.startsWith('TD:') ? (selectedQuote.name ?? selectedQuote.symbol) : selectedQuote.symbol}</span>
@@ -1412,7 +1412,7 @@ export default function AssetsPage() {
                   <div className="space-y-2">
                     <Label>{t('assets.growthType')}</Label>
                     <select
-                      className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-sm w-full"
+                      className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-app-body w-full"
                       value={formGrowthType}
                       onChange={e => setFormGrowthType(e.target.value)}
                     >
@@ -1426,7 +1426,7 @@ export default function AssetsPage() {
                     <div className="relative">
                       <Input type="number" step="any" value={formGrowthRate} onChange={e => setFormGrowthRate(e.target.value)} className={formGrowthType === 'percentage' ? 'pr-8' : ''} />
                       {formGrowthType === 'percentage' && (
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground pointer-events-none">%</span>
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-app-body text-muted-foreground pointer-events-none">%</span>
                       )}
                     </div>
                   </div>
@@ -1435,7 +1435,7 @@ export default function AssetsPage() {
                   <div className="space-y-2">
                     <Label>{t('assets.growthFrequency')}</Label>
                     <select
-                      className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-sm w-full"
+                      className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-app-body w-full"
                       value={formGrowthFrequency}
                       onChange={e => setFormGrowthFrequency(e.target.value)}
                     >
@@ -1546,7 +1546,7 @@ export default function AssetsPage() {
           <DialogHeader>
             <DialogTitle>{t('assets.confirmRegenerateTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">{t('assets.confirmRegenerate')}</p>
+          <p className="text-app-body text-muted-foreground">{t('assets.confirmRegenerate')}</p>
           <DialogFooter>
             <Button variant="outline" onClick={() => setPendingGrowthSave(null)}>
               {t('common.cancel')}
@@ -1567,7 +1567,7 @@ export default function AssetsPage() {
           <DialogHeader>
             <DialogTitle>{t('assets.confirmDeleteTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">{t('assets.confirmDelete')}</p>
+          <p className="text-app-body text-muted-foreground">{t('assets.confirmDelete')}</p>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeletingId(null)}>
               {t('common.cancel')}
@@ -1637,7 +1637,7 @@ export default function AssetsPage() {
           <DialogHeader>
             <DialogTitle>{t('assets.confirmDeleteWalletTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">{t('assets.confirmDeleteWallet')}</p>
+          <p className="text-app-body text-muted-foreground">{t('assets.confirmDeleteWallet')}</p>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeletingWalletId(null)}>
               {t('common.cancel')}
@@ -1668,7 +1668,7 @@ export default function AssetsPage() {
               <div className="w-6 h-6 rounded-md flex items-center justify-center bg-muted">
                 <Package size={13} className="text-muted-foreground" />
               </div>
-              <span className="text-sm text-foreground">{t('assets.noWallet')}</span>
+              <span className="text-app-body text-foreground">{t('assets.noWallet')}</span>
             </button>
             {sortedWallets.map(w => (
               <button
@@ -1683,7 +1683,7 @@ export default function AssetsPage() {
                 >
                   <Wallet size={13} style={{ color: w.color }} />
                 </div>
-                <span className="text-sm text-foreground flex-1 truncate">{w.name}</span>
+                <span className="text-app-body text-foreground flex-1 truncate">{w.name}</span>
                 <span className="text-xs text-muted-foreground">{w.asset_count}</span>
               </button>
             ))}
@@ -1710,7 +1710,7 @@ export default function AssetsPage() {
   )
 }
 
-const PORTFOLIO_COLORS = ['#6366F1', '#F43F5E', '#F59E0B', '#10B981', '#8B5CF6', '#EC4899', '#06B6D4', '#84CC16']
+const PORTFOLIO_COLORS = ['#A8ED6B', '#F43F5E', '#F59E0B', '#10B981', '#8B5CF6', '#EC4899', '#06B6D4', '#84CC16']
 
 function PortfolioChart({ data, wallets, currency, locale: loc, dateLocale: dateLoc, mask }: {
   data: { assets: { id: string; name: string; type: string; group_id: string | null }[]; trend: Record<string, unknown>[]; total: number }
@@ -1824,7 +1824,7 @@ function PortfolioChart({ data, wallets, currency, locale: loc, dateLocale: date
     <div className="border border-border rounded-xl bg-card shadow-sm p-5">
       <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-foreground">{t('assets.portfolioValue')}</h3>
+          <h3 className="text-app-body font-semibold text-foreground">{t('assets.portfolioValue')}</h3>
           <div className="flex flex-wrap items-center gap-2">
             <div role="group" aria-label={t('assets.chartGroupMode')} className="inline-flex items-center rounded-lg border border-border p-0.5 bg-muted/40">
               <button
@@ -1977,7 +1977,7 @@ function renderAssetTradeDot(props: {
   }
   const hasBuy = trades.some(t => t.kind === 'buy')
   const hasSell = trades.some(t => t.kind === 'sell')
-  const color = hasSell && !hasBuy ? '#F43F5E' : hasBuy && !hasSell ? '#10B981' : '#6366F1'
+  const color = hasSell && !hasBuy ? '#F43F5E' : hasBuy && !hasSell ? '#10B981' : '#A8ED6B'
   return (
     <circle key={`td-${index}`} cx={cx} cy={cy} r={4} fill={color} stroke="var(--card)" strokeWidth={1.5} />
   )
@@ -2185,7 +2185,7 @@ function AssetDetail({ assetId, currency, locale: loc, dateLocale: dateLoc, purc
             value={valueAmount}
             onChange={e => setValueAmount(e.target.value)}
             placeholder="0.00"
-            className="h-8 text-sm"
+            className="h-8 text-app-body"
           />
         </div>
         <div className="w-36">
@@ -2228,7 +2228,7 @@ function AssetDetail({ assetId, currency, locale: loc, dateLocale: dateLoc, purc
               return (
                 <div key={v.id} className={`flex items-center justify-between py-2 px-3 transition-colors ${isPurchase ? 'bg-primary/5' : 'hover:bg-muted/30'}`}>
                   <div className="flex items-center gap-3 min-w-0">
-                    <span className="text-sm tabular-nums font-semibold text-foreground">
+                    <span className="text-app-body tabular-nums font-semibold text-foreground">
                       {mask(formatCurrency(v.amount, currency, loc))}
                     </span>
                     {change != null && (
@@ -2446,7 +2446,7 @@ function AssetTransactionsTab({
             >
               <AlertTriangle size={16} className="text-amber-500 shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-amber-900 dark:text-amber-200 truncate">
+                <p className="text-app-body font-medium text-amber-900 dark:text-amber-200 truncate">
                   {h.ticker || h.name}
                 </p>
                 <p className="text-[11px] text-amber-700 dark:text-amber-300/80">
@@ -2474,7 +2474,7 @@ function AssetTransactionsTab({
         </div>
       ) : (txs ?? []).length === 0 ? (
         holdingsWithoutCost.length === 0 ? (
-          <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden text-center py-16 text-muted-foreground">
+          <div className="alx-panel overflow-hidden text-center py-16 text-muted-foreground">
             <TrendingUp size={32} className="mx-auto mb-2 opacity-50" />
             <p>{t('assets.noTransactions')}</p>
           </div>
@@ -2493,7 +2493,7 @@ function AssetTransactionsTab({
                   {tx.kind === 'buy' ? t('assets.txBuy') : t('assets.txSell')}
                 </Badge>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground truncate">
+                  <p className="text-app-body font-medium text-foreground truncate">
                     {tx.ticker || tx.asset_name}
                   </p>
                   <p className="text-[11px] text-muted-foreground tabular-nums">
@@ -2502,7 +2502,7 @@ function AssetTransactionsTab({
                   </p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-sm font-semibold tabular-nums text-foreground">
+                  <p className="text-app-body font-semibold tabular-nums text-foreground">
                     {mask(formatCurrency(total, cur, locale))}
                   </p>
                   {tx.fee > 0 && (
@@ -2547,7 +2547,7 @@ function AssetTransactionsTab({
               <div className="space-y-2">
                 <Label>{t('assets.holding')}</Label>
                 <select
-                  className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-sm w-full"
+                  className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-app-body w-full"
                   value={formHolding}
                   onChange={(e) => {
                     setFormHolding(e.target.value)
@@ -2577,7 +2577,7 @@ function AssetTransactionsTab({
                 <div className="space-y-2">
                   <Label>{t('assets.wallet')}</Label>
                   <select
-                    className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-sm w-full"
+                    className="bg-card border border-border focus:outline-none focus:ring-2 focus:ring-primary px-3 py-2 rounded-lg text-foreground text-app-body w-full"
                     value={formGroupId}
                     onChange={(e) => setFormGroupId(e.target.value)}
                   >
@@ -2599,7 +2599,7 @@ function AssetTransactionsTab({
                     <button
                       key={k}
                       type="button"
-                      className={`px-3 py-2 rounded-lg text-sm font-medium border transition-all ${formKind === k ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/50'}`}
+                      className={`px-3 py-2 rounded-lg text-app-body font-medium border transition-all ${formKind === k ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/50'}`}
                       onClick={() => setFormKind(k)}
                     >
                       {k === 'buy' ? t('assets.txBuy') : t('assets.txSell')}
@@ -2640,7 +2640,7 @@ function AssetTransactionsTab({
             {formQuantity && formPrice && parseFloat(formQuantity) > 0 && (
               <div className="flex items-center justify-between p-3 rounded-lg border border-border bg-muted/30">
                 <span className="text-xs font-medium text-muted-foreground">{t('assets.txTotal')}</span>
-                <span className="text-sm font-bold tabular-nums text-foreground">
+                <span className="text-app-body font-bold tabular-nums text-foreground">
                   {formatTransactionTotal(
                     parseFloat(formQuantity) * parseFloat(formPrice) + (formFee ? parseFloat(formFee) : 0) * (formKind === 'buy' ? 1 : -1),
                     getTransactionTotalCurrency(holdings, formHolding, editingTx),
@@ -2663,7 +2663,7 @@ function AssetTransactionsTab({
           <DialogHeader>
             <DialogTitle>{t('assets.confirmDeleteTxTitle')}</DialogTitle>
           </DialogHeader>
-          <p className="text-sm text-muted-foreground">{t('assets.confirmDeleteTx')}</p>
+          <p className="text-app-body text-muted-foreground">{t('assets.confirmDeleteTx')}</p>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeletingId(null)}>{t('common.cancel')}</Button>
             <Button variant="destructive" onClick={() => deletingId && deleteMutation.mutate(deletingId)} disabled={deleteMutation.isPending}>
@@ -2841,7 +2841,7 @@ function AddHoldingTransactionDialog({
                 <button
                   key={k}
                   type="button"
-                  className={`px-3 py-2 rounded-lg text-sm font-medium border transition-all ${kind === k ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/50'}`}
+                  className={`px-3 py-2 rounded-lg text-app-body font-medium border transition-all ${kind === k ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:border-primary/50'}`}
                   onClick={() => setKind(k)}
                 >
                   {k === 'buy' ? t('assets.txBuy') : t('assets.txSell')}
@@ -2878,7 +2878,7 @@ function AddHoldingTransactionDialog({
           {quantity && price && parseFloat(quantity) > 0 && (
             <div className="flex items-center justify-between p-3 rounded-lg border border-border bg-muted/30">
               <span className="text-xs font-medium text-muted-foreground">{t('assets.txTotal')}</span>
-              <span className="text-sm font-bold tabular-nums text-foreground">
+              <span className="text-app-body font-bold tabular-nums text-foreground">
                 {formatCurrency(parseFloat(quantity) * parseFloat(price) + (fee ? parseFloat(fee) : 0) * (kind === 'buy' ? 1 : -1), cur, locale)}
               </span>
             </div>

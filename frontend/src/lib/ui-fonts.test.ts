@@ -5,6 +5,7 @@ import { applyUiFont, UI_FONT_PRESETS } from './ui-fonts'
 
 afterEach(() => {
   document.documentElement.style.removeProperty('--font-sans')
+  document.documentElement.style.removeProperty('--font-mono')
   document.documentElement.style.removeProperty('--default-font-family')
   document.documentElement.style.removeProperty('font-family')
   document.body.style.removeProperty('font-family')
@@ -12,16 +13,22 @@ afterEach(() => {
 })
 
 describe('applyUiFont', () => {
-  it('defaults to Inter when setting is missing', () => {
+  it('defaults to system stack when setting is missing', () => {
     applyUiFont(null)
-    expect(document.documentElement.style.getPropertyValue('--default-font-family')).toContain('Inter')
-    expect(document.getElementById('securo-ui-font')).toBeTruthy()
+    expect(document.documentElement.style.getPropertyValue('--default-font-family')).toContain('apple-system')
+    expect(document.getElementById('securo-ui-font')).toBeNull()
   })
 
   it('uses system stack without a Google Fonts link', () => {
     applyUiFont('system')
     expect(document.documentElement.style.getPropertyValue('--default-font-family')).toContain('apple-system')
+    expect(document.documentElement.style.getPropertyValue('--font-mono')).toContain('apple-system')
     expect(document.getElementById('securo-ui-font')).toBeNull()
+  })
+
+  it('syncs mono token for amount labels in charts', () => {
+    applyUiFont('sf_pro_display')
+    expect(document.documentElement.style.getPropertyValue('--font-mono')).toContain('SF Pro Display')
   })
 
   it('loads Geist when selected', () => {

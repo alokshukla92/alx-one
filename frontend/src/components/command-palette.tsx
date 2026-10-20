@@ -115,8 +115,8 @@ const QUICK_ACTIONS: StaticItem[] = [
 const ENTITY_META: Record<SearchHitType, { icon: React.ElementType; tintClass: string; bgClass: string; labelKey: string; pathFor: (hit: SearchHit) => string }> = {
   transaction: {
     icon: Receipt,
-    tintClass: 'text-indigo-500 dark:text-indigo-300',
-    bgClass: 'bg-indigo-500/10',
+    tintClass: 'text-[var(--color-green-700)] dark:text-[var(--color-primary)]',
+    bgClass: 'bg-[var(--color-primary-soft)]',
     labelKey: 'cmdk.groups.transactions',
     pathFor: (hit) => {
       const params = new URLSearchParams()
@@ -740,7 +740,7 @@ function Group({
 
 function itemClasses() {
   return cn(
-    'group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm',
+    'group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-app-body',
     'transition-colors',
     'data-[selected=true]:bg-primary/[0.08] data-[selected=true]:text-foreground',
     'data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',

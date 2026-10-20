@@ -132,7 +132,9 @@
     "agents": "Agenten",
     "aiAgents": "KI-Agenten",
     "collapseSidebar": "Seitenleiste einklappen",
-    "expandSidebar": "Seitenleiste ausklappen"
+    "expandSidebar": "Seitenleiste ausklappen",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "Invoices",

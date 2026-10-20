@@ -96,7 +96,7 @@ function applyLeafChange(
   }
 }
 
-const SELECT_CLASS = 'border border-border rounded-lg px-2 py-1.5 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary'
+const SELECT_CLASS = 'border border-border rounded-lg px-2 py-1.5 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary'
 
 /** AND/OR switch, used for the rule itself and for each nested group. */
 function OpToggle({ value, onChange }: { value: 'and' | 'or'; onChange: (op: 'and' | 'or') => void }) {
@@ -192,7 +192,7 @@ function ConditionRow({
         </select>
       ) : (
         <Input
-          className="col-span-2 h-8 w-full min-w-0 text-sm sm:w-0 sm:flex-1"
+          className="col-span-2 h-8 w-full min-w-0 text-app-body sm:w-0 sm:flex-1"
           value={String(condition.value)}
           onChange={(e) => onChange('value', e.target.value)}
           placeholder={condition.field === 'amount' ? '0.00' : condition.field === 'date' ? 'YYYY-MM-DD' : t('rules.valuePlaceholder')}
@@ -305,7 +305,7 @@ function RulePreviewPanel({
         type="button"
         disabled={disabled}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-2 px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted/60 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex w-full items-center justify-between gap-2 px-3 py-2 text-app-body text-foreground transition-colors hover:bg-muted/60 disabled:cursor-not-allowed disabled:opacity-50"
         onClick={() => onOpenChange(!open)}
       >
         <span className="flex items-center gap-1.5 font-medium">
@@ -693,7 +693,7 @@ export function RuleDialog({
                         <option value="ignore">{t('rules.ignoreAction')}</option>
                       </select>
                       {action.op === 'ignore' ? (
-                        <span className="min-w-0 text-sm italic text-muted-foreground sm:w-0 sm:flex-1">
+                        <span className="min-w-0 text-app-body italic text-muted-foreground sm:w-0 sm:flex-1">
                           {t('rules.ignoreActionHint')}
                         </span>
                       ) : action.op === 'set_category' ? (
@@ -725,7 +725,7 @@ export function RuleDialog({
                         </select>
                       ) : (
                         <Input
-                          className="h-8 w-full min-w-0 text-sm aria-invalid:border-input aria-invalid:ring-0 dark:aria-invalid:ring-0 sm:w-0 sm:flex-1"
+                          className="h-8 w-full min-w-0 text-app-body aria-invalid:border-input aria-invalid:ring-0 dark:aria-invalid:ring-0 sm:w-0 sm:flex-1"
                           value={action.value}
                           onChange={(e) => updateAction(i, 'value', e.target.value)}
                           placeholder={
@@ -781,7 +781,7 @@ export function RuleDialog({
               onChange={(e) => setApplyToExisting(e.target.checked)}
               className="h-4 w-4 rounded border-border"
             />
-            <span className="text-sm text-foreground">
+            <span className="text-app-body text-foreground">
               {t('rules.applyToExisting', 'Apply matching actions to existing transactions')}
             </span>
           </label>
@@ -794,7 +794,7 @@ export function RuleDialog({
                 onChange={(e) => setOverwriteExistingCategories(e.target.checked)}
                 className="h-4 w-4 rounded border-border"
               />
-              <span className="text-sm text-foreground">
+              <span className="text-app-body text-foreground">
                 {t('rules.overwriteExistingCategories', 'Also replace existing categories')}
               </span>
             </label>

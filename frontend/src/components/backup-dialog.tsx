@@ -106,7 +106,7 @@ export function BackupDialog({ open, onClose }: BackupDialogProps) {
               {t('backup.encryptionNote')}
             </p>
           )}
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="text-app-body text-destructive">{error}</p>}
           <DialogFooter>
             <Button type="button" variant="outline" onClick={handleClose}>
               {t('common.cancel')}

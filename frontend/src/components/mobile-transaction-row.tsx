@@ -109,16 +109,16 @@ export function MobileTransactionRow({
       <div className="min-w-0 flex-1">
         {/* Description row */}
         <div className="flex items-center gap-1.5">
-          <p className={`text-sm font-semibold text-foreground leading-tight min-w-0 ${hasWordBreaks(description) ? 'break-words whitespace-normal' : 'truncate'}`}>
+          <p className={`text-app-body font-normal text-foreground leading-tight min-w-0 ${hasWordBreaks(description) ? 'break-words whitespace-normal' : 'truncate'}`}>
             {description}
           </p>
           {tx.group_id && (
-            <span className="inline-flex items-center text-[9px] font-semibold uppercase tracking-wide text-violet-700 bg-violet-50 border border-violet-200 dark:bg-violet-950/40 dark:text-violet-300 dark:border-violet-900 px-1 py-0.5 rounded-full shrink-0">
+            <span className="alx-badge alx-badge-group shrink-0">
               {tx.is_shared && tx.parent_owner_name ? tx.parent_owner_name : t('splitGroups.ownerRowBadge', { group: groupName ?? '' })}
             </span>
           )}
           {!!tx.transfer_pair_id && (
-            <ArrowLeftRight className="h-3 w-3 text-blue-600 shrink-0" />
+            <ArrowLeftRight className="h-3 w-3 text-[var(--color-green-dark)] shrink-0" strokeWidth={2} />
           )}
           {virtual && (
             <CalendarClock className="h-3 w-3 text-primary shrink-0" />
@@ -158,7 +158,7 @@ export function MobileTransactionRow({
         {/* Account row or payee row */}
         {showPayee ? (
           (tx.payee_name || tx.payee) && (tx.payee_name || tx.payee) !== tx.description ? (
-            <p className="text-xs text-muted-foreground mt-0.5 truncate">
+            <p className="text-[13px] text-muted-foreground mt-0.5 truncate">
               {tx.payee_name || tx.payee}
             </p>
           ) : null
@@ -176,7 +176,7 @@ export function MobileTransactionRow({
 
       {/* Amount */}
       <div className="shrink-0 text-right">
-        <span className={`text-sm font-bold tabular-nums ${amountColor}`}>
+        <span className={`text-app-body font-medium tabular-nums ${amountColor}`}>
           {mask(
             `${tx.is_ignored ? ' ' : tx.type === 'credit' ? '+' : '\u2212'}${formatCurrency(
               Math.abs(displayAmount),

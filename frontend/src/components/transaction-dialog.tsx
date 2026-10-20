@@ -267,7 +267,7 @@ export function TransactionDialog({
                     </div>
                   ) : null}
                 </div>
-                <div className="flex items-center gap-2 px-4 py-3 border-t text-sm shrink-0">
+                <div className="flex items-center gap-2 px-4 py-3 border-t text-app-body shrink-0">
                   <button
                     type="button"
                     className="p-1 rounded hover:bg-accent text-muted-foreground hover:text-foreground cursor-pointer"
@@ -311,7 +311,7 @@ export function TransactionDialog({
                 </div>
               ) : null}
             </div>
-            <div className="flex items-center gap-2 px-4 py-3 border-t text-sm shrink-0">
+            <div className="flex items-center gap-2 px-4 py-3 border-t text-app-body shrink-0">
               <button
                 type="button"
                 className="p-1 rounded hover:bg-accent text-muted-foreground hover:text-foreground cursor-pointer"
@@ -345,7 +345,7 @@ export function TransactionDialog({
         <DialogHeader>
           <DialogTitle>{t('transactions.installmentScopeTitle')}</DialogTitle>
         </DialogHeader>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-app-body text-muted-foreground">
           {t('transactions.installmentScopeEditDesc')}
         </p>
         <DialogFooter className="flex-col sm:flex-row sm:justify-end gap-2">
@@ -865,17 +865,17 @@ function TransactionForm({
     >
       <div className="space-y-4 overflow-y-auto flex-1 min-h-0 pb-2 sm:pr-3">
       {error && (
-        <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
+        <div className="p-3 text-app-body text-destructive bg-destructive/10 rounded-md">
           {error}
         </div>
       )}
       {isSynced && (
-        <div className="flex items-center gap-2 p-3 text-sm bg-amber-50 border border-amber-200 rounded-md text-amber-700">
+        <div className="flex items-center gap-2 p-3 text-app-body bg-amber-50 border border-amber-200 rounded-md text-amber-700">
           {t('transactions.syncedInfo')}
         </div>
       )}
       {!!transaction?.transfer_pair_id && (
-        <div className="p-3 text-sm bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md text-blue-700 dark:text-blue-300 space-y-2">
+        <div className="p-3 text-app-body bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md text-blue-700 dark:text-blue-300 space-y-2">
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1 min-w-0">
               <p>{t('transactions.transferInfo')}</p>
@@ -933,7 +933,7 @@ function TransactionForm({
         </div>
       )}
       {recurringMatch && (
-        <div className="flex items-center gap-2 p-3 text-sm bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md">
+        <div className="flex items-center gap-2 p-3 text-app-body bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md">
           <span>{t('transactions.recurringInfo', {
             frequency: t(`recurring.${recurringMatch.frequency}`),
             next: new Date(recurringMatch.next_occurrence + 'T00:00:00').toLocaleDateString(dateLocale),
@@ -941,7 +941,7 @@ function TransactionForm({
         </div>
       )}
       {recurringLinked && !isCreating && (
-        <div className="flex items-center justify-between gap-2 p-3 text-sm bg-muted/50 border border-border rounded-md">
+        <div className="flex items-center justify-between gap-2 p-3 text-app-body bg-muted/50 border border-border rounded-md">
           <span className="text-muted-foreground">{t('transactions.recurringLinkedInfo')}</span>
           <Button
             type="button"
@@ -961,7 +961,7 @@ function TransactionForm({
         {isSynced ? (
           <textarea
             ref={descriptionRef}
-            className="w-full border border-input rounded-md px-3 py-2 text-sm bg-card dark:bg-input/30 shadow-xs resize-none overflow-hidden outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+            className="w-full border border-input rounded-md px-3 py-2 text-app-body bg-card dark:bg-input/30 shadow-xs resize-none overflow-hidden outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/30 focus-visible:ring-[2px]"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             // Descriptions are single-line; Enter saves like the Input does.
@@ -1049,7 +1049,7 @@ function TransactionForm({
         <div className="space-y-2">
           <Label>{t('transactions.currency')}</Label>
           <select
-            className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card h-9 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+            className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card h-9 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
             value={currency}
             onChange={(e) => handleCurrencyChange(e.target.value)}
             disabled={isSynced}
@@ -1073,7 +1073,7 @@ function TransactionForm({
         <div className="space-y-2">
           <Label>{t('transactions.colStatus')}</Label>
           <select
-            className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card h-9 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+            className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card h-9 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
             value={status}
             onChange={(e) => setStatus(e.target.value as 'posted' | 'pending')}
             disabled={isSynced}
@@ -1092,7 +1092,7 @@ function TransactionForm({
             </div>
           )}
           <div>
-            <span className="text-sm font-medium">{t('transactions.conversion')}</span>
+            <span className="text-app-body font-medium">{t('transactions.conversion')}</span>
             <span className="text-xs text-muted-foreground ml-2">({t('transactions.conversionHint')})</span>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -1135,7 +1135,7 @@ function TransactionForm({
         <div className="space-y-2">
           <Label>{t('transactions.type')}</Label>
           <select
-            className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+            className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
             value={type}
             onChange={(e) => setType(e.target.value as 'debit' | 'credit')}
             disabled={isSynced}
@@ -1175,7 +1175,7 @@ function TransactionForm({
           <div className="space-y-2">
             <Label>{t('transactions.account')}</Label>
             <select
-              className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+              className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
               value={accountId}
               onChange={(e) => setAccountId(e.target.value)}
               required
@@ -1191,7 +1191,7 @@ function TransactionForm({
       <div className="space-y-2">
         <Label>{t('transactions.notes')} <span className="text-muted-foreground font-normal text-xs">({t('transactions.notesHint')})</span></Label>
         <textarea
-          className="w-full border border-input rounded-md px-3 py-2 text-sm bg-card resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-0"
+          className="w-full border border-input rounded-md px-3 py-2 text-app-body bg-card resize-none focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-0"
           rows={2}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
@@ -1208,7 +1208,7 @@ function TransactionForm({
             onChange={(event) => setExcludeFromReports(event.target.checked)}
           />
           <span>
-            <span className="block text-sm font-medium">
+            <span className="block text-app-body font-medium">
               {t('transactions.excludeFromReports')}
             </span>
             <span className="block text-xs text-muted-foreground">
@@ -1305,7 +1305,7 @@ function TransactionForm({
                 }}
                 className="rounded border-gray-300"
               />
-              <span className="text-sm font-medium">{t('transactions.makeRecurring')}</span>
+              <span className="text-app-body font-medium">{t('transactions.makeRecurring')}</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -1317,7 +1317,7 @@ function TransactionForm({
                 }}
                 className="rounded border-gray-300"
               />
-              <span className="text-sm font-medium">{t('transactions.makeInstallment')}</span>
+              <span className="text-app-body font-medium">{t('transactions.makeInstallment')}</span>
             </label>
           </div>
           {isRecurring && (
@@ -1325,7 +1325,7 @@ function TransactionForm({
               <div className="space-y-2">
                 <Label>{t('recurring.frequency')}</Label>
                 <select
-                  className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                  className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                   value={frequency}
                   onChange={(e) => setFrequency(e.target.value as RecurringTransaction['frequency'])}
                 >
@@ -1353,7 +1353,7 @@ function TransactionForm({
               <div className="space-y-2">
                 <Label>{t('transactions.installmentFrequency')}</Label>
                 <select
-                  className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                  className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                   value={installmentFrequency}
                   onChange={(e) => setInstallmentFrequency(e.target.value as RecurringTransaction['frequency'])}
                 >
@@ -1371,7 +1371,7 @@ function TransactionForm({
                   type="number"
                   min={2}
                   max={360}
-                  className="w-full border border-border rounded-md px-3 py-2 text-sm bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                  className="w-full border border-border rounded-md px-3 py-2 text-app-body bg-card focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
                   value={installmentCount}
                   onChange={(e) => setInstallmentCount(e.target.value)}
                 />
@@ -1389,7 +1389,7 @@ function TransactionForm({
       )}>
         <div className="flex min-w-0 flex-wrap gap-2 items-center">
           {onDelete && (
-            <Button type="button" variant="destructive" onClick={onDelete} disabled={loading} className="whitespace-nowrap text-xs sm:text-sm h-8 sm:h-9">
+            <Button type="button" variant="destructive" onClick={onDelete} disabled={loading} className="whitespace-nowrap text-xs sm:text-app-body h-8 sm:h-9">
               {t('common.delete')}
             </Button>
           )}
@@ -1400,7 +1400,7 @@ function TransactionForm({
               onClick={handleToggleIgnore}
               disabled={loading || togglingIgnore}
               title={t('transactions.ignoreTransferHint')}
-              className="gap-1.5 whitespace-nowrap text-xs sm:text-sm h-8 sm:h-9"
+              className="gap-1.5 whitespace-nowrap text-xs sm:text-app-body h-8 sm:h-9"
             >
               {isIgnored ? <Eye size={14} /> : <EyeClosed size={14} />}
               {isIgnored ? t('transactions.unignoreAction') : t('transactions.ignoreAction')}
@@ -1412,7 +1412,7 @@ function TransactionForm({
                 type="button"
                 variant="outline"
                 onClick={() => onCreateRule(transaction)}
-                className="gap-1.5 rounded-r-none whitespace-nowrap text-xs sm:text-sm h-8 sm:h-9"
+                className="gap-1.5 rounded-r-none whitespace-nowrap text-xs sm:text-app-body h-8 sm:h-9"
                 title={t('transactions.createRule')}
               >
                 <SlidersHorizontal size={14} />
@@ -1441,7 +1441,7 @@ function TransactionForm({
           )}
         </div>
         <div className="flex flex-wrap gap-2 justify-end sm:ml-auto">
-          <Button type="button" variant="outline" onClick={onCancel} className="whitespace-nowrap text-xs sm:text-sm h-8 sm:h-9">
+          <Button type="button" variant="outline" onClick={onCancel} className="whitespace-nowrap text-xs sm:text-app-body h-8 sm:h-9">
             {t('common.cancel')}
           </Button>
           {showSaveVariants ? (
@@ -1449,7 +1449,7 @@ function TransactionForm({
               <Button
                 type="submit"
                 disabled={loading || !splitsValid}
-                className="rounded-r-none whitespace-nowrap text-xs sm:text-sm h-8 sm:h-9"
+                className="rounded-r-none whitespace-nowrap text-xs sm:text-app-body h-8 sm:h-9"
               >
                 {loading ? t('common.loading') : t('common.save')}
               </Button>
@@ -1475,7 +1475,7 @@ function TransactionForm({
               </DropdownMenu>
             </div>
           ) : (
-            <Button type="submit" disabled={loading || !splitsValid} className="whitespace-nowrap text-xs sm:text-sm h-8 sm:h-9">
+            <Button type="submit" disabled={loading || !splitsValid} className="whitespace-nowrap text-xs sm:text-app-body h-8 sm:h-9">
               {loading ? t('common.loading') : t('common.save')}
             </Button>
           )}
@@ -1601,7 +1601,7 @@ function AddTransactionToRuleDialog({
                 <button
                   type="button"
                   disabled={loadingRules || rules.length === 0}
-                  className="flex w-full items-center justify-between gap-2 rounded-md border border-input bg-card px-3 py-2 text-sm text-left shadow-xs transition-[color,box-shadow] outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:hover:bg-input/50 h-9 cursor-pointer"
+                  className="flex w-full items-center justify-between gap-2 rounded-md border border-input bg-card px-3 py-2 text-app-body text-left shadow-xs transition-[color,box-shadow] outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:hover:bg-input/50 h-9 cursor-pointer"
                 >
                   <span className="flex-1 truncate text-left">
                     {loadingRules ? (
@@ -1710,7 +1710,7 @@ function PendingAttachmentsSection({
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 text-sm font-medium">
+      <div className="flex items-center gap-2 text-app-body font-medium">
         <Paperclip size={14} />
         {t('transactions.attachments')}
         {hasFiles && (

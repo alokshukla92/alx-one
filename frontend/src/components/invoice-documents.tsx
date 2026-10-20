@@ -312,10 +312,10 @@ export function InvoiceDocumentBrowser({
           ) : (
             <div className="py-20 text-center" data-testid="invoice-missing-source">
               <FileText className="h-6 w-6 mx-auto text-muted-foreground" />
-              <p className="mt-3 text-sm font-medium text-foreground">
+              <p className="mt-3 text-app-body font-medium text-foreground">
                 {t('invoices.documents.notOurs')}
               </p>
-              <p className="mt-1 text-sm text-muted-foreground max-w-md mx-auto">
+              <p className="mt-1 text-app-body text-muted-foreground max-w-md mx-auto">
                 {t('invoices.documents.notOursHint')}
               </p>
             </div>
@@ -366,7 +366,7 @@ function ShelfItem({
           {icon}
         </span>
         <span className="min-w-0">
-          <span className="block text-sm font-medium text-foreground truncate">{title}</span>
+          <span className="block text-app-body font-medium text-foreground truncate">{title}</span>
           <span className="block text-xs text-muted-foreground truncate mt-0.5">{subtitle}</span>
           {reference && (
             <span className="block text-[11px] text-muted-foreground/80 truncate mt-0.5 tabular-nums">
@@ -445,7 +445,7 @@ function AttachmentView({
           <img src={url} alt={attachment.filename} className="w-full block" />
         ) : (
           <div className="p-10 text-center">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-app-body text-muted-foreground">
               {t('invoices.documents.cannotPreview')}
             </p>
           </div>

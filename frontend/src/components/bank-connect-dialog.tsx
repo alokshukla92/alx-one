@@ -106,7 +106,7 @@ export function BankConnectDialog({
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>{t('connections.initialSyncSettings')}</DialogTitle>
-            <p className="text-sm text-muted-foreground">{t('connections.initialSyncSettingsDesc')}</p>
+            <p className="text-app-body text-muted-foreground">{t('connections.initialSyncSettingsDesc')}</p>
           </DialogHeader>
           <div className="flex items-start justify-between gap-4 rounded-lg border border-border p-3">
             <div className="space-y-1">

@@ -15,8 +15,8 @@ export default function AlxHubPage() {
     <div className="min-h-screen bg-background">
       <header className="flex h-14 items-center justify-between border-b px-4 sm:px-8">
         <div className="flex items-center gap-2.5">
-          <ShellLogo size={26} className="text-primary shrink-0" />
-          <span className="text-lg font-bold tracking-tight">{t('alx.platformName')}</span>
+          <ShellLogo size={26} className="shrink-0" />
+          <span className="text-lg font-medium tracking-tight">{t('alx.platformName')}</span>
         </div>
         <Button type="button" variant="ghost" size="sm" onClick={() => logout()}>
           {t('auth.logout')}
@@ -25,11 +25,11 @@ export default function AlxHubPage() {
 
       <main className="mx-auto max-w-4xl px-4 py-10 sm:px-8 sm:py-14">
         <div className="mb-10">
-          <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="mb-2 flex items-center gap-2 text-app-body text-muted-foreground">
             <LayoutGrid className="size-4" aria-hidden />
             {t('alx.hub.eyebrow')}
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('alx.hub.title')}</h1>
+          <h1 className="text-2xl font-normal tracking-tight sm:text-3xl">{t('alx.hub.title')}</h1>
           <p className="mt-2 max-w-xl text-muted-foreground">{t('alx.hub.subtitle')}</p>
         </div>
 
@@ -62,7 +62,7 @@ export default function AlxHubPage() {
                     />
                   )}
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{description}</p>
+                <p className="mt-3 text-app-body text-muted-foreground leading-relaxed">{description}</p>
               </>
             )
 

@@ -36,7 +36,6 @@ import { UpdateAvailableDialog } from '@/components/update-available-dialog'
 import { WorkspaceSwitcher } from '@/components/workspace-switcher'
 import { navItems, visibleNavItems, type NavItem } from '@/lib/nav-items'
 import {
-  Menu,
   ChevronLeft,
   ChevronRight,
   Eye,
@@ -61,8 +60,11 @@ import { useCommandPaletteHotkey } from '@/hooks/use-command-palette-hotkey'
 import { GlobalChatPanel } from '@/components/global-chat-panel'
 import { useFeatureFlags } from '@/hooks/use-feature-flags'
 import { Bot, LayoutGrid, Plus, Search, Sparkles } from 'lucide-react'
+import { MobileBottomNav } from '@/components/mobile-bottom-nav'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
+import { resolveBrandThemeSettings } from '@/lib/alxone-brand'
 import { applyUiFont } from '@/lib/ui-fonts'
+import { applyUiFontScale } from '@/lib/ui-font-scale'
 import { useLocalAuthEnabled } from '@/hooks/use-local-auth'
 import { formatCurrency } from '@/lib/format'
 import { securoPath } from '@/lib/securo-path'
@@ -74,14 +76,14 @@ function NavSkeleton() {
   return (
     <div className="flex flex-col gap-0.5" aria-hidden>
       {[3, 2, 7].map((count, section) => (
-        <div key={section} className={cn('flex flex-col gap-0.5', section > 0 && 'pt-3')}>
-          <div className="px-3 pt-1 pb-1">
-            <div className="h-2 w-16 rounded bg-sidebar-accent/60 animate-pulse" />
+        <div key={section} className={cn('flex flex-col gap-px', section > 0 && 'pt-1.5')}>
+          <div className="px-3 pb-0.5">
+            <div className="h-2 w-16 rounded bg-muted animate-pulse" />
           </div>
           {Array.from({ length: count }).map((_, row) => (
-            <div key={row} className="flex items-center gap-3 px-3 py-2">
-              <div className="h-4 w-4 rounded bg-sidebar-accent/60 animate-pulse" />
-              <div className="h-3 flex-1 max-w-[7rem] rounded bg-sidebar-accent/40 animate-pulse" />
+            <div key={row} className="flex items-center gap-2.5 px-3 py-1">
+              <div className="h-4 w-4 rounded bg-muted animate-pulse" />
+              <div className="h-3 flex-1 max-w-[7rem] rounded bg-muted/80 animate-pulse" />
             </div>
           ))}
         </div>
@@ -132,9 +134,11 @@ export function AppLayout() {
   // Gated on agentsEnabled so the hotkey is a no-op when the feature is
   // off — keeps ⌘J free for browsers/other tools.
   useEffect(() => {
-    adminApi.defaultColors().then(({ light, dark, font }) => {
-      setThemeBasedOnSystem(light, dark, resolvedTheme)
-      applyUiFont(font)
+    adminApi.defaultColors().then(({ light, dark, font, font_scale }) => {
+      const brand = resolveBrandThemeSettings(light, dark, font, font_scale)
+      setThemeBasedOnSystem(brand.light, brand.dark, resolvedTheme)
+      applyUiFont(brand.font)
+      applyUiFontScale(brand.fontScale)
     }).catch(() => {})
     
     if (!chatAvailable) return
@@ -200,27 +204,21 @@ export function AppLayout() {
     : allAccounts
   const totalBalance = sumAccountBalances(visibleAccounts)
   const versionA11yLabel = t('app.versionAriaLabel', { version: APP_VERSION })
+  const appName = t('app.name', { defaultValue: 'Securo' })
 
   return (
     <div className="min-h-screen bg-background">
       {/* Mobile header */}
-      <header className="sticky top-0 z-40 flex h-14 items-center gap-3 bg-sidebar border-b border-sidebar-border px-4 lg:hidden">
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="text-sidebar-muted hover:text-sidebar-foreground transition-colors"
-          aria-label={t('app.toggleMenu')}
-        >
-          <Menu size={20} />
-        </button>
+      <header className="sticky top-0 z-40 flex h-12 items-center gap-3 bg-background border-b border-border px-5 lg:hidden">
         <Link
           to={securoPath()}
           className="flex items-center gap-2 -mx-1 px-1 py-1 rounded-md hover:bg-sidebar-accent transition-colors"
-          aria-label={t('app.name')}
+          aria-label={appName}
           title={t('nav.dashboard')}
         >
-          <ShellLogo size={22} className="text-primary shrink-0" />
-          <span className="font-bold text-sidebar-foreground">
-            {t('app.name')}
+          <ShellLogo size={32} variant="app" />
+          <span className="font-medium text-sidebar-foreground">
+            {appName}
           </span>
         </Link>
         <div className="ml-auto flex items-center gap-2">
@@ -283,15 +281,22 @@ export function AppLayout() {
           <div
             className="fixed inset-0 z-40 bg-black/50 lg:hidden"
             onClick={() => setSidebarOpen(false)}
+            aria-hidden
           />
         )}
 
-        {/* Sidebar */}
+        {/* Sidebar — drawer on mobile (via bottom nav "More"), fixed rail on desktop */}
         <aside
+          data-sidebar="securo"
           data-collapsed={desktopSidebarCollapsed}
           className={cn(
-            'group/sidebar fixed inset-y-0 left-0 z-50 w-60 bg-sidebar border-r border-sidebar-border flex flex-col transform transition-[transform,width] duration-300 ease-in-out motion-reduce:transition-none lg:translate-x-0 shrink-0',
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full',
+            'group/sidebar fixed inset-y-0 left-0 z-50 w-60 bg-sidebar border-r border-sidebar-border flex flex-col shrink-0 font-sans antialiased',
+            'max-lg:transition-transform max-lg:duration-300 max-lg:ease-in-out motion-reduce:transition-none',
+            'max-lg:pb-[env(safe-area-inset-bottom)]',
+            'lg:transition-[width] lg:duration-300 lg:ease-in-out',
+            sidebarOpen ? 'max-lg:translate-x-0' : 'max-lg:-translate-x-full',
+            'max-lg:pointer-events-none max-lg:opacity-0',
+            sidebarOpen && 'max-lg:pointer-events-auto max-lg:opacity-100',
             desktopSidebarCollapsed ? 'lg:w-16' : 'lg:w-60',
           )}
         >
@@ -303,22 +308,22 @@ export function AppLayout() {
               so nothing the expanded header offers goes missing in the
               rail. */}
           <div className={cn(
-            'flex h-16 min-h-16 items-center justify-between px-5 border-b border-sidebar-border shrink-0',
-            desktopSidebarCollapsed && 'lg:h-auto lg:min-h-0 lg:flex-col lg:justify-center lg:gap-2 lg:px-0 lg:py-3',
+            'flex h-12 min-h-12 items-center justify-between px-4 border-b border-sidebar-border shrink-0',
+            desktopSidebarCollapsed && 'lg:h-auto lg:min-h-0 lg:flex-col lg:justify-center lg:gap-1.5 lg:px-0 lg:py-2',
           )}>
             <Link
               to={securoPath()}
-              className="flex items-center gap-2.5 -mx-1 px-1 py-1 rounded-md hover:bg-sidebar-accent transition-colors"
+              className="flex items-center gap-2 -mx-1 px-1 py-0.5 rounded-md hover:bg-sidebar-accent transition-colors"
               onClick={() => setSidebarOpen(false)}
-              aria-label={t('app.name')}
+              aria-label={appName}
               title={t('nav.dashboard')}
             >
-              <ShellLogo size={24} className="text-primary shrink-0" />
+              <ShellLogo size={28} variant="app" className="shrink-0" />
               <span className={cn(
-                'font-bold text-lg text-sidebar-foreground tracking-tight',
+                'font-normal text-base text-sidebar-foreground tracking-tight',
                 desktopSidebarCollapsed && 'lg:hidden',
               )}>
-                {t('app.name')}
+                {appName}
               </span>
             </Link>
             <div className={cn(
@@ -386,21 +391,21 @@ export function AppLayout() {
           </button>
 
           {/* Command palette trigger */}
-          <div className={cn('px-3 pt-3', desktopSidebarCollapsed && 'lg:px-2')}>
+          <div className={cn('px-3 pt-2', desktopSidebarCollapsed && 'lg:px-2')}>
             <button
               type="button"
               onClick={() => setPaletteOpen(true)}
               className={cn(
-                'group flex w-full items-center gap-2 rounded-lg border border-sidebar-border/80 bg-sidebar-accent/40 px-3 py-2',
-                'text-[12.5px] text-sidebar-muted transition-all',
-                'hover:bg-sidebar-accent hover:text-sidebar-foreground hover:border-sidebar-border',
+                'group flex w-full items-center gap-2 rounded-lg border border-sidebar-border bg-muted px-2.5 py-1.5',
+                'text-xs text-sidebar-muted transition-colors',
+                'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:border-sidebar-border',
                 desktopSidebarCollapsed && 'lg:justify-center lg:px-0',
               )}
               aria-label={t('cmdk.triggerAria')}
             >
               <Search size={13} className="shrink-0" />
               <span className={cn('flex-1 text-left', desktopSidebarCollapsed && 'lg:hidden')}>{t('cmdk.triggerLabel')}</span>
-              <kbd className={cn('hidden lg:inline-flex h-[17px] items-center rounded border border-sidebar-border bg-sidebar px-1 font-mono text-[9.5px] font-semibold text-sidebar-muted/80', desktopSidebarCollapsed && 'lg:hidden')}>
+              <kbd className={cn('hidden lg:inline-flex h-[18px] items-center rounded-md border border-sidebar-border bg-sidebar px-1.5 text-[10px] font-medium text-sidebar-muted', desktopSidebarCollapsed && 'lg:hidden')}>
                 {isMac ? '⌘' : 'Ctrl'}&nbsp;K
               </kbd>
             </button>
@@ -408,7 +413,7 @@ export function AppLayout() {
 
           <div className="flex-1 min-h-0 overflow-y-auto">
           {/* Nav */}
-          <nav className={cn('flex flex-col gap-0.5 px-3 pt-1 pb-3', desktopSidebarCollapsed && 'lg:items-center lg:gap-1 lg:px-0 lg:pt-3')} data-tour="sidebar">
+          <nav className={cn('flex flex-col gap-px px-2 pt-1 pb-2', desktopSidebarCollapsed && 'lg:items-center lg:gap-0.5 lg:px-0 lg:pt-2')} data-tour="sidebar">
             {/* Which modules this workspace shows is resolved server-side,
                 so until the workspace list lands there is no honest answer
                 — a placeholder beats both an empty sidebar and a guess. */}
@@ -422,10 +427,10 @@ export function AppLayout() {
                 const isFirstSep = idx === 0
                 return (
                   <div key={`sep-${idx}`} className={cn(
-                    isFirstSep ? 'pt-1 pb-1 px-3' : 'pt-3 pb-1 px-3',
+                    isFirstSep ? 'pt-0.5 pb-0.5 px-2' : 'pt-2 pb-0.5 px-2',
                     desktopSidebarCollapsed && 'lg:hidden',
                   )}>
-                    <span className="text-[10px] uppercase tracking-[0.12em] font-semibold text-sidebar-muted/50">
+                    <span className="text-xs font-medium text-sidebar-muted">
                       {t(item.labelKey)}
                     </span>
                   </div>
@@ -447,21 +452,25 @@ export function AppLayout() {
                   title={t(`nav.${item.key}`)}
                   aria-label={t(`nav.${item.key}`)}
                   className={cn(
-                    'flex items-center gap-3 text-[13px] font-medium transition-all rounded-lg px-3 py-2',
+                    'flex items-center gap-2 text-app-body font-normal transition-colors rounded-full px-2 py-1',
                     isActive
-                      ? 'bg-primary/[0.08] text-primary border-l-[3px] border-primary pl-[9px]'
-                      : 'text-sidebar-muted hover:bg-sidebar-accent hover:text-sidebar-foreground',
-                    desktopSidebarCollapsed && 'lg:h-10 lg:w-10 lg:justify-center lg:border-l-0 lg:px-0 lg:pl-0',
+                      ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                      : 'text-sidebar-foreground hover:bg-muted',
+                    desktopSidebarCollapsed && 'lg:h-9 lg:w-9 lg:justify-center lg:px-0 lg:py-0',
                   )}
                 >
-                  <Icon
-                    size={17}
+                  <span
                     className={cn(
-                      'shrink-0',
-                      isActive ? 'text-primary' : 'text-sidebar-muted',
-                      desktopSidebarCollapsed && 'lg:h-5 lg:w-5',
+                      'flex h-7 w-7 shrink-0 items-center justify-center rounded-full',
+                      isActive && 'bg-[var(--color-primary-lime)] text-[var(--color-green-900)]',
                     )}
-                  />
+                  >
+                    <Icon
+                      size={16}
+                      strokeWidth={2}
+                      className={cn(!isActive && 'text-sidebar-foreground')}
+                    />
+                  </span>
                   <span className={cn(desktopSidebarCollapsed && 'lg:hidden')}>{t(`nav.${item.key}`)}</span>
                 </Link>
               )
@@ -491,12 +500,12 @@ export function AppLayout() {
 
           {/* Account list in sidebar */}
           {allAccounts.length > 0 && (
-            <div className={cn('px-3 pb-2 mt-2', desktopSidebarCollapsed && 'lg:hidden')}>
+            <div className={cn('px-2 pb-1.5 mt-1', desktopSidebarCollapsed && 'lg:hidden')}>
               <button
                 onClick={() => setAccountsExpanded(!accountsExpanded)}
-                className="flex items-center justify-between w-full px-3 py-2 hover:text-sidebar-foreground transition-colors"
+                className="flex items-center justify-between w-full px-2 py-1 hover:text-sidebar-foreground transition-colors"
               >
-                <span className="text-[11px] uppercase tracking-[0.12em] font-semibold text-sidebar-muted">
+                <span className="text-[11px] font-medium text-sidebar-muted">
                   {t('accounts.title')}
                 </span>
                 <div className="flex items-center gap-2">
@@ -530,7 +539,7 @@ export function AppLayout() {
                       >
                         <div className="truncate min-w-0">
                           <span className="block truncate font-medium">{getAccountName(acc)}</span>
-                          <span className="block text-[10px] text-sidebar-muted/60">
+                          <span className="block text-[10px] text-sidebar-muted">
                             {t(`accounts.type${typeKey}`)}
                             {acc.shared_balance_group && ` · ${t('accounts.sharedCreditBalance')}`}
                           </span>
@@ -546,7 +555,7 @@ export function AppLayout() {
                   {visibleAccounts.length > 3 && (
                     <button
                       onClick={() => setAccountsShowAll(!accountsShowAll)}
-                      className="w-full px-3 py-1.5 text-[11px] font-medium text-sidebar-muted/70 hover:text-sidebar-foreground transition-colors text-center"
+                      className="w-full px-3 py-1.5 text-[11px] font-medium text-sidebar-muted hover:text-sidebar-foreground transition-colors text-center"
                     >
                       {accountsShowAll
                         ? t('common.showLess', { defaultValue: 'Show less' })
@@ -571,7 +580,7 @@ export function AppLayout() {
               primary identity, the user email + role as the secondary
               line, and combines workspace switching with all the
               account actions that used to live in a separate dropdown. */}
-          <div className={cn('px-3 pt-1', desktopSidebarCollapsed && 'lg:px-2')}>
+          <div className={cn('px-2 pt-0.5', desktopSidebarCollapsed && 'lg:px-2')}>
             <WorkspaceSwitcher
               onChangePassword={() => setChangePasswordOpen(true)}
               onTwoFactor={() => setTwoFactorOpen(true)}
@@ -584,23 +593,23 @@ export function AppLayout() {
             />
           </div>
 
-          <div className={cn('px-3 pb-2', desktopSidebarCollapsed && 'lg:px-1')}>
+          <div className={cn('px-2 pb-1.5', desktopSidebarCollapsed && 'lg:px-1')}>
             <Link
               to="/"
               onClick={() => setSidebarOpen(false)}
               title={t('alx.hub.allModules')}
               className={cn(
-                'flex items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium text-sidebar-muted transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground',
+                'flex items-center gap-2 rounded-full px-2 py-1 text-app-body font-normal text-sidebar-foreground transition-colors hover:bg-muted',
                 desktopSidebarCollapsed && 'lg:justify-center lg:px-0',
               )}
             >
-              <LayoutGrid size={17} className="shrink-0" aria-hidden />
+              <LayoutGrid size={16} strokeWidth={2} className="shrink-0" aria-hidden />
               <span className={cn(desktopSidebarCollapsed && 'lg:hidden')}>{t('alx.hub.allModules')}</span>
             </Link>
           </div>
-          <div className={cn('px-3 pb-3 pt-1', desktopSidebarCollapsed && 'lg:hidden')}>
+          <div className={cn('px-2 pb-2 pt-0.5', desktopSidebarCollapsed && 'lg:hidden')}>
             <div
-              className="text-[11px] leading-4 text-sidebar-muted/70 text-center"
+              className="text-[11px] leading-4 text-muted-foreground text-center"
               role="note"
             >
               <span className="sr-only">{versionA11yLabel}</span>
@@ -613,10 +622,11 @@ export function AppLayout() {
 
         {/* Main content */}
         <main className={cn(
-          'flex-1 min-h-screen overflow-x-hidden transition-[margin] duration-300 ease-in-out motion-reduce:transition-none',
+          'flex-1 min-h-screen overflow-x-hidden bg-background transition-[margin] duration-300 ease-in-out motion-reduce:transition-none',
+          'pb-[calc(4.25rem+env(safe-area-inset-bottom))] lg:pb-0',
           desktopSidebarCollapsed ? 'lg:ml-16' : 'lg:ml-60',
         )}>
-          <div className="p-6 max-w-7xl mx-auto">
+          <div className="px-5 py-4 max-w-7xl mx-auto sm:px-6 sm:py-6">
             {/* Active-collection filter (issue #105): sticky bar above the
                 content so the scope is visible right where the data is. */}
             <CollectionSelector variant="header" />
@@ -624,6 +634,8 @@ export function AppLayout() {
           </div>
         </main>
       </div>
+
+      <MobileBottomNav hasModule={hasModule} onMore={() => setSidebarOpen(true)} />
 
       {showTour && <OnboardingTour onComplete={handleTourComplete} />}
       {localAuthEnabled && (

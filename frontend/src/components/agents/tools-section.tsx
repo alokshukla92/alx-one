@@ -31,7 +31,7 @@ export function ToolsSection({ agentId }: { agentId: string }) {
     onError: () => toast.error(t('agents.tools.saveFailed')),
   })
 
-  if (isLoading) return <div className="text-sm text-muted-foreground">{t('agents.tools.loading')}</div>
+  if (isLoading) return <div className="text-app-body text-muted-foreground">{t('agents.tools.loading')}</div>
 
   const grouped = draft.reduce<Record<string, AgentToolHandle[]>>((acc, tool) => {
     ;(acc[tool.server] ||= []).push(tool)
@@ -44,7 +44,7 @@ export function ToolsSection({ agentId }: { agentId: string }) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm font-semibold">{t('agents.tools.title')}</h3>
+          <h3 className="text-app-body font-semibold">{t('agents.tools.title')}</h3>
           <p className="text-xs text-muted-foreground">{t('agents.tools.subtitle')}</p>
         </div>
         {canWrite && (
@@ -55,7 +55,7 @@ export function ToolsSection({ agentId }: { agentId: string }) {
       </div>
 
       {Object.keys(grouped).length === 0 ? (
-        <div className="rounded-lg border border-dashed p-6 text-sm text-muted-foreground text-center">
+        <div className="rounded-lg border border-dashed p-6 text-app-body text-muted-foreground text-center">
           {t('agents.tools.empty')}
         </div>
       ) : (
@@ -67,7 +67,7 @@ export function ToolsSection({ agentId }: { agentId: string }) {
                 {items.map((tool) => (
                   <div key={`${tool.server}.${tool.name}`} className="flex items-center gap-3 px-3 py-2.5">
                     <div className="min-w-0 flex-1">
-                      <div className="text-sm font-medium flex items-center gap-2">
+                      <div className="text-app-body font-medium flex items-center gap-2">
                         {tool.name}
                         {tool.is_proposal && (
                           <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">

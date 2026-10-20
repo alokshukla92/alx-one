@@ -47,7 +47,7 @@ export function MonthStepper({ value, onChange, locale = 'pt-BR', prevLabel, nex
             type="button"
             aria-label={label}
             title={label}
-            className="inline-flex min-w-0 items-center justify-center truncate rounded-lg border border-border bg-card px-2 py-1.5 text-sm text-foreground transition-all hover:bg-muted/50 sm:min-w-[160px] sm:px-3"
+            className="inline-flex min-w-0 items-center justify-center truncate rounded-lg border border-border bg-card px-2 py-1.5 text-app-body text-foreground transition-all hover:bg-muted/50 sm:min-w-[160px] sm:px-3"
           >
             <span className="sm:hidden">{compactLabel}</span>
             <span className="hidden sm:inline">{label}</span>

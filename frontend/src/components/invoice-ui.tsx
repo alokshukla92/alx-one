@@ -22,7 +22,7 @@ export function SectionCard({
   return (
     <div
       className={cn(
-        'bg-card rounded-xl border border-border shadow-sm overflow-hidden',
+        'alx-panel overflow-hidden',
         className,
       )}
     >
@@ -45,7 +45,7 @@ export function SectionHeader({
   return (
     <div className="px-4 sm:px-5 py-4 border-b border-border flex flex-wrap items-center justify-between gap-2">
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-foreground">{title}</p>
+        <p className="text-app-body font-semibold text-foreground">{title}</p>
         {description && <p className="text-xs text-muted-foreground mt-0.5">{description}</p>}
       </div>
       {action}

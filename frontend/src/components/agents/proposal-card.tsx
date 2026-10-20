@@ -72,7 +72,7 @@ export function ProposalCard({ toolCallId, data }: Props) {
   // Backend already short-circuits with {error: "..."} on bad input.
   if (data.error) {
     return (
-      <div className="rounded-md border border-rose-300/50 bg-rose-50/40 dark:bg-rose-950/15 px-3 py-2 text-sm flex items-center gap-2 text-rose-700 dark:text-rose-200">
+      <div className="rounded-md border border-rose-300/50 bg-rose-50/40 dark:bg-rose-950/15 px-3 py-2 text-app-body flex items-center gap-2 text-rose-700 dark:text-rose-200">
         <AlertCircle className="h-4 w-4 shrink-0" />
         <span className="truncate">{data.error}</span>
       </div>
@@ -88,7 +88,7 @@ export function ProposalCard({ toolCallId, data }: Props) {
   return (
     <div
       className={cn(
-        'rounded-md border text-sm overflow-hidden',
+        'rounded-md border text-app-body overflow-hidden',
         isApplied
           ? 'border-emerald-300/40 bg-emerald-50/30 dark:bg-emerald-950/15'
           : 'border-amber-300/50 bg-amber-50/40 dark:bg-amber-950/15',

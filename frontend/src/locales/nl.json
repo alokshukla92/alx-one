@@ -132,7 +132,9 @@
     "agents": "Agents",
     "aiAgents": "AI-agents",
     "collapseSidebar": "Zijbalk inklappen",
-    "expandSidebar": "Zijbalk uitklappen"
+    "expandSidebar": "Zijbalk uitklappen",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "Invoices",

@@ -114,7 +114,7 @@ export function TwoFactorSetup({ open, onClose, localAuthEnabled = true }: TwoFa
             <DialogTitle>{t('auth.disable2fa')}</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleDisable} className="space-y-4">
-            <p className="text-sm text-muted-foreground">{t('auth.disable2faDescription')}</p>
+            <p className="text-app-body text-muted-foreground">{t('auth.disable2faDescription')}</p>
             <div className="space-y-2">
               <Label htmlFor="disable-password">{t('auth.password')}</Label>
               <Input
@@ -142,7 +142,7 @@ export function TwoFactorSetup({ open, onClose, localAuthEnabled = true }: TwoFa
               />
             </div>
             {error && (
-              <p role="alert" className="text-sm text-destructive">
+              <p role="alert" className="text-app-body text-destructive">
                 {error}
               </p>
             )}
@@ -175,8 +175,8 @@ export function TwoFactorSetup({ open, onClose, localAuthEnabled = true }: TwoFa
 
         {setupStep === 'idle' ? (
           <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">{t('auth.setup2faDescription')}</p>
-            {error && <p className="text-sm text-destructive">{error}</p>}
+            <p className="text-app-body text-muted-foreground">{t('auth.setup2faDescription')}</p>
+            {error && <p className="text-app-body text-destructive">{error}</p>}
             <DialogFooter>
               <Button type="button" variant="outline" onClick={handleClose}>
                 {t('common.cancel')}
@@ -212,7 +212,7 @@ export function TwoFactorSetup({ open, onClose, localAuthEnabled = true }: TwoFa
                 autoFocus
               />
             </div>
-            {error && <p className="text-sm text-destructive">{error}</p>}
+            {error && <p className="text-app-body text-destructive">{error}</p>}
             <DialogFooter>
               <Button type="button" variant="outline" onClick={handleClose}>
                 {t('common.cancel')}

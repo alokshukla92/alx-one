@@ -29,9 +29,22 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { PageHeader } from '@/components/page-header'
+import { ThemeColorInput } from '@/components/theme-color-input'
+import { isValidHexColor } from '@/lib/hex-color'
 import { TimezoneSettings } from '@/components/timezone-settings'
 import { setThemeBasedOnSystem } from '@/lib/theme-utils'
+import {
+  ALXONE_THEME_COLOR_DARK,
+  ALXONE_THEME_COLOR_LIGHT,
+  resolveBrandThemeSettings,
+} from '@/lib/alxone-brand'
 import { applyUiFont, DEFAULT_UI_FONT, UI_FONT_IDS, type UiFontId } from '@/lib/ui-fonts'
+import {
+  applyUiFontScale,
+  DEFAULT_UI_FONT_SCALE,
+  UI_FONT_SCALE_IDS,
+  type UiFontScaleId,
+} from '@/lib/ui-font-scale'
 import { useLocalAuthEnabled } from '@/hooks/use-local-auth'
 import { Search, Plus, Trash2, Shield, ShieldOff, UserCog, Users, Scale, Tag, Palette, Save, Hash, CalendarDays } from 'lucide-react'
 import type { AdminUser } from '@/types'
@@ -61,10 +74,12 @@ export default function AdminSettingsPage() {
 
   const [lastSyncedLight, setLastSyncedLight] = useState<string | undefined>()
   const [lastSyncedDark, setLastSyncedDark] = useState<string | undefined>()
-  const [localLight, setLocalLight] = useState<string>('#6366F1')
-  const [localDark, setLocalDark] = useState<string>('#818CF8')
+  const [localLight, setLocalLight] = useState<string>(ALXONE_THEME_COLOR_LIGHT)
+  const [localDark, setLocalDark] = useState<string>(ALXONE_THEME_COLOR_DARK)
   const [lastSyncedFont, setLastSyncedFont] = useState<string | undefined>()
   const [localFont, setLocalFont] = useState<UiFontId>(DEFAULT_UI_FONT)
+  const [lastSyncedFontScale, setLastSyncedFontScale] = useState<string | undefined>()
+  const [localFontScale, setLocalFontScale] = useState<UiFontScaleId>(DEFAULT_UI_FONT_SCALE)
 
   const { data: usersData, isLoading: usersLoading } = useQuery({
     queryKey: ['admin', 'users', search],
@@ -143,6 +158,12 @@ export default function AdminSettingsPage() {
   const { data: uiFontSetting } = useQuery({
     queryKey: ['admin', 'settings', 'ui_font'],
     queryFn: () => adminApi.getSetting('ui_font').catch(() => null),
+    retry: false,
+  })
+
+  const { data: uiFontScaleSetting } = useQuery({
+    queryKey: ['admin', 'settings', 'ui_font_scale'],
+    queryFn: () => adminApi.getSetting('ui_font_scale').catch(() => null),
     retry: false,
   })
 
@@ -239,11 +260,22 @@ export default function AdminSettingsPage() {
 
   if (themeColorLightSetting?.value && themeColorLightSetting.value !== lastSyncedLight) {
     setLastSyncedLight(themeColorLightSetting.value)
-    setLocalLight(themeColorLightSetting.value)
-  }
-  if (themeColorDarkSetting?.value && themeColorDarkSetting.value !== lastSyncedDark) {
+    const brand = resolveBrandThemeSettings(
+      themeColorLightSetting.value,
+      themeColorDarkSetting?.value,
+      uiFontSetting?.value,
+    )
+    setLocalLight(brand.light)
+    setLocalDark(brand.dark)
+  } else if (themeColorDarkSetting?.value && themeColorDarkSetting.value !== lastSyncedDark) {
     setLastSyncedDark(themeColorDarkSetting.value)
-    setLocalDark(themeColorDarkSetting.value)
+    const brand = resolveBrandThemeSettings(
+      themeColorLightSetting?.value,
+      themeColorDarkSetting.value,
+      uiFontSetting?.value,
+    )
+    setLocalLight(brand.light)
+    setLocalDark(brand.dark)
   }
   if (uiFontSetting?.value && uiFontSetting.value !== lastSyncedFont) {
     setLastSyncedFont(uiFontSetting.value)
@@ -251,22 +283,37 @@ export default function AdminSettingsPage() {
       setLocalFont(uiFontSetting.value as UiFontId)
     }
   }
+  if (uiFontScaleSetting?.value && uiFontScaleSetting.value !== lastSyncedFontScale) {
+    setLastSyncedFontScale(uiFontScaleSetting.value)
+    if (UI_FONT_SCALE_IDS.includes(uiFontScaleSetting.value as UiFontScaleId)) {
+      setLocalFontScale(uiFontScaleSetting.value as UiFontScaleId)
+    }
+  }
 
   const saveColorsMutation = useMutation({
     mutationFn: async () => {
+      if (!isValidHexColor(localLight) || !isValidHexColor(localDark)) {
+        throw new Error('invalid_hex')
+      }
       await Promise.all([
-        adminApi.updateSetting('theme_color_light', localLight),
-        adminApi.updateSetting('theme_color_dark', localDark),
+        adminApi.updateSetting('theme_color_light', localLight.toUpperCase()),
+        adminApi.updateSetting('theme_color_dark', localDark.toUpperCase()),
         adminApi.updateSetting('ui_font', localFont),
+        adminApi.updateSetting('ui_font_scale', localFontScale),
       ])
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin', 'settings'] })
       setThemeBasedOnSystem(localLight, localDark, resolvedTheme)
       applyUiFont(localFont)
+      applyUiFontScale(localFontScale)
       toast.success(t('admin.settings.updated'))
     },
-    onError: () => {
+    onError: (err: Error) => {
+      if (err.message === 'invalid_hex') {
+        toast.error(t('settings.themeColorHexInvalid', { defaultValue: 'Use a 6-digit hex code like #12491F' }))
+        return
+      }
       toast.error(t('common.error'))
     },
   })
@@ -331,7 +378,7 @@ export default function AdminSettingsPage() {
         ) : filteredUsers.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
             <Users size={32} className="mb-3 opacity-40" />
-            <p className="text-sm">{t('admin.users.empty')}</p>
+            <p className="text-app-body">{t('admin.users.empty')}</p>
           </div>
         ) : (
           <div className="divide-y divide-border/40">
@@ -349,7 +396,7 @@ export default function AdminSettingsPage() {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-foreground truncate">{u.email}</span>
+                    <span className="text-app-body font-medium text-foreground truncate">{u.email}</span>
                     {isSelf(u) && (
                       <span className="text-[10px] font-medium text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
                         {t('admin.users.you')}
@@ -395,7 +442,7 @@ export default function AdminSettingsPage() {
           <div className="px-5 py-4 border-b border-border/40 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Palette size={15} className="text-muted-foreground" />
-              <h3 className="text-sm font-semibold text-foreground">{t('settings.customization')}</h3>
+              <h3 className="text-app-body font-semibold text-foreground">{t('settings.customization')}</h3>
             </div>
             <Button
               onClick={() => saveColorsMutation.mutate()}
@@ -430,23 +477,41 @@ export default function AdminSettingsPage() {
               <p className="text-xs text-muted-foreground">{t('settings.uiFontHint')}</p>
             </div>
 
+            <div className="space-y-3 md:col-span-2">
+              <Label className="text-xs">{t('settings.uiFontScale')}</Label>
+              <Select
+                value={localFontScale}
+                onValueChange={(value) => {
+                  const next = value as UiFontScaleId
+                  setLocalFontScale(next)
+                  applyUiFontScale(next)
+                }}
+              >
+                <SelectTrigger className="max-w-md">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {UI_FONT_SCALE_IDS.map((id) => (
+                    <SelectItem key={id} value={id}>
+                      {t(`settings.fontScales.${id}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">{t('settings.uiFontScaleHint')}</p>
+            </div>
+
             {/* Light Mode Colors */}
             <div className="space-y-3">
               <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                 {t('settings.lightMode')}
               </p>
-              <div className="space-y-1.5">
-                <Label className="text-xs">{t('settings.themeColor')}</Label>
-                <div className="flex items-center gap-2">
-                  <Input 
-                    type="color" 
-                    className="w-12 h-9 p-1 cursor-pointer" 
-                    value={localLight}
-                    onChange={(e) => setLocalLight(e.target.value)}
-                  />
-                  <span className="text-xs font-mono text-muted-foreground">{localLight}</span>
-                </div>
-              </div>
+              <ThemeColorInput
+                id="theme-light"
+                label={t('settings.themeColor')}
+                value={localLight}
+                onChange={setLocalLight}
+              />
             </div>
 
             {/* Dark Mode Colors */}
@@ -454,18 +519,12 @@ export default function AdminSettingsPage() {
               <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                 {t('settings.darkMode')}
               </p>
-              <div className="space-y-1.5">
-                <Label className="text-xs">{t('settings.themeColor')}</Label>
-                <div className="flex items-center gap-2">
-                  <Input 
-                    type="color" 
-                    className="w-12 h-9 p-1 cursor-pointer" 
-                    value={localDark}
-                    onChange={(e) => setLocalDark(e.target.value)}
-                  />
-                  <span className="text-xs font-mono text-muted-foreground">{localDark}</span>
-                </div>
-              </div>
+              <ThemeColorInput
+                id="theme-dark"
+                label={t('settings.themeColor')}
+                value={localDark}
+                onChange={setLocalDark}
+              />
             </div>
           </div>
         </div>
@@ -476,7 +535,7 @@ export default function AdminSettingsPage() {
         <div className="px-5 py-4 border-b border-border/40">
           <div className="flex items-center gap-2 mb-0.5">
             <Scale size={15} className="text-muted-foreground" />
-            <h3 className="text-sm font-semibold text-foreground">{t('admin.settings.accountingTitle')}</h3>
+            <h3 className="text-app-body font-semibold text-foreground">{t('admin.settings.accountingTitle')}</h3>
           </div>
           <p className="text-xs text-muted-foreground">{t('admin.settings.accountingSubtitle')}</p>
         </div>
@@ -491,7 +550,7 @@ export default function AdminSettingsPage() {
               {accountingMode === 'cash' && <div className="h-full w-full rounded-full bg-primary ring-2 ring-background ring-inset" />}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground">{t('admin.settings.accountingCash')}</p>
+              <p className="text-app-body font-medium text-foreground">{t('admin.settings.accountingCash')}</p>
               <p className="text-xs text-muted-foreground mt-0.5">{t('admin.settings.accountingCashDesc')}</p>
             </div>
           </button>
@@ -505,7 +564,7 @@ export default function AdminSettingsPage() {
               {accountingMode === 'accrual' && <div className="h-full w-full rounded-full bg-primary ring-2 ring-background ring-inset" />}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground">{t('admin.settings.accountingAccrual')}</p>
+              <p className="text-app-body font-medium text-foreground">{t('admin.settings.accountingAccrual')}</p>
               <p className="text-xs text-muted-foreground mt-0.5">{t('admin.settings.accountingAccrualDesc')}</p>
             </div>
           </button>
@@ -517,12 +576,12 @@ export default function AdminSettingsPage() {
         <div className="px-5 py-4 border-b border-border/40">
           <div className="flex items-center gap-2 mb-0.5">
             <Tag size={15} className="text-muted-foreground" />
-            <h3 className="text-sm font-semibold text-foreground">{t('admin.settings.providerCategoriesTitle')}</h3>
+            <h3 className="text-app-body font-semibold text-foreground">{t('admin.settings.providerCategoriesTitle')}</h3>
           </div>
         </div>
         <div className="px-5 py-4 flex items-center justify-between">
           <div>
-            <p className="text-sm text-foreground">{t('admin.settings.providerCategories')}</p>
+            <p className="text-app-body text-foreground">{t('admin.settings.providerCategories')}</p>
             <p className="text-xs text-muted-foreground mt-0.5">{t('admin.settings.providerCategoriesDesc')}</p>
           </div>
           <button
@@ -543,7 +602,7 @@ export default function AdminSettingsPage() {
         <div className="px-5 py-4 border-b border-border/40">
           <div className="flex items-center gap-2 mb-0.5">
             <Hash size={15} className="text-muted-foreground" />
-            <h3 className="text-sm font-semibold text-foreground">{t('admin.settings.numberFormatTitle')}</h3>
+            <h3 className="text-app-body font-semibold text-foreground">{t('admin.settings.numberFormatTitle')}</h3>
           </div>
           <p className="text-xs text-muted-foreground">{t('admin.settings.numberFormatDesc')}</p>
         </div>
@@ -572,7 +631,7 @@ export default function AdminSettingsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2 flex-wrap">
-                    <p className="text-sm font-medium text-foreground tabular-nums">{opt.label}</p>
+                    <p className="text-app-body font-medium text-foreground tabular-nums">{opt.label}</p>
                     <span className="text-xs tabular-nums text-muted-foreground">{numExample}</span>
                   </div>
                   {opt.desc && (
@@ -590,7 +649,7 @@ export default function AdminSettingsPage() {
         <div className="px-5 py-4 border-b border-border/40">
           <div className="flex items-center gap-2 mb-0.5">
             <CalendarDays size={15} className="text-muted-foreground" />
-            <h3 className="text-sm font-semibold text-foreground">{t('admin.settings.dateFormatTitle')}</h3>
+            <h3 className="text-app-body font-semibold text-foreground">{t('admin.settings.dateFormatTitle')}</h3>
           </div>
           <p className="text-xs text-muted-foreground">{t('admin.settings.dateFormatDesc')}</p>
         </div>
@@ -620,7 +679,7 @@ export default function AdminSettingsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2 flex-wrap">
-                    <p className="text-sm font-medium text-foreground tabular-nums">{opt.label}</p>
+                    <p className="text-app-body font-medium text-foreground tabular-nums">{opt.label}</p>
                     <span className="text-xs tabular-nums text-muted-foreground">
                       {numericExample} <span className="opacity-50">·</span> {wordedExample}
                     </span>
@@ -640,7 +699,7 @@ export default function AdminSettingsPage() {
         <div className="px-5 py-4 border-b border-border/40">
           <div className="flex items-center gap-2 mb-0.5">
             <UserCog size={15} className="text-muted-foreground" />
-            <h3 className="text-sm font-semibold text-foreground">{t('admin.settings.registrationTitle')}</h3>
+            <h3 className="text-app-body font-semibold text-foreground">{t('admin.settings.registrationTitle')}</h3>
           </div>
         </div>
 
@@ -651,7 +710,7 @@ export default function AdminSettingsPage() {
         ) : (
           <div className="px-5 py-4 flex items-center justify-between">
             <div>
-              <p className="text-sm text-foreground">{t('admin.settings.registration')}</p>
+              <p className="text-app-body text-foreground">{t('admin.settings.registration')}</p>
               <p className="text-xs text-muted-foreground mt-0.5">{t('admin.settings.registrationDesc')}</p>
             </div>
             <button
@@ -699,7 +758,7 @@ export default function AdminSettingsPage() {
                   <select
                     value={formLanguage}
                     onChange={(e) => setFormLanguage(e.target.value)}
-                    className="w-full h-10 rounded-lg border border-input bg-card px-3 text-sm"
+                    className="w-full h-10 rounded-lg border border-input bg-card px-3 text-app-body"
                   >
                     {SUPPORTED_LANGS.map(({ code, label }) => (
                       <option key={code} value={code}>{label}</option>
@@ -725,7 +784,7 @@ export default function AdminSettingsPage() {
               <button
                 type="button"
                 onClick={() => setFormIsAdmin(!formIsAdmin)}
-                className={`flex items-center gap-2 w-full px-3.5 py-2.5 rounded-lg border text-sm font-medium transition-all ${formIsAdmin ? 'bg-primary/8 border-primary/30 text-primary' : 'border-border text-muted-foreground hover:border-border/80'}`}
+                className={`flex items-center gap-2 w-full px-3.5 py-2.5 rounded-lg border text-app-body font-medium transition-all ${formIsAdmin ? 'bg-primary/8 border-primary/30 text-primary' : 'border-border text-muted-foreground hover:border-border/80'}`}
               >
                 {formIsAdmin ? <Shield size={15} /> : <ShieldOff size={15} />}
                 <span className="flex-1 text-left">{t('admin.users.adminRole')}</span>
@@ -770,7 +829,7 @@ export default function AdminSettingsPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-sm font-medium">{editUser.email}</p>
+                    <p className="text-app-body font-medium">{editUser.email}</p>
                     <p className="text-xs text-muted-foreground">
                       {editUser.is_superuser ? t('admin.users.admin') : t('admin.users.user')}
                       {isSelf(editUser) && ` — ${t('admin.users.you')}`}
@@ -813,7 +872,7 @@ export default function AdminSettingsPage() {
                     type="button"
                     onClick={() => !isSelf(editUser) && setEditIsActive(!editIsActive)}
                     disabled={isSelf(editUser)}
-                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg border text-app-body font-medium transition-all ${
                       isSelf(editUser) ? 'opacity-50 cursor-not-allowed' : ''
                     } ${editIsActive ? 'bg-emerald-500/8 border-emerald-500/30 text-emerald-600' : 'border-border text-muted-foreground'}`}
                   >
@@ -824,7 +883,7 @@ export default function AdminSettingsPage() {
                     type="button"
                     onClick={() => !isSelf(editUser) && setEditIsAdmin(!editIsAdmin)}
                     disabled={isSelf(editUser)}
-                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg border text-sm font-medium transition-all ${
+                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg border text-app-body font-medium transition-all ${
                       isSelf(editUser) ? 'opacity-50 cursor-not-allowed' : ''
                     } ${editIsAdmin ? 'bg-primary/8 border-primary/30 text-primary' : 'border-border text-muted-foreground'}`}
                   >

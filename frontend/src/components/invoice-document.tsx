@@ -238,7 +238,7 @@ export function InvoiceDocumentView({ document }: { document: InvoiceDocumentPay
             <div className="text-[10px] font-semibold uppercase tracking-[0.14em]" style={{ color: MUTED }}>
               {L.schedule}
             </div>
-            <table className="mt-1.5 w-full text-sm">
+            <table className="mt-1.5 w-full text-app-body">
               <tbody>
                 {document.installments.map((row, index) => (
                   <tr key={index} style={{ borderBottom: `1px solid ${RULE}` }}>

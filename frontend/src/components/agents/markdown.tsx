@@ -25,7 +25,7 @@ interface Props {
  */
 function _Markdown({ children, className }: Props) {
   return (
-    <div className={cn('text-sm leading-relaxed [&>:first-child]:mt-0 [&>:last-child]:mb-0', className)}>
+    <div className={cn('text-app-body leading-relaxed [&>:first-child]:mt-0 [&>:last-child]:mb-0', className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -35,8 +35,8 @@ function _Markdown({ children, className }: Props) {
           li: ({ children }: NodeProps) => <li className="marker:text-muted-foreground/70">{children}</li>,
           h1: ({ children }: NodeProps) => <h1 className="text-base font-bold mt-3 mb-1.5">{children}</h1>,
           h2: ({ children }: NodeProps) => <h2 className="text-[15px] font-semibold mt-3 mb-1.5">{children}</h2>,
-          h3: ({ children }: NodeProps) => <h3 className="text-sm font-semibold mt-2.5 mb-1">{children}</h3>,
-          h4: ({ children }: NodeProps) => <h4 className="text-sm font-semibold mt-2 mb-1">{children}</h4>,
+          h3: ({ children }: NodeProps) => <h3 className="text-app-body font-semibold mt-2.5 mb-1">{children}</h3>,
+          h4: ({ children }: NodeProps) => <h4 className="text-app-body font-semibold mt-2 mb-1">{children}</h4>,
           strong: ({ children }: NodeProps) => <strong className="font-semibold">{children}</strong>,
           em: ({ children }: NodeProps) => <em className="italic">{children}</em>,
           del: ({ children }: NodeProps) => <del className="opacity-70">{children}</del>,

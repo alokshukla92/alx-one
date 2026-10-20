@@ -20,7 +20,7 @@ import {
 // Same starting look the categories page gives a new category, so one made
 // from a picker is indistinguishable from one made there.
 const NEW_CATEGORY_ICON = 'circle-help'
-const NEW_CATEGORY_COLOR = '#6366f1'
+const NEW_CATEGORY_COLOR = '#12491F'
 
 interface CategorySelectProps {
   value: string
@@ -122,7 +122,7 @@ export function CategorySelect({
           type="button"
           disabled={disabled}
           className={cn(
-            "flex w-full items-center justify-between gap-2 rounded-md border border-input bg-card px-3 py-2 text-sm text-left shadow-xs transition-[color,box-shadow] outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:hover:bg-input/50 h-9 cursor-pointer",
+            "flex w-full items-center justify-between gap-2 rounded-md border border-input bg-card px-3 py-2 text-app-body text-left shadow-xs transition-[color,box-shadow] outline-hidden focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:hover:bg-input/50 h-9 cursor-pointer",
             className
           )}
         >

@@ -87,7 +87,7 @@ export function ConnectionSettingsDialog({
           <div className="space-y-2">
             <Label>{t('connections.payeeSource')}</Label>
             <select
-              className="w-full border border-border rounded-lg px-3 py-2 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full border border-border rounded-lg px-3 py-2 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               value={payeeSource}
               onChange={(e) => setPayeeSource(e.target.value as PayeeSource)}
             >

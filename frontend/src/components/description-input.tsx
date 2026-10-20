@@ -120,7 +120,7 @@ export function DescriptionInput({ value, onChange, onPick, required, className 
               }}
               onMouseEnter={() => setActive(i)}
               className={cn(
-                'cursor-pointer truncate rounded-md px-2 py-1.5 text-sm',
+                'cursor-pointer truncate rounded-md px-2 py-1.5 text-app-body',
                 i === active && 'bg-accent text-accent-foreground',
               )}
             >

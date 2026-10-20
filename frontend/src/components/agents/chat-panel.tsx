@@ -234,7 +234,7 @@ export function ChatPanel({ agent, conversationId, onConversationCreated, focusS
           ) && (
           <div className="flex justify-end">
             <div className="max-w-[80%] rounded-lg px-3 py-2 bg-primary text-primary-foreground">
-              <div className="whitespace-pre-wrap text-sm">{pendingUser.text}</div>
+              <div className="whitespace-pre-wrap text-app-body">{pendingUser.text}</div>
             </div>
           </div>
         )}
@@ -276,7 +276,7 @@ export function ChatPanel({ agent, conversationId, onConversationCreated, focusS
               </div>
             )}
             {draft.error && (
-              <div className="rounded-lg px-3 py-2 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-200 text-sm flex items-center gap-2">
+              <div className="rounded-lg px-3 py-2 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-200 text-app-body flex items-center gap-2">
                 <AlertCircle className="h-4 w-4" />
                 {draft.error}
               </div>
@@ -284,7 +284,7 @@ export function ChatPanel({ agent, conversationId, onConversationCreated, focusS
           </div>
         )}
         {!draft && lastError && (
-          <div className="rounded-lg px-3 py-2 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-200 text-sm flex items-start gap-2">
+          <div className="rounded-lg px-3 py-2 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-200 text-app-body flex items-start gap-2">
             <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
             <div className="min-w-0 flex-1 break-words">{lastError}</div>
             <button
@@ -313,7 +313,7 @@ export function ChatPanel({ agent, conversationId, onConversationCreated, focusS
           // h-10 matches the default Button height so the input + send
           // button line up when empty. Auto-grow above lifts it as the
           // user types more lines.
-          className="flex-1 h-10 max-h-[200px] rounded-md border bg-card px-3 py-2 text-sm resize-none leading-5 overflow-y-auto"
+          className="flex-1 h-10 max-h-[200px] rounded-md border bg-card px-3 py-2 text-app-body resize-none leading-5 overflow-y-auto"
           onKeyDown={(e) => {
             // Enter sends; Shift+Enter inserts a newline. IME composition
             // (e.g. accented chars on Mac, CJK input) must not be hijacked.
@@ -358,7 +358,7 @@ function HistoryView({ agent, history }: { agent: Agent; history: AgentMessage[]
             return (
               <div key={m.id} className="flex justify-end">
                 <div className="max-w-[80%] rounded-lg px-3 py-2 bg-primary text-primary-foreground">
-                  <div className="whitespace-pre-wrap text-sm">{m.content}</div>
+                  <div className="whitespace-pre-wrap text-app-body">{m.content}</div>
                 </div>
               </div>
             )
@@ -490,7 +490,7 @@ function ChatEmptyState({ agent, onPick }: { agent: Agent; onPick: (text: string
                 key={p}
                 type="button"
                 onClick={() => onPick(p)}
-                className="text-left text-sm px-3 py-2 rounded-md border border-border bg-background/40 hover:bg-muted transition-colors"
+                className="text-left text-app-body px-3 py-2 rounded-md border border-border bg-background/40 hover:bg-muted transition-colors"
               >
                 {p}
               </button>

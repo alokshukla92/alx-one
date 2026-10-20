@@ -257,10 +257,10 @@ function BulkAddToGroupForm({
         </div>
       ) : ownedGroups.length === 0 ? (
         <div className="space-y-2 py-4">
-          <p className="text-sm text-muted-foreground font-semibold">
+          <p className="text-app-body text-muted-foreground font-semibold">
             {t('splitGroups.splitNoGroups')}
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-app-body text-muted-foreground">
             {t('splitGroups.splitNoGroupsLinkPrefix')}
             <button
               type="button"
@@ -297,7 +297,7 @@ function BulkAddToGroupForm({
                 </button>
               </div>
               <select
-                className="w-full border border-border rounded-md px-2 py-1.5 text-sm bg-card"
+                className="w-full border border-border rounded-md px-2 py-1.5 text-app-body bg-card"
                 value={groupId}
                 onChange={(e) => setExplicitGroupId(e.target.value)}
               >
@@ -309,7 +309,7 @@ function BulkAddToGroupForm({
             <div className="space-y-1">
               <Label className="text-xs">{t('splitGroups.shareType')}</Label>
               <select
-                className="w-full border border-border rounded-md px-2 py-1.5 text-sm bg-card"
+                className="w-full border border-border rounded-md px-2 py-1.5 text-app-body bg-card"
                 value={shareType}
                 onChange={(e) => setShareType(e.target.value as BulkShareType)}
               >
@@ -343,7 +343,7 @@ function BulkAddToGroupForm({
             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
               {group.members.length === 0 ? (
                 <div className="py-4 text-center">
-                  <p className="text-sm text-muted-foreground mb-3">
+                  <p className="text-app-body text-muted-foreground mb-3">
                     {t('splitGroups.splitNoMembers')}
                   </p>
                   <Button
@@ -374,7 +374,7 @@ function BulkAddToGroupForm({
                         }
                         className="h-4 w-4 rounded border-border accent-primary"
                       />
-                      <span className="text-sm flex-1 min-w-0 truncate">
+                      <span className="text-app-body flex-1 min-w-0 truncate">
                         {m.name}
                         {m.is_self && (
                           <span className="ml-1.5 text-xs text-primary">
@@ -387,7 +387,7 @@ function BulkAddToGroupForm({
                           <Input
                             type="number"
                             step="0.01"
-                            className="w-20 h-8 text-sm"
+                            className="w-20 h-8 text-app-body"
                             value={row.percent}
                             onChange={(e) => updateRow(m.id, { percent: e.target.value })}
                           />

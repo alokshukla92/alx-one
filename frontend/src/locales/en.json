@@ -88,7 +88,7 @@
     }
   },
   "app": {
-    "name": "ALX Securo",
+    "name": "Securo",
     "versionAriaLabel": "Running version {{version}}",
     "versionLabel": "Version {{version}}",
     "updateAvailable": "Update Available",
@@ -156,7 +156,9 @@
     "agents": "Agents",
     "aiAgents": "AI Agents",
     "collapseSidebar": "Collapse sidebar",
-    "expandSidebar": "Expand sidebar"
+    "expandSidebar": "Expand sidebar",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "Invoices",
@@ -1356,8 +1358,17 @@
     "themeSystem": "System",
     "customization": "Customization",
     "themeColor": "Theme color",
+    "themeColorHexHint": "Pick a swatch or enter #RRGGBB",
+    "themeColorHexInvalid": "Use a 6-digit hex code like #12491F",
     "uiFont": "Font",
     "uiFontHint": "Applies to the whole app for all users. System uses San Francisco on Apple devices and Segoe UI on Windows.",
+    "uiFontScale": "Text size",
+    "uiFontScaleHint": "Adjusts body copy, headings, and balances across the app for all users.",
+    "fontScales": {
+      "compact": "Compact (smallest)",
+      "standard": "Standard (recommended)",
+      "comfortable": "Comfortable (larger)"
+    },
     "fonts": {
       "inter": "Inter",
       "geist": "Geist (original Securo)",
@@ -1366,7 +1377,8 @@
       "plus_jakarta": "Plus Jakarta Sans",
       "manrope": "Manrope",
       "source_sans_3": "Source Sans 3",
-      "poppins": "Poppins"
+      "poppins": "Poppins",
+      "sf_pro_display": "SF Pro Display"
     },
     "lightMode": "Light mode",
     "darkMode": "Dark mode"

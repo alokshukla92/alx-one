@@ -26,7 +26,7 @@ import { ReconciliationPair, type PairSide } from '@/components/reconciliation-p
 
 function SectionCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="alx-panel overflow-hidden">
       {children}
     </div>
   )
@@ -92,7 +92,7 @@ export function ReconciliationHistory() {
   return (
     <SectionCard>
       <div className="px-4 sm:px-5 py-4 border-b border-border">
-        <p className="text-sm font-semibold text-foreground">
+        <p className="text-app-body font-semibold text-foreground">
           {t('reconciliation.history.title')}
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">
@@ -104,7 +104,7 @@ export function ReconciliationHistory() {
         // An empty state rather than nothing: as a card in a stack,
         // rendering nothing was right. As a tab somebody clicked, a blank
         // page reads as broken.
-        <p className="text-sm text-muted-foreground text-center py-10">
+        <p className="text-app-body text-muted-foreground text-center py-10">
           {t('reconciliation.history.empty')}
         </p>
       ) : (
@@ -115,7 +115,7 @@ export function ReconciliationHistory() {
           return (
             <div
               key={event.id}
-              className="px-4 sm:px-5 py-2.5 text-sm hover:bg-muted/60 transition-colors cursor-pointer"
+              className="px-4 sm:px-5 py-2.5 text-app-body hover:bg-muted/60 transition-colors cursor-pointer"
               onClick={() =>
                 setOpenId((current) => (current === event.id ? null : event.id))
               }

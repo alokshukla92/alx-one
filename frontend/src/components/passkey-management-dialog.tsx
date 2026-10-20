@@ -120,10 +120,10 @@ function PasskeyManagementSession({ open, onClose, localAuthEnabled = true }: Pa
         </DialogHeader>
 
         <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">{t(localAuthEnabled ? 'auth.passkeysDescription' : 'auth.passkeysCleanupDescription')}</p>
+          <p className="text-app-body text-muted-foreground">{t(localAuthEnabled ? 'auth.passkeysDescription' : 'auth.passkeysCleanupDescription')}</p>
 
           {blocker && (
-            <div className="flex items-start gap-2.5 rounded-lg bg-amber-500/10 px-3 py-2.5 text-sm text-amber-700 dark:text-amber-300">
+            <div className="flex items-start gap-2.5 rounded-lg bg-amber-500/10 px-3 py-2.5 text-app-body text-amber-700 dark:text-amber-300">
               <TriangleAlert size={16} className="mt-0.5 shrink-0" />
               <p>{t(FAILURE_KEYS[blocker])}</p>
             </div>
@@ -151,10 +151,10 @@ function PasskeyManagementSession({ open, onClose, localAuthEnabled = true }: Pa
 
           <div className="space-y-2">
             {loading ? (
-              <p className="text-sm text-muted-foreground">{t('common.loading')}</p>
+              <p className="text-app-body text-muted-foreground">{t('common.loading')}</p>
             ) : loadFailed ? (
               <div className="flex items-center justify-between gap-3 rounded-lg border border-destructive/30 p-3">
-                <p className="text-sm text-destructive">{t('auth.passkeyLoadError')}</p>
+                <p className="text-app-body text-destructive">{t('auth.passkeyLoadError')}</p>
                 <Button type="button" variant="outline" size="sm" onClick={() => void loadPasskeys()}>
                   {t('common.retry')}
                 </Button>
@@ -162,7 +162,7 @@ function PasskeyManagementSession({ open, onClose, localAuthEnabled = true }: Pa
             ) : passkeys.length === 0 ? (
               <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed px-3 py-6 text-center">
                 <Fingerprint size={20} className="text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">{t('auth.noPasskeys')}</p>
+                <p className="text-app-body text-muted-foreground">{t('auth.noPasskeys')}</p>
               </div>
             ) : (
               passkeys.map((passkey) => {
@@ -175,7 +175,7 @@ function PasskeyManagementSession({ open, onClose, localAuthEnabled = true }: Pa
                       <Fingerprint size={16} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium">{passkey.name}</p>
+                      <p className="truncate text-app-body font-medium">{passkey.name}</p>
                       <p className="text-xs text-muted-foreground">
                         {t('auth.passkeyCreated')}: {formatDate(passkey.created_at)}
                       </p>

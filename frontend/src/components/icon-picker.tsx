@@ -28,7 +28,7 @@ export function IconPicker({ value, color, onChange }: IconPickerProps) {
       <input
         type="text"
         placeholder={t('common.searchIcon')}
-        className="w-full border border-border rounded-lg px-3 py-1.5 text-sm bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+        className="w-full border border-border rounded-lg px-3 py-1.5 text-app-body bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

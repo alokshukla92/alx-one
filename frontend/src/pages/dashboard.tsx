@@ -41,7 +41,6 @@ import {
 import { CheckCircle2, CalendarIcon, Clock, Paperclip, Target, ArrowUpDown, HelpCircle, EyeClosed, AlertCircle } from 'lucide-react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { ICON_MAP } from '@/lib/category-icons'
-import { PageHeader } from '@/components/page-header'
 import { CategoryIcon } from '@/components/category-icon'
 import { AccountIcon } from '@/components/account-icon'
 import { TransactionDrillDown, type DrillDownFilter } from '@/components/transaction-drill-down'
@@ -58,6 +57,8 @@ import { resolveDateFnsLocale } from '@/lib/date-fns-locale'
 import type { Rule, Transaction } from '@/types'
 import { formatCurrency } from '@/lib/format'
 import { shouldShowPendingBadge } from '@/lib/transaction-status'
+import { securoPath } from '@/lib/securo-path'
+import { CHART_PRIMARY, CHART_PRIMARY_FILL, CHART_SECONDARY, CHART_LABEL } from '@/lib/chart-colors'
 
 function formatDate(dateStr: string, locale = 'pt-BR') {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString(locale)
@@ -603,11 +604,11 @@ export default function DashboardPage() {
 
   // Savings rate display
   const savingsRateColor = income === 0 && expenses > 0
-    ? 'text-rose-500'
+    ? 'text-destructive'
     : savingsRate > 0
-      ? 'text-emerald-600'
+      ? 'text-[var(--color-income)]'
       : savingsRate < 0
-        ? 'text-rose-500'
+        ? 'text-destructive'
         : 'text-muted-foreground'
 
   const savingsRateDisplay = income === 0 && expenses > 0
@@ -617,23 +618,28 @@ export default function DashboardPage() {
   return (
     <div>
       {/* Header */}
-      <PageHeader
-        section={greeting}
-        title={monthLabel(selectedMonth, uiLocale).replace(/^\w/, c => c.toUpperCase())}
-        action={
-          <div className="flex items-center gap-1">
+      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-app-body text-muted-foreground">{greeting}</p>
+          <h1 className="text-2xl font-normal tracking-tight text-foreground capitalize">
+            {monthLabel(selectedMonth, uiLocale)}
+          </h1>
+        </div>
+        <div className="flex items-center gap-1 shrink-0">
             <button
-              className="h-8 w-8 flex items-center justify-center rounded-lg border border-border bg-card text-muted-foreground hover:border-border hover:text-foreground transition-all text-base"
+              type="button"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               onClick={() => handleMonthChange(shiftMonth(selectedMonth, -1))}
+              aria-label={t('dashboard.prevMonth', { defaultValue: 'Previous month' })}
             >&#8249;</button>
             <Popover open={headerCalOpen} onOpenChange={setHeaderCalOpen}>
               <PopoverTrigger asChild>
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-2 border border-border rounded-lg px-3 py-1.5 text-sm bg-card text-foreground hover:bg-muted/50 transition-all cursor-pointer min-w-[180px]"
+                  className="group inline-flex min-w-[9rem] items-center justify-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-app-body font-medium text-foreground transition-colors hover:bg-muted"
                 >
-                  <CalendarIcon className="size-3.5 text-muted-foreground" />
-                  {monthLabel(selectedMonth, uiLocale).replace(/^\w/, c => c.toUpperCase())}
+                  <CalendarIcon className="size-4 text-muted-foreground transition-colors group-hover:text-foreground" strokeWidth={1.75} />
+                  <span className="capitalize">{monthLabel(selectedMonth, uiLocale)}</span>
                 </button>
               </PopoverTrigger>
               <PopoverContent align="center" className="w-auto p-0">
@@ -650,18 +656,18 @@ export default function DashboardPage() {
               </PopoverContent>
             </Popover>
             <button
-              className="h-8 w-8 flex items-center justify-center rounded-lg border border-border bg-card text-muted-foreground hover:border-border hover:text-foreground transition-all text-base"
+              type="button"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               onClick={() => handleMonthChange(shiftMonth(selectedMonth, 1))}
+              aria-label={t('dashboard.nextMonth', { defaultValue: 'Next month' })}
             >&#8250;</button>
-          </div>
-        }
-      />
+        </div>
+      </div>
 
-      {/* Hero Card: Available Balance + secondary indicators */}
-      <div className="bg-card rounded-xl border border-border shadow-sm mb-5 px-5 pt-5 pb-4">
-        {/* Available balance in checking/savings accounts */}
-        <div className="pb-4 mb-4 border-b border-border">
-          <p className="text-xs font-semibold text-muted-foreground mb-1">{t('dashboard.availableBalance')}</p>
+      {/* Hero: Available Balance + summary metrics */}
+      <div className="alx-panel mb-5 px-4 pt-4 pb-5 sm:px-6 sm:pt-5">
+        <div className="pb-5 mb-5 border-b border-border/80">
+          <p className="text-[13px] text-muted-foreground mb-1">{t('dashboard.availableBalance')}</p>
           {summaryLoading || accountsUnavailable ? (
             <Skeleton className="h-9 w-40" />
           ) : (
@@ -670,7 +676,7 @@ export default function DashboardPage() {
                   colour is left to mean direction (income, expenses) and
                   exception (a negative balance), so it still says something
                   when it does appear. */}
-              <p className={`text-3xl font-bold tabular-nums leading-tight ${availableBalance < 0 ? 'text-rose-500' : 'text-foreground'}`}>
+              <p className={`alx-balance tabular-nums ${availableBalance < 0 ? 'text-destructive' : 'text-foreground'}`}>
                 {mask(formatCurrency(availableBalance, primaryCurrency, locale))}
               </p>
               {sortedAvailableBalanceAccounts.length > 0 && (
@@ -685,8 +691,8 @@ export default function DashboardPage() {
                     return (
                       <Link
                         key={acc.id}
-                        to={`/accounts/${acc.id}`}
-                        className="group inline-flex items-center gap-1 text-[11px] pl-1 pr-2 py-0.5 rounded-full border border-border bg-background transition-transform duration-150 ease-out hover:scale-105 hover:border-foreground/25 focus:outline-none focus-visible:ring-ring/30 focus-visible:ring-[2px]"
+                        to={securoPath(`/accounts/${acc.id}`)}
+                        className="group inline-flex items-center gap-1.5 text-[11px] pl-1 pr-2.5 py-1 rounded-full border border-border/80 bg-[var(--color-background-muted)] transition-colors hover:border-[var(--color-green-medium)]/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/40"
                       >
                         {/* The bank mark is what the eye actually sorts on in a
                             row of chips; the name is the confirmation. Falls
@@ -697,7 +703,7 @@ export default function DashboardPage() {
                             share a name, and the mask suffix is what tells them
                             apart in a row of chips. */}
                         <span className="text-muted-foreground group-hover:text-foreground transition-colors">{getAccountLabel(acc)}</span>
-                        <span className={`font-semibold tabular-nums ${bal < 0 ? 'text-rose-500' : 'text-foreground'}`}>
+                        <span className={`font-medium tabular-nums ${bal < 0 ? 'text-destructive' : 'text-foreground'}`}>
                           {mask(formatCurrency(bal, balCurrency, locale))}
                         </span>
                       </Link>
@@ -730,7 +736,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Secondary indicators */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-5 gap-y-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-4 sm:gap-x-6">
           {/* Income */}
           <button
             type="button"
@@ -747,7 +753,7 @@ export default function DashboardPage() {
               <Skeleton className="h-6 w-20" />
             ) : (
               <>
-                <p className="text-xl font-bold tabular-nums text-emerald-600">
+                <p className="text-xl font-medium tabular-nums text-[var(--color-income)]">
                   +{mask(formatCurrency(income, primaryCurrency, locale))}
                 </p>
                 {Math.abs(projectedIncome - income) >= 0.01 && (
@@ -775,7 +781,7 @@ export default function DashboardPage() {
               <Skeleton className="h-6 w-20" />
             ) : (
               <>
-                <p className="text-xl font-bold tabular-nums text-rose-500">
+                <p className="text-xl font-medium tabular-nums text-[var(--color-expense)]">
                   -{mask(formatCurrency(expenses, primaryCurrency, locale))}
                 </p>
                 {Math.abs(projectedExpenses - expenses) >= 0.01 && (
@@ -835,7 +841,7 @@ export default function DashboardPage() {
             {summaryLoading || accountsUnavailable ? (
               <Skeleton className="h-6 w-24" />
             ) : (
-              <p className={`text-lg sm:text-xl font-bold tabular-nums ${totalBalance < 0 ? 'text-rose-500' : 'text-foreground'}`}>
+              <p className={`text-lg sm:text-xl font-medium tabular-nums ${totalBalance < 0 ? 'text-destructive' : 'text-foreground'}`}>
                 {mask(formatCurrency(totalBalance, primaryCurrency, locale))}
               </p>
             )}
@@ -848,7 +854,7 @@ export default function DashboardPage() {
               <Skeleton className="h-6 w-16" />
             ) : (
               <>
-                <p className={`text-xl font-bold tabular-nums ${savingsRateColor}`}>
+                <p className={`text-xl font-medium tabular-nums ${savingsRateColor}`}>
                   {savingsRateDisplay}
                 </p>
                 <p className="text-[10px] text-muted-foreground mt-0.5">{t('dashboard.savingsRateCaption')}</p>
@@ -884,21 +890,21 @@ export default function DashboardPage() {
                 size={16}
                 className={`shrink-0 ${uncategorizedCount >= 20 ? 'text-amber-600 dark:text-amber-400' : 'text-amber-500 dark:text-amber-500'}`}
               />
-              <span className="text-sm text-amber-900 dark:text-amber-200 truncate">
+              <span className="text-app-body text-amber-900 dark:text-amber-200 truncate">
                 {t('dashboard.uncategorizedCta', { count: uncategorizedCount })}
                 {uncategorizedAmount > 0 && (
                   <span className="text-amber-700/70 dark:text-amber-300/70"> · {mask(formatCurrency(uncategorizedAmount, userCurrency, locale))}</span>
                 )}
               </span>
             </div>
-            <span className="shrink-0 text-sm font-semibold text-amber-600 dark:text-amber-400 hover:underline">
+            <span className="shrink-0 text-app-body font-semibold text-amber-600 dark:text-amber-400 hover:underline">
               {t('dashboard.categorizeNow')} &rarr;
             </span>
           </button>
         ) : (
-          <div className="flex items-center gap-2 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 rounded-lg px-4 py-2.5 mb-5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-            <span className="text-sm text-emerald-900 dark:text-emerald-200">{t('dashboard.allCategorized')}</span>
+          <div className="alx-success-banner flex items-center gap-2.5 px-4 py-2.5 mb-5">
+            <CheckCircle2 className="w-4 h-4 text-[var(--color-green-medium)] shrink-0" strokeWidth={1.75} />
+            <span className="text-app-body text-[var(--color-green-dark)]">{t('dashboard.allCategorized')}</span>
           </div>
         )
       )}
@@ -906,9 +912,9 @@ export default function DashboardPage() {
       {/* Charts: Category Spending Bars + Balance Evolution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5" style={{ gridAutoRows: 'minmax(380px, auto)' }}>
         {/* Category Spending Bars */}
-        <div className="bg-card rounded-xl border border-border shadow-sm flex flex-col max-h-[420px]">
-          <div className="px-5 py-4 border-b border-border shrink-0 flex items-center justify-between">
-            <p className="text-sm font-semibold text-foreground">{t('dashboard.spendingByCategory')}</p>
+        <div className="alx-panel flex flex-col max-h-[420px] overflow-hidden">
+          <div className="px-4 sm:px-5 py-3.5 border-b border-border/60 shrink-0 flex items-center justify-between">
+            <p className="text-base font-medium text-foreground">{t('dashboard.spendingByCategory')}</p>
             <button
               onClick={() => setCatSortDesc(v => !v)}
               className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
@@ -930,8 +936,8 @@ export default function DashboardPage() {
                   const hasBudget = item.budget_amount != null && item.budget_amount > 0
                   const pct = item.percentage_used
                   const barColor = hasBudget
-                    ? pct! > 100 ? 'bg-rose-500' : pct! >= 80 ? 'bg-amber-400' : 'bg-emerald-500'
-                    : 'bg-muted-foreground/20'
+                    ? pct! > 100 ? 'bg-destructive' : pct! >= 80 ? 'bg-amber-400' : 'bg-[var(--color-primary)]'
+                    : 'bg-border'
 
                   return (
                     <div
@@ -949,12 +955,12 @@ export default function DashboardPage() {
                         <CategoryIcon icon={item.category_icon} color={item.category_color} size="lg" />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2 mb-1">
-                            <span className="text-sm font-semibold text-foreground truncate">{item.category_name}</span>
+                            <span className="text-app-body font-medium text-foreground truncate">{item.category_name}</span>
                             <div className="flex items-center gap-2 shrink-0">
-                              <span className="text-sm font-bold tabular-nums text-foreground">{mask(formatCurrency(item.actual, userCurrency, locale))}</span>
+                              <span className="text-app-body font-medium tabular-nums text-foreground">{mask(formatCurrency(item.actual, userCurrency, locale))}</span>
                               {item.momPct !== null && (
                                 <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold tabular-nums ${
-                                  item.momPct > 0 ? 'bg-rose-100 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400' : item.momPct < 0 ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400' : 'bg-muted text-muted-foreground'
+                                  item.momPct > 0 ? 'bg-rose-50 text-destructive' : item.momPct < 0 ? 'bg-[var(--color-primary-soft)] text-[var(--color-income)]' : 'bg-muted text-muted-foreground'
                                 }`}>
                                   {item.momPct > 0 ? '\u2191' : item.momPct < 0 ? '\u2193' : '='}{Math.abs(item.momPct).toFixed(0)}%
                                 </span>
@@ -983,17 +989,17 @@ export default function DashboardPage() {
                 })}
               </div>
             ) : (
-              <p className="text-muted-foreground text-sm text-center py-12">{t('dashboard.noData')}</p>
+              <p className="text-muted-foreground text-app-body text-center py-16 px-4">{t('dashboard.noData')}</p>
             )}
           </div>
         </div>
 
         {/* Cumulative Spending Comparison */}
-        <div className="bg-card rounded-xl border border-border shadow-sm max-h-[420px] flex flex-col">
-          <div className="px-5 pt-5 pb-3 shrink-0">
+        <div className="alx-panel max-h-[420px] flex flex-col overflow-hidden">
+          <div className="px-4 sm:px-5 pt-4 pb-3 shrink-0">
             <div className="flex items-start justify-between mb-0.5">
               <div>
-                <p className="text-base font-bold text-foreground">{t('dashboard.balanceFlow')}</p>
+                <p className="text-base font-medium text-foreground">{t('dashboard.balanceFlow')}</p>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   {new Date(`${selectedMonth}-01T00:00:00`).toLocaleDateString(dateLocale)} → {new Date(`${selectedMonth}-${String(lastCurrentPoint?.day ?? monthLastDay(selectedMonth)).padStart(2, '0')}T00:00:00`).toLocaleDateString(dateLocale)}
                 </p>
@@ -1001,7 +1007,7 @@ export default function DashboardPage() {
               {!balanceHistoryLoading && lastCurrentPoint && (
                 <div className="text-right">
                   <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">{t('dashboard.balancePeriodVariation')}</p>
-                  <span className={`text-lg font-bold tabular-nums ${monthVariation >= 0 ? 'text-emerald-600' : 'text-rose-500'}`}>
+                  <span className={`text-lg font-medium tabular-nums ${monthVariation >= 0 ? 'text-[var(--color-income)]' : 'text-destructive'}`}>
                     {mask(`${monthVariation > 0 ? '+' : ''}${formatCurrency(monthVariation, userCurrency, locale)}`)}
                   </span>
                 </div>
@@ -1009,7 +1015,7 @@ export default function DashboardPage() {
             </div>
             <div className="flex items-center gap-3 mt-2">
               <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                <span className="inline-block w-3 h-0.5 rounded-full bg-emerald-500" />
+                <span className="inline-block w-3 h-0.5 rounded-full bg-[var(--color-chart-line)]" />
                 {t('dashboard.balanceCurrentMonthLegend')}
               </span>
               <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
@@ -1052,13 +1058,13 @@ export default function DashboardPage() {
                 >
                   <defs>
                     <linearGradient id="cumGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.18} />
-                      <stop offset="95%" stopColor="#10B981" stopOpacity={0.02} />
+                      <stop offset="5%" stopColor={CHART_PRIMARY} stopOpacity={0.35} />
+                      <stop offset="95%" stopColor={CHART_PRIMARY_FILL} stopOpacity={0.05} />
                     </linearGradient>
                   </defs>
                   <XAxis
                     dataKey="day"
-                    tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
+                    tick={{ fontSize: 10, fill: CHART_LABEL }}
                     axisLine={false}
                     tickLine={false}
                     interval={3}
@@ -1069,7 +1075,7 @@ export default function DashboardPage() {
                       if (v === 0) return '0'
                       return formatCurrency(v, userCurrency, locale).replace(/,00$/, '').replace(/\.00$/, '')
                     }}
-                    tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
+                    tick={{ fontSize: 10, fill: CHART_LABEL }}
                     axisLine={false}
                     tickLine={false}
                     width={56}
@@ -1097,26 +1103,26 @@ export default function DashboardPage() {
                   <Area
                     type="monotone"
                     dataKey="current"
-                    stroke="#10B981"
+                    stroke={CHART_PRIMARY}
                     strokeWidth={2}
                     fill="url(#cumGrad)"
                     dot={false}
-                    activeDot={{ r: 3, fill: '#10B981' }}
+                    activeDot={{ r: 4, fill: CHART_SECONDARY, stroke: CHART_PRIMARY, strokeWidth: 2 }}
                     connectNulls={false}
                   />
                   <Line
                     type="monotone"
                     dataKey="previous"
-                    stroke="#94A3B8"
-                    strokeWidth={2}
+                    stroke="#C5C5C5"
+                    strokeWidth={1.5}
                     strokeDasharray="5 3"
                     dot={false}
-                    activeDot={{ r: 3, fill: '#94A3B8' }}
+                    activeDot={{ r: 3, fill: '#A0A0A0' }}
                   />
                 </ComposedChart>
               </ResponsiveContainer>
             ) : (
-              <p className="text-muted-foreground text-sm text-center py-12">{t('dashboard.noData')}</p>
+              <p className="text-muted-foreground text-app-body text-center py-16 px-4">{t('dashboard.noData')}</p>
             )}
           </div>
           {!balanceHistoryLoading && lastCurrentPoint && (() => {
@@ -1135,7 +1141,7 @@ export default function DashboardPage() {
                     delta: `${footerPct >= 0 ? '+' : ''}${footerPct.toFixed(1)}%`,
                   })}
                   {' '}
-                  <span className={footerPct >= 0 ? 'text-emerald-600' : 'text-rose-500'}>
+                  <span className={footerPct >= 0 ? 'text-[var(--color-income)]' : 'text-destructive'}>
                     {footerPct >= 0 ? '\u25B2' : '\u25BC'}
                   </span>
                 </p>
@@ -1147,9 +1153,9 @@ export default function DashboardPage() {
 
       {/* Goals Progress Widget */}
       {goalsSummary && goalsSummary.length > 0 && (
-        <div className="bg-card rounded-xl border border-border shadow-sm mb-5">
+        <div className="alx-panel mb-5">
           <div className="px-5 py-4 border-b border-border flex items-center justify-between">
-            <p className="text-sm font-semibold text-foreground">{t('goals.dashboardTitle')}</p>
+            <p className="text-app-body font-semibold text-foreground">{t('goals.dashboardTitle')}</p>
             <Link to="/goals" className="text-xs font-medium text-primary hover:underline">
               {t('goals.viewAll')} &rarr;
             </Link>
@@ -1157,15 +1163,15 @@ export default function DashboardPage() {
           <div className="divide-y divide-border">
             {goalsSummary.map((goal) => {
               const progressColor = goal.percentage >= 100
-                ? 'bg-emerald-500'
+                ? 'bg-[var(--color-primary)]'
                 : goal.percentage >= 60
-                  ? 'bg-blue-500'
+                  ? 'bg-[var(--color-green-medium)]'
                   : goal.percentage >= 30
                     ? 'bg-amber-400'
-                    : 'bg-muted-foreground/30'
+                    : 'bg-border'
               const onTrackConfig: Record<string, { cls: string; key: string }> = {
-                ahead: { cls: 'text-emerald-600', key: 'goals.onTrackAhead' },
-                on_track: { cls: 'text-blue-600', key: 'goals.onTrackOnTrack' },
+                ahead: { cls: 'text-[var(--color-income)]', key: 'goals.onTrackAhead' },
+                on_track: { cls: 'text-[var(--color-green-medium)]', key: 'goals.onTrackOnTrack' },
                 behind: { cls: 'text-amber-600', key: 'goals.onTrackBehind' },
                 overdue: { cls: 'text-rose-600', key: 'goals.onTrackOverdue' },
                 achieved: { cls: 'text-emerald-600', key: 'goals.onTrackAchieved' },
@@ -1182,7 +1188,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <span className="text-sm font-medium text-foreground truncate">{goal.name}</span>
+                      <span className="text-app-body font-medium text-foreground truncate">{goal.name}</span>
                       <span className="text-xs font-bold tabular-nums text-foreground shrink-0">
                         {mask(formatCurrency(goal.current_amount, goal.currency, locale))} / {mask(formatCurrency(goal.target_amount, goal.currency, locale))}
                       </span>
@@ -1220,7 +1226,7 @@ export default function DashboardPage() {
       <div>
         {/* One control bar for both views, so the switch never moves between them. */}
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <p className="text-sm font-semibold text-foreground">{t('dashboard.periodTransactions')}</p>
+          <p className="text-app-body font-semibold text-foreground">{t('dashboard.periodTransactions')}</p>
           <div className="flex items-center gap-3">
             <TransactionsViewSwitcher
               value={txViewMode}
@@ -1256,7 +1262,7 @@ export default function DashboardPage() {
         )}
 
         {txViewMode === 'list' && (
-        <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="alx-panel overflow-hidden">
           {txListLoading ? (
             <div className="p-5 space-y-3">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -1291,7 +1297,7 @@ export default function DashboardPage() {
                       {/* Content */}
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5">
-                          <p className="text-sm font-semibold text-foreground truncate leading-tight">{row.description}</p>
+                          <p className="text-app-body font-semibold text-foreground truncate leading-tight">{row.description}</p>
                           {row.groupId && (
                             <span className="inline-flex items-center text-[9px] font-semibold uppercase tracking-wide text-violet-700 bg-violet-50 border border-violet-200 dark:bg-violet-950/40 dark:text-violet-300 dark:border-violet-900 px-1 py-0.5 rounded-full shrink-0">
                               {row.isShared && row.parentOwnerName
@@ -1339,7 +1345,7 @@ export default function DashboardPage() {
 
                       {/* Amount */}
                       <div className="shrink-0 text-right">
-                        <span className={`text-sm font-bold tabular-nums ${row.isIgnored ? 'text-gray-500' : row.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
+                        <span className={`text-app-body font-bold tabular-nums ${row.isIgnored ? 'text-gray-500' : row.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
                           {mask(`${row.isIgnored ? ' ' : row.type === 'credit' ? '+' : '\u2212'}${formatCurrency(Math.abs(row.amount), row.currency, locale)}`)}
                         </span>
                         {row.isShared && row.parentTotal != null && (
@@ -1398,7 +1404,7 @@ export default function DashboardPage() {
                         if (tx) { setEditingTx(tx); setDialogOpen(true) }
                       }}
                     >
-                      <TableCell className="py-2.5 pl-5 text-sm text-muted-foreground tabular-nums whitespace-nowrap hidden sm:table-cell">
+                      <TableCell className="py-2.5 pl-5 text-app-body text-muted-foreground tabular-nums whitespace-nowrap hidden sm:table-cell">
                         {formatDate(row.date, dateLocale)}
                       </TableCell>
                       <TableCell className="py-2.5 pl-5 sm:pl-0">
@@ -1406,7 +1412,7 @@ export default function DashboardPage() {
                           <CategoryIcon icon={row.categoryIcon} color={row.categoryColor} size="lg" />
                           <div className="min-w-0">
                             <div className="flex items-center gap-2">
-                              <p className="text-sm font-semibold text-foreground truncate">{row.description}</p>
+                              <p className="text-app-body font-semibold text-foreground truncate">{row.description}</p>
                               {row.groupId && (
                                 <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-violet-100 text-violet-700 dark:bg-violet-950/40 dark:text-violet-300 shrink-0 uppercase tracking-wide">
                                   {row.isShared && row.parentOwnerName
@@ -1445,7 +1451,7 @@ export default function DashboardPage() {
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="py-2.5 text-sm text-muted-foreground hidden sm:table-cell">
+                      <TableCell className="py-2.5 text-app-body text-muted-foreground hidden sm:table-cell">
                         {(() => {
                           const acc = row.accountId
                             ? accountsList?.find((a) => a.id === row.accountId)
@@ -1460,7 +1466,7 @@ export default function DashboardPage() {
                         })()}
                       </TableCell>
                       <TableCell className="py-2.5 pr-5 text-right">
-                        <span className={`text-sm font-semibold tabular-nums ${row.isIgnored ? 'text-gray-500' : row.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
+                        <span className={`text-app-body font-semibold tabular-nums ${row.isIgnored ? 'text-gray-500' : row.type === 'credit' ? 'text-emerald-600' : 'text-rose-500'}`}>
                           {mask(`${row.isIgnored ? ' ' : row.type === 'credit' ? '+' : '-'}${formatCurrency(Math.abs(row.amount), row.currency, locale)}`)}
                         </span>
                         {row.isShared && row.parentTotal != null && (
@@ -1501,7 +1507,7 @@ export default function DashboardPage() {
                       >
                         {t('dashboard.previous')}
                       </Button>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-app-body text-muted-foreground">
                         {txPage} / {txTotalPages}
                       </span>
                       <Button
@@ -1547,7 +1553,7 @@ export default function DashboardPage() {
               )}
             </>
           ) : (
-            <p className="text-muted-foreground text-sm text-center py-8">{t('dashboard.noTransactions')}</p>
+            <p className="text-muted-foreground text-app-body text-center py-8">{t('dashboard.noTransactions')}</p>
           )}
         </div>
         )}

@@ -132,7 +132,9 @@
     "agents": "Agenti",
     "aiAgents": "AI agenti",
     "collapseSidebar": "Zbaliť bočný panel",
-    "expandSidebar": "Rozbaliť bočný panel"
+    "expandSidebar": "Rozbaliť bočný panel",
+    "more": "More",
+    "mobileBottom": "Main navigation"
   },
   "invoices": {
     "title": "Faktúry",
